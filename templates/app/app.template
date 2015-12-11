@@ -1,0 +1,11 @@
+sails init <%= app%>
+// get package.json
+npm install
+
+bower install
+
+create deploy folder
+
+set connection
+
+set model  (alter & default connection)

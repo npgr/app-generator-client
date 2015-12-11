@@ -1,0 +1,22 @@
+{
+  "name": "assets",
+  "authors": [
+    "Nuno <e_npgr@yahoo.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-elements": "~1.0.6",
+    "iron-elements": "~1.0.7"
+  }
+}

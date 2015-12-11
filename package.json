@@ -1,0 +1,28 @@
+{
+  "name": "generator",
+  "version": "1.0.0",
+  "description": "App Generator",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron .",
+	"asar": "asar pack App-win32-x64/resources/app App-win32-x64/resources/app.asar",
+    "build": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite && mv App-win32-x64/resources/app/primas App-win32-x64/primas",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://npgr@bitbucket.org/npgr/generator.git"
+  },
+  "keywords": [
+    "App",
+    "Generator"
+  ],
+  "author": "Nuno Goncalves",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/npgr/generator#readme",
+  "devDependencies": {
+    "asar": "^0.8.3",
+    "electron-packager": "^5.1.1",
+    "electron-prebuilt": "^0.36.0"
+  }
+}

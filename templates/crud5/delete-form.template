@@ -1,0 +1,70 @@
+<!-- delete-form: version 5.10 -->
+<% function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+<dom-module id="<%= model%>-delete">
+<template>
+	<iron-ajax id="ajax" method='DELETE' handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
+	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
+	  if (crud == "crud6") { %>
+		<h2 class="card_title">>%= lng("%s %s",lng("Delete"),lng("<%= title%>"))%<</h2><% 
+	  } else { %>	
+		<h2 class="card_title">Delete <%= title%></h2><% 
+	  } %>
+		<paper-dialog-scrollable>
+		<form id="form" action="javascript:void(0);" on-submit="delete">
+			<table class="table_dialog" style="width:100%"><%
+			for (i=0; i < keys.length; i++) { 
+				if (jsondata[keys[i]].line_d) {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>"><%= srv(crud, jsondata[keys[i]].description)%></label></td>
+				<td><%= jsondata[keys[i]].line_d %></td>
+			</tr><% } }%>
+			</table>
+		<div class="buttons">
+			<input id="submit_delete" class="hide" type="submit" value="BORRAR">
+			<div class="card_line">
+				<paper-button id="delete_btn" class="btn" on-click="form_submit" raised><%= srv(crud, "Delete")%></paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= srv(crud, "Exit")%></paper-button>
+			</div>
+		</div>
+		</form>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-delete",
+		open_delete_dialog: function(item) {
+			this.item = item
+			this.set_select_fields(item)
+			this.$.dialog.open()
+		},
+		set_select_fields(item) {
+			<%for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].enum) {
+			%>this.$.<%= keys[i]%>.value = item.<%= keys[i]%>
+			<%} }
+		%>},
+		form_submit: function() {
+			this.$.submit_delete.click()
+		},
+		delete: function() {
+			this.$.ajax.url = config_server() + "<%= model%>/"+this.item.id
+			this.$.ajax.generateRequest()
+		},
+		record_deleted: function() {
+			alert("<%= srv(crud, "Record Deleted")%>")
+			this.$.dialog.close()
+			this.fire('close')
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
+		}
+	})
+</script>
+</dom-module>

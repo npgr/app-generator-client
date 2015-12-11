@@ -1,0 +1,113 @@
+<!-- edit-form: version 5.10 -->
+<% function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+<dom-module id="<%= model%>-edit">
+<template>
+	<iron-ajax id="ajax" method='PUT' handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation"><%
+		for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].model) {%>
+		<<%= jsondata[keys[i]].model%>-select id="<%= jsondata[keys[i]].model%>_select_dialog" on-item_selected="set_select_field"></<%= jsondata[keys[i]].model%>-select><%
+		} }
+	  if (crud == "crud6") { %>
+		<h2 class="card_title">>%= lng("%s %s",lng("Edit"),lng("<%= title%>"))%<</h2><% 
+	  } else { %>	
+		<h2 class="card_title">Edit <%= title%></h2><% 
+	  } %>
+		<paper-dialog-scrollable>
+		<form id="form" action="javascript:void(0);" on-submit="update">
+			<table class="table_dialog" style="width:100%"><%
+			for (i=0; i < keys.length; i++) { 
+				if (jsondata[keys[i]].line_u) {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>"><%= srv(crud, jsondata[keys[i]].description)%><%
+				if (jsondata[keys[i]].required) {%><strong class="red"> *</strong><%}%></label></td>
+				<td><%if (jsondata[keys[i]].model) {
+				    %><iron-icon icon="find-in-page" field="<%= keys[i]%>" on-click="select_field_b"></iron-icon><%}
+				%><%= jsondata[keys[i]].line_u %></td>
+			</tr><% } }%>
+			</table>
+			<div class="buttons">
+			  <input id="submit_update" class="hide" type="submit" value="CAMBIAR">
+			  <div class="card_line">
+				<paper-button id="update_btn" class="btn" on-click="submit_form" raised><%= srv(crud, "Change ")%></paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= srv(crud, "Exit")%></paper-button>
+			  </div>
+			</div>
+		</form>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-edit",
+		open_dialog: function(item) {
+			this.item = item
+			this.set_select_fields(item)
+			this.$.dialog.open()
+		},
+		set_select_fields(item) {
+			<%for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].enum) {
+			%>this.$.<%= keys[i]%>.value = item.<%= keys[i]%>
+			<%} }
+		%>},
+		select_field_b: function(e) {
+			this.$[e.toElement.getAttribute("field")].click()
+		},
+		select_field: function(e) {
+			this.field = e.toElement.id<% 
+			for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].model) {%>
+			if (this.field == "<%= keys[i]%>")
+				this.$.<%= jsondata[keys[i]].model%>_select_dialog.open_select_dialog()<%
+			} }%>
+		},
+		set_select_field: function(e) {
+			this.$[this.field].value = this.$[e.srcElement.id].item.name
+			this.$[this.field].key = this.$[e.srcElement.id].item.key
+		},
+		submit_form: function() {
+			this.$.submit_update.click()
+		},
+		update: function() {
+			var record = {}<%
+			for (i=0; i < keys.length; i++) { 
+			  if (keys[i].substring(0,1) != "_")  {
+			    if (jsondata[keys[i]].model) {%>
+			record.<%= keys[i]%> = this.$.<%= keys[i]%>.key<%		
+				} else {
+				switch(jsondata[keys[i]].type) {
+				  case "string":%>
+			record.<%= keys[i]%> = this.$.<%= keys[i]%>.value<%
+					break
+					case "boolean":%>
+			record.<%= keys[i]%> = this.$.<%= keys[i]%>.value<%
+					break
+				  case "date":%>
+			if (this.$.<%= keys[i]%>.value)
+				record.<%= keys[i]%> = this.$.<%= keys[i]%>.value<%
+					break
+				  default:%>
+			record.<%= keys[i]%> = Number(this.$.<%= keys[i]%>.value)<% 		
+			}}}}%>
+			this.$.ajax.url = config_server() + "<%= model%>/" +record.<%= key.name%>
+			this.$.ajax.params = record
+			this.$.ajax.generateRequest()
+		},
+		record_updated: function() {
+			alert("<%= srv(crud, "Record Updated")%>")
+			this.$.dialog.close()
+			this.fire('close')
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
+		}
+	})
+</script>
+</dom-module>

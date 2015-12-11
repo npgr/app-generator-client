@@ -1,0 +1,158 @@
+<!-- topBar template: version 1.20 -->
+
+<dom-module id="top-bar">
+<template>
+<style>
+	.topbar1 {
+		position: fixed;
+		top: 0;
+		margin-top: 0;
+		width: 100%;
+		z-index: 1;
+		//background-color: #039BE5;
+		//background-color: #26A69A;
+		background-color: #0097A7; //cyan 700
+		color: white;
+		//height: 40px;
+		font-family: verdana, sans-serif;
+	}
+	.topBar {
+		display: flex;
+		justify-content: space-between;
+		width: 94%;
+		margin-top: 10px;
+		margin-left:3%;
+		z-index: 1;
+		//background-color: #039BE5; blue
+		//background-color: #26A69A; green
+		background-color: #0097A7; 
+		color: white;
+		height: 30px;
+	}
+	.menubar {
+		width: 100%;
+		position: relative;
+		top: 40px;
+		z-index: 1;
+		display: flex;
+		//justify-content: space-between;
+		justify-content: flex-start;
+		background-color: #007080;
+		height: 30px;
+	}
+	.menubar > div {
+		color: white;
+		margin-left: 20px;
+		margin-top: 5px;
+	}
+	.menubar > div:first-of-type {
+		margin-left: 120px;
+	}
+	.barTitle {
+		margin-top: -3px;
+		font-size: 20px;
+	}
+	.barItem {
+		font-size: 15px;
+	}
+	.dropdown-content {
+		margin-top: 30px;
+		//margin-left: 0px,
+		display: block;
+		position: relative;
+		background-color: #fff;
+		color: black;
+		box-shadow: 0px 2px 6px #ccc;
+		padding: 10px;
+		border-radius: 3px;
+    }
+	.dropdown-item {
+		padding: 5px;
+		color: rgb(100, 100, 100);
+	}
+	/*.dropdown-item:not(:last-of-type) {
+		border-bottom: 1px solid #eee;
+	}*/
+	.top_border {
+		border-top: 1px solid #eee;
+	}
+	.bar_icon {
+		padding: 0;
+	}
+	.inline {
+		display: inline;
+	}
+	#dropdown_user iron-icon {
+		margin-right: 5px;
+	}
+</style>
+	<div id="menubar" class="hide"><%
+	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
+	  _.forEach(groups , function(n, key) { 
+		if (n != '') {%>
+		<div on-click="open_<%= n %>_menu"><%= lng(n) %>
+		  <iron-dropdown id="dropdown_<%= n %>"  horizontal-align="left"  vertical-align="top">
+			<ul class="dropdown-content" tabindex="0"><%
+			  var arr = _.map(_.filter(resources, {'Group': n}), function(n4) { return n4.name})
+			  _.forEach(arr, function(n2, key2) { %>
+				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2) %></li><%
+			  }) %>
+			</ul>
+		  </iron-dropdown>
+		</div><%
+	  } } ) %>
+	</div>
+	<div class="topbar1">
+	  <div class="topBar">
+		<div class="barItem" on-click="open_app_menu">
+		  <paper-icon-button class="bar_icon" icon="menu"></paper-icon-button>
+		  <div class="inline">Menu</div>
+		</div>
+		<div class="barTitle"><content></content></div>
+		<div class="barItem" on-click="open_user_menu">
+		  <paper-icon-button class="bar_icon" icon="account-circle"></paper-icon-button>
+		  <div class="inline dropdown-trigger"><%= user.user%></div>
+		  <iron-icon icon="arrow-drop-down"></iron-icon>
+		  <iron-dropdown id="dropdown_user"  horizontal-align="right" vertical-align="top">
+			<ul class="dropdown-content" tabindex="0">
+			  <li class="dropdown-item"><iron-icon icon="assessment"></iron-icon>Dashboard</li>
+			  <hr>
+			  <li class="dropdown-item"><iron-icon icon="perm-identity"></iron-icon>Profile</li>
+			  <li class="dropdown-item"><iron-icon icon="drafts"></iron-icon>Messages</li>
+			  <li class="dropdown-item"><iron-icon icon="settings"></iron-icon>Preferences</li>
+			  <hr>
+			  <li class="dropdown-item" on-click="signout"><iron-icon icon="exit-to-app"></iron-icon>Log Out</li>
+			</ul>
+		  </iron-dropdown>
+		</div>
+	  </div>
+	</div>
+</template>
+<script>
+	Polymer({
+		is: "top-bar",
+		open_user_menu: function() {
+			this.$.dropdown_user.toggle()
+		},
+		open_app_menu: function() {
+			this.$.menubar.classList.toggle('hide')
+			this.$.menubar.classList.toggle('menubar')
+		},
+		signout: function() {
+			window.location.assign(config_server() + "signout")
+		}<%
+	_.forEach(groups, function(n, key) {
+	  if(n != '') {%>
+		,open_<%= n %>_menu: function() {
+			this.$.dropdown_<%= n%>.toggle()
+		}<%
+	}})
+	_.forEach(resources, function(n, key) { 
+	  if (n.resource.type == "page") {%>
+		,<%= n.name %>: function() {
+			window.location.assign(config_server() + "<%= n.path.substring(1) %>")
+		}<%
+	}})%>
+	})
+</script>
+</dom-module>
