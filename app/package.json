@@ -2,7 +2,7 @@
   "name": "generator",
   "version": "1.0.0",
   "description": "App Generator",
-  "main": "app/app.js",
+  "main": "app.js",
   "scripts": {
     "start": "electron .",
     "asar": "asar pack App-win32-x64/resources/app App-win32-x64/resources/app.asar",

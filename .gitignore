@@ -1,4 +1,4 @@
-node_modules/*
-!node_modules/crud5
-app/assets/bower_components
+app/node_modules/*
+!app/node_modules/crud5
+assets/bower_components
 
