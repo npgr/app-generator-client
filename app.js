@@ -13,7 +13,7 @@ app.on('ready', function() {
 		//show: false,
 		//frame: false  //frameless window
 	})
-	mainWindow.openDevTools()
+	//mainWindow.openDevTools()
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});

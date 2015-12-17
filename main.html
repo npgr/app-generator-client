@@ -5,6 +5,7 @@
 	<script src="assets/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 	<link rel="import" href="assets/bower_components/polymer/polymer.html">
 	<link rel="import" href="assets/bower_components/paper-dialog/paper-dialog.html">
+	<link rel="import" href="assets/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 	<link rel="import" href="assets/bower_components/paper-button/paper-button.html">
 	<link rel="import" href="assets/bower_components/neon-animation/neon-animation.html">
 	
@@ -13,20 +14,21 @@
 <body>
   <!-- ***************** Main Style ***********************  -->
   <style>
-  
+	
   </style>
 	<!-- ***************** Component: app-select ***********************  -->
 	<dom-module id="app-select">
 	<template>
 		<app-new id="app_new"></app-new>
-		<paper-dialog id="dialog" vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+		<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
 			<h2 class="card_title">Select App</h2>
 			<strong on-click="new">+ New App</strong>
-			<paper-dialog-scrollable>
+			<div id="app_list"></div>
+			<!--<xpaper-dialog-scrollable>
 			  <template id="template_items" is="dom-repeat" items="{{apps}}">
 				<div id="{{item.id}}" on-click="select">{{item.name}}</div>
 			  </template>
-			</paper-dialog-scrollable>
+			</xpaper-dialog-scrollable>-->
 		</paper-dialog>
 	</template>
 	<script>
@@ -77,8 +79,13 @@
 			}
 			var apps_in = JSON.stringify([app1, app2])
 			fs.writeFileSync('./db/apps', apps_in, 'utf8')*/
-			
+			this.apps = []
 			this.apps = JSON.parse(fs.readFileSync('./db/apps', 'utf8'));
+			//this.apps = []
+			for (var i=0; i < this.apps.length; i++)
+				this.$.app_list.
+				//this.push('apps', apps[i]);
+			*/
 			console.log(this.apps)
 		}
 	});
@@ -103,14 +110,46 @@
 				<td><input id="name" type="string" name="Name" required></td>
 			</tr>
 			<tr>
+				<td><label class="left_label" for="type">App Type</td>
+			<td><select id="type" name="type">
+					<option value="web">Web App (Browser)</option>
+					<option value="web2">Web App (Electron Client)</option>
+					<option value="desktop">Desktop</option>
+					<option value="mobile">Mobile</option>
+			</select></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="db">Database</td>
+			<td><select id="db" name="db">
+					<option value="postgreSQL">PostgreSQL</option>
+					<option value="mySQL">mySQL</option>
+					<option value="MongoDB">MongoDB</option>
+					<option value="Cassandra">Cassandra</option>
+					<option value="Disk">Disk</option>		
+			</select></td>
+			</tr>
+			<tr>
 				<td><label class="left_label" for="version">Version</label></td>
 				<td><input id="version" type="string" name="version"></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="description">Description</label></td>
-				<td><textarea id="description" name="description" rows="3" cols="40"></textarea></td>
+				<td><textarea id="description" name="description" rows="4" cols="30"></textarea></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="path">Path<strong class="red"> *</strong></label></td>
+				<td><input id="path" type="string" name="path"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="port">Port<strong class="red"> *</strong></label></td>
+				<td><input id="port" type="string" name="port"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="repository">Repository</label></td>
+				<td><input id="repository" type="string" name="repository"></td>
 			</tr>
 		   </table>
+		   
 		   <div class="buttons">
 				<input id="submit_btn" class="hide" type="submit" value="CREAR">
 				<div class="card_line">
@@ -119,7 +158,7 @@
 				</div>
 		   </div>
 		  </form>
-		</paper-dialog-scrollable>
+		 </paper-dialog-scrollable>
 		</paper-dialog>
 	</template>
 	<script>
