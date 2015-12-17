@@ -1,0 +1,161 @@
+<html>
+<head>
+	<title>Generador</title>
+	
+	<script src="assets/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+	<link rel="import" href="assets/bower_components/polymer/polymer.html">
+	<link rel="import" href="assets/bower_components/paper-dialog/paper-dialog.html">
+	<link rel="import" href="assets/bower_components/paper-button/paper-button.html">
+	<link rel="import" href="assets/bower_components/neon-animation/neon-animation.html">
+	
+	<link rel="stylesheet" href="assets/styles/app.css">
+</head>
+<body>
+  <!-- ***************** Main Style ***********************  -->
+  <style>
+  
+  </style>
+	<!-- ***************** Component: app-select ***********************  -->
+	<dom-module id="app-select">
+	<template>
+		<app-new id="app_new"></app-new>
+		<paper-dialog id="dialog" vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+			<h2 class="card_title">Select App</h2>
+			<strong on-click="new">+ New App</strong>
+			<paper-dialog-scrollable>
+			  <template id="template_items" is="dom-repeat" items="{{apps}}">
+				<div id="{{item.id}}" on-click="select">{{item.name}}</div>
+			  </template>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+	</template>
+	<script>
+	Polymer({
+		is: "app-select",
+		properties: {
+			//cur_sort: { field: "id", isdesc: false },
+		},
+		open_dialog: function() {
+			this.load_apps()
+			this.$.dialog.open()
+		},
+		new: function() {
+			console.log('New App')
+			this.$.dialog.close()
+			this.$.app_new.open_dialog()
+		},
+		select: function(e) {
+			this.item = {}
+			this.item.key = e.toElement.id
+			this.item.name = e.toElement.innerHTML
+			this.$.dialog.close()
+			console.log('item selected: ', this.item)
+			//this.fire('item_selected')
+		},
+		load_apps: function() {
+			var fs = require('fs');
+			
+			/*var app1 = {
+				id: 1,
+				name: 'Application01',
+				version:'1.0.0',
+				desc: 'My First App',
+				path: 'C:\Documents\projects\app01',
+				port: 3000,
+				type: 'web',
+				db: 'postgres'
+			}
+			var app2 = {
+				id: 2,
+				name: 'Application02',
+				version:'1.0.0',
+				desc: 'My Second App',
+				path: 'C:\Documents\projects\app02',
+				port: 8272,
+				type: 'web2',
+				db: 'mongodb'
+			}
+			var apps_in = JSON.stringify([app1, app2])
+			fs.writeFileSync('./db/apps', apps_in, 'utf8')*/
+			
+			this.apps = JSON.parse(fs.readFileSync('./db/apps', 'utf8'));
+			console.log(this.apps)
+		}
+	});
+	</script>
+	</dom-module>
+	
+	<!-- ***************** Component: app-new ***********************  -->
+	<dom-module id="app-new">
+	<template>
+		<h3>New App</h3>
+		<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+		<h2 class="card_title">New App</h2>
+		<paper-dialog-scrollable>
+		  <form id="form" action="javascript:void(0);" on-submit="create">
+		   <table class="table_dialog" style="width:100%">
+			<tr>
+				<td><label class="left_label" for="id">id</td>
+				<td><input id="id" type="number" name="id" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="name">App Name<strong class="red"> *</strong></label></td>
+				<td><input id="name" type="string" name="Name" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="version">Version</label></td>
+				<td><input id="version" type="string" name="version"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="description">Description</label></td>
+				<td><textarea id="description" name="description" rows="3" cols="40"></textarea></td>
+			</tr>
+		   </table>
+		   <div class="buttons">
+				<input id="submit_btn" class="hide" type="submit" value="CREAR">
+				<div class="card_line">
+					<paper-button id="create_btn" class="btn" on-click="submit_form" raised>Create</paper-button>
+					<paper-button id="exit_btn" class="btn" dialog-confirm raised>Exit</paper-button>
+				</div>
+		   </div>
+		  </form>
+		</paper-dialog-scrollable>
+		</paper-dialog>
+	</template>
+	<script>
+	Polymer({
+		is: "app-new",
+		properties: {
+			//cur_sort: { field: "id", isdesc: false },
+		},
+		open_dialog: function() {
+			this.$.dialog.open()
+		}
+	});
+	</script>
+	</dom-module>
+	
+	<!-- ***************** Component: Main-Generador ***********************  -->
+	<dom-module id="main-generador">
+	<template>
+		<h3>Main Generador</h3>
+		<app-select id="app_select"></app-select>
+	</template>
+	<script>
+	Polymer({
+		is: "main-generador",
+		properties: {
+			//cur_sort: { field: "id", isdesc: false },
+		},
+		ready: function() {
+			this.$.app_select.open_dialog()
+		}
+	});
+	</script>
+	</dom-module>
+	<!-- ***************** Main Body ***********************  -->
+	
+	<h2>Inicio</h2>
+	<main-generador></main-generador>
+</body>
+</html>
