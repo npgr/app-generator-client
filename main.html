@@ -22,13 +22,13 @@
 		<app-new id="app_new"></app-new>
 		<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
 			<h2 class="card_title">Select App</h2>
-			<strong on-click="new">+ New App</strong>
-			<div id="app_list"></div>
-			<!--<xpaper-dialog-scrollable>
+			<strong on-click="new">+ New App</strong><br>
+			<xpaper-dialog-scrollable>
+			  <!--<div id="app_list"></div>-->
 			  <template id="template_items" is="dom-repeat" items="{{apps}}">
 				<div id="{{item.id}}" on-click="select">{{item.name}}</div>
 			  </template>
-			</xpaper-dialog-scrollable>-->
+			</xpaper-dialog-scrollable>
 		</paper-dialog>
 	</template>
 	<script>
@@ -76,16 +76,20 @@
 				port: 8272,
 				type: 'web2',
 				db: 'mongodb'
-			}
-			var apps_in = JSON.stringify([app1, app2])
-			fs.writeFileSync('./db/apps', apps_in, 'utf8')*/
-			this.apps = []
+			}*/
+			//var apps_in = JSON.stringify([app1, app2])
+			//fs.writeFileSync('./db/apps', apps_in, 'utf8')
+			//this.apps = [app1, app2]
 			this.apps = JSON.parse(fs.readFileSync('./db/apps', 'utf8'));
 			//this.apps = []
-			for (var i=0; i < this.apps.length; i++)
-				this.$.app_list.
+			//var div = document.createElement("div")
+			//for (var i=0; i < this.apps.length; i++)
+			//{	
+				//div = document.createElement("div")
+				//div.innerHTML = this.apps[i].name
+				//this.$.app_list.appendChild(div)
 				//this.push('apps', apps[i]);
-			*/
+			//}
 			console.log(this.apps)
 		}
 	});
@@ -107,7 +111,7 @@
 			</tr>
 			<tr>
 				<td><label class="left_label" for="name">App Name<strong class="red"> *</strong></label></td>
-				<td><input id="name" type="string" name="Name" required></td>
+				<td><input id="name" type="text" name="Name" required></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="type">App Type</td>
@@ -138,11 +142,11 @@
 			</tr>
 			<tr>
 				<td><label class="left_label" for="path">Path<strong class="red"> *</strong></label></td>
-				<td><input id="path" type="string" name="path"></td>
+				<td><input id="path" type="text" name="path"></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="port">Port<strong class="red"> *</strong></label></td>
-				<td><input id="port" type="string" name="port"></td>
+				<td><input id="port" type="number" name="port"></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="repository">Repository</label></td>
@@ -169,6 +173,13 @@
 		},
 		open_dialog: function() {
 			this.$.dialog.open()
+		},
+		submit_form: function() {
+			this.$.submit_btn.click()
+		},
+		create: function() {
+			var app = {}
+			
 		}
 	});
 	</script>
