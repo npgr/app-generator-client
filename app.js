@@ -18,8 +18,8 @@ app.on('ready', function() {
 		mainWindow = null;
 	});
 	
-	mainWindow.loadURL('file://'+__dirname+'/main.html')
-	//mainWindow.loadURL('http://localhost:1337')
+	//mainWindow.loadURL('file://'+__dirname+'/main.html')
+	mainWindow.loadURL('http://localhost:1337')
 })
 
 app.on('window-all-closed', () => {
