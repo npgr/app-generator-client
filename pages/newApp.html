@@ -1,0 +1,69 @@
+<html>
+<head>
+ <title>New App</title>
+ <style>
+		html, div {
+			background-color: rgb(30, 30, 30);
+			color: rgb(240,240,240);
+			font-family: sans-serif;
+			font-size: 15px;
+		}
+		[red] {
+			color: red;
+		}
+		[orange] {
+			color: orange;
+		}
+		[green] {
+			color: green;
+		}
+		[yellow] {
+			color: yellow;
+		}
+	</style>
+</head>
+<body> <!-- onload="newContent();"-->
+	
+	<div yellow>> Creating New Application ...</div>
+	<div id="list">
+		<script>
+			var spawn = require('child_process').spawn;
+			var child = spawn('unzip',['templates/webserver.zip','-d','apps/app01'] );
+
+			child.stdout.on('data', function(data) {
+				//document.write("<div green>"+data.toString()+"</div>").focus()
+				var node = document.createElement("DIV");                 // Create a <li> node
+				var textnode = document.createTextNode(data.toString());         // Create a text node
+				node.appendChild(textnode); 
+				document.getElementById("list").appendChild(node);
+				node.scrollIntoView()
+			})
+	
+			child.stderr.on('data', function (data) {
+				document.write('<div red>stderr: ', data.toString()+"</div>");
+			});
+	
+			child.on('close', function (code, signal) {
+			//console.log('child process terminated due to receipt of signal ' + signal);	
+			if (code == 0)
+			{
+				//document.write('<div yellow>Application Created Sunccefully on Path Apps/</div>')
+				//document.write('<div yellow>Intalling Node Modules</div>')
+				//document.getElementById('app_list').copy_node_modules()
+			}
+			else 
+				document.write("<div yellow>Process End with code: "+code+"</div>")
+			});
+		</script>
+	</div>
+	<!--<script>
+		function newContent()
+		{
+			alert("load new content");
+			document.open();
+			document.write("<h1>Out with the old - in with the new!</h1>");
+			document.close();
+		}
+	</script>-->
+</body>
+</html>

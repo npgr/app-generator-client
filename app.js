@@ -14,12 +14,31 @@ app.on('ready', function() {
 		//frame: false  //frameless window
 	})
 	//mainWindow.openDevTools()
+	
+	
 	mainWindow.on('closed', function() {
 		mainWindow = null;
+		//newAppWindow.close()
 	});
+	/*newAppWindow.on('closed', function() {
+		newAppWindow = null;
+	});*/
 	
 	//mainWindow.loadURL('file://'+__dirname+'/main.html')
 	mainWindow.loadURL('http://localhost:1337')
+	
+	ipcMain.on('new-app', function() {
+		var newAppWindow = new BrowserWindow({
+		width: 600,
+		height: 400,
+		y: 50,
+		show: false,
+		//frame: false  //frameless window
+		})
+		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html')
+		newAppWindow.show();
+	});
+	
 })
 
 app.on('window-all-closed', () => {
