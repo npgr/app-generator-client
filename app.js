@@ -15,17 +15,28 @@ app.on('ready', function() {
 	})
 	//mainWindow.openDevTools()
 	
-	
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 		//newAppWindow.close()
 	});
-	/*newAppWindow.on('closed', function() {
-		newAppWindow = null;
-	});*/
-	
+
 	//mainWindow.loadURL('file://'+__dirname+'/main.html')
-	mainWindow.loadURL('http://localhost:1337')
+	fs.readFile('./config.json', 'utf-8', function (err, data) {
+		//if (err) throw err;
+		if (err){ // if config.json does not exist
+			// ASK for configuration
+			var obj = {
+				url: 'http://localhost:1337',
+				width: 1000,
+				height: 700
+			}
+			var data = JSON.stringify(obj)
+			fs.writeFile('./config.json', text_data, 'utf-8')
+		} 
+		var config = JSON.parse(data)
+		mainWindow.setSize(config.width, config.height)
+		mainWindow.loadURL(config.url)
+	});
 	
 	ipcMain.on('new-app', function(event, arg) {
 		var newAppWindow = new BrowserWindow({
@@ -38,7 +49,6 @@ app.on('ready', function() {
 		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg)
 		newAppWindow.show();
 	});
-	
 })
 
 app.on('window-all-closed', () => {
