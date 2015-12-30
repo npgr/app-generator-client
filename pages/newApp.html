@@ -25,37 +25,7 @@
 <body> <!-- onload="newContent();"-->
 	
 	<div yellow>> Creating New Application ...</div>
-	<div id="list">
-		<script>
-			var spawn = require('child_process').spawn;
-			var child = spawn('unzip',['templates/webserver.zip','-d','apps/app01'] );
-
-			child.stdout.on('data', function(data) {
-				//document.write("<div green>"+data.toString()+"</div>").focus()
-				var node = document.createElement("DIV");                 // Create a <li> node
-				var textnode = document.createTextNode(data.toString());         // Create a text node
-				node.appendChild(textnode); 
-				document.getElementById("list").appendChild(node);
-				node.scrollIntoView()
-			})
-	
-			child.stderr.on('data', function (data) {
-				document.write('<div red>stderr: ', data.toString()+"</div>");
-			});
-	
-			child.on('close', function (code, signal) {
-			//console.log('child process terminated due to receipt of signal ' + signal);	
-			if (code == 0)
-			{
-				//document.write('<div yellow>Application Created Sunccefully on Path Apps/</div>')
-				//document.write('<div yellow>Intalling Node Modules</div>')
-				//document.getElementById('app_list').copy_node_modules()
-			}
-			else 
-				document.write("<div yellow>Process End with code: "+code+"</div>")
-			});
-		</script>
-	</div>
+	<div id="list"></div>
 	<!--<script>
 		function newContent()
 		{
@@ -65,5 +35,78 @@
 			document.close();
 		}
 	</script>-->
+	<script>
+		cont = 0
+		function append_html(txt)
+		{
+			var node = document.createElement("P");               
+			var textnode = document.createTextNode(txt);       
+			node.appendChild(textnode); 
+			document.getElementById("list").appendChild(node);
+			node.scrollIntoView()
+		}
+		function append_text(txt)
+		{
+			var textnode = document.createTextNode(txt);      
+			document.getElementById("list").appendChild(textnode);
+			//node.scrollIntoView()
+		}
+		function create_app()
+		{
+			var spawn = require('child_process').spawn;
+			var child = spawn('unzip',['templates/webserver.zip','-d','apps/app01'] );
+
+			child.stdout.on('data', function(data) {
+				//append_html(data.toString())
+				cont ++
+				if (cont % 50 == 0)
+				  append_text('* ')	
+			})
+
+			child.stderr.on('data', function (data) {
+				append_html('stderr: '+ data.toString())
+			});
+	
+			child.on('close', function (code, signal) {
+				//console.log('child process terminated due to receipt of signal ' + signal);	
+				if (code == 0)
+					copy_node_modules()
+					//append_html("Process End with code: "+code)
+				else 
+					append_html("Process End with code: "+code)
+			});
+		}
+		function copy_node_modules() {
+			cont = 0
+			append_html('Intalling Node Modules')
+			var spawn = require('child_process').spawn;
+			var child2 = spawn('cp',['-R', '-v', '../server/node_modules/*', 'apps/app01/node_modules/']);
+			//var execFile = require('child_process').execFile;
+			//var child2 = execFile('npm',['install'], {cwd: 'apps/app01'} );
+	
+			child2.stdout.on('data', function(data) {
+				//append_html(data.toString())
+				cont ++
+				if (cont % 30 == 0)
+				  append_text('* ')	
+			})
+	
+			child2.stderr.on('data', function (data) {
+				append_html('stderr: '+ data.toString())
+			});
+	
+			child2.on('close', function (code, signal) {
+				if (code == 0 || code == 1) 
+				{
+					append_html('Application Created Sunccefully on Path Apps/app01')
+					append_html('For start Server, run node app')
+				}
+				else 
+					append_html('Process End with code: '+ code)
+			})
+		}
+		
+		create_app()
+	</script>
 </body>
 </html>
