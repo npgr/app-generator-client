@@ -27,7 +27,7 @@ app.on('ready', function() {
 	//mainWindow.loadURL('file://'+__dirname+'/main.html')
 	mainWindow.loadURL('http://localhost:1337')
 	
-	ipcMain.on('new-app', function() {
+	ipcMain.on('new-app', function(event, arg) {
 		var newAppWindow = new BrowserWindow({
 		width: 600,
 		height: 400,
@@ -35,7 +35,7 @@ app.on('ready', function() {
 		show: false,
 		//frame: false  //frameless window
 		})
-		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html')
+		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg)
 		newAppWindow.show();
 	});
 	
