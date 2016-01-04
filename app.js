@@ -9,7 +9,7 @@ app.on('ready', function() {
 	var mainWindow = new BrowserWindow({
 		width: 1020,
 		height: 700,
-		y: 50,
+		y: 50
 		//show: false,
 		//frame: false  //frameless window
 	})
@@ -43,11 +43,22 @@ app.on('ready', function() {
 		width: 600,
 		height: 400,
 		y: 50,
-		show: false,
+		show: false
 		//frame: false  //frameless window
 		})
 		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg)
 		newAppWindow.show();
+	});
+	ipcMain.on('start-app', function(event, arg) {
+		var startAppWindow = new BrowserWindow({
+		width: 300,
+		height: 200,
+		y: 50,
+		show: false
+		//frame: false  //frameless window
+		})
+		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg)
+		startAppWindow.show();
 	});
 })
 
