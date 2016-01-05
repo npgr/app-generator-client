@@ -22,7 +22,7 @@
 		}
 	</style>
 </head>
-<body> <!-- onload="newContent();"-->
+<body onunload="endApp()"> <!-- onload="newContent();"-->
 	
 	<div yellow>> Starting Application 
 		<strong id="app"></strong>
@@ -47,13 +47,17 @@
 			document.getElementById("list").appendChild(textnode);
 			//node.scrollIntoView()
 		}
+		function endApp()
+		{
+			child.kill()
+		}
 		function start_app(app)
 		{
 			append_html('Apps/'+app+'/node App')
 			
 			var spawn = require('child_process').spawn;
 			//var child = spawn('Apps/'+app+'/node',['app'] );
-			var child = spawn('node',['Apps/'+app+'/app'] );
+			child = spawn('node',['Apps/'+app+'/app'] );
 
 			child.stdout.on('data', function(data) {
 				append_html(data.toString())
