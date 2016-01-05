@@ -57,16 +57,16 @@
 			//node.scrollIntoView()
 		}
 		function create_app(app)
-		{
-			
+		{	
 			var spawn = require('child_process').spawn;
-			var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
+			//var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
+			var child = spawn('node', ['zip_util', app]);
 
 			child.stdout.on('data', function(data) {
-				//append_html(data.toString())
-				cont ++
+				append_html(data.toString())
+				/*cont ++
 				if (cont % 200 == 0)
-				  append_text('* ')	
+				  append_text('* ')	*/
 			})
 
 			child.stderr.on('data', function (data) {
