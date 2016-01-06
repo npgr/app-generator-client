@@ -53,6 +53,7 @@ var entries = [
 	'node_modules/include-all/',
 	'node_modules/jsonic/',
 	'node_modules/lodash/',
+	'node_modules/nodemon/',
 	'node_modules/rc/',
 	'node_modules/sails/',
 	'node_modules/sails-disk/',
