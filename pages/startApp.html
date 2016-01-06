@@ -61,6 +61,11 @@
 
 			child.stdout.on('data', function(data) {
 				append_html(data.toString())
+				
+				if (first_time) {
+					first_time = false
+					setTimeout(function() { open_browser() } , 3500);
+				}
 				/*cont ++
 				if (cont % 200 == 0)
 				  append_text('* ')	*/
@@ -68,6 +73,7 @@
 
 			child.stderr.on('data', function (data) {
 				append_html('Message: '+ data.toString())
+				
 			});
 	
 			child.on('close', function (code, signal) {
@@ -85,6 +91,23 @@
 				else 
 					append_html("Process End with code: "+code)
 			});
+		}
+		function open_browser() {
+			var child2 = require('child_process')
+			var url_to_open = 'http://localhost:3000';
+			var command = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+
+			child2.spawn(command, ['-new-tab', url_to_open]);
+			/*console.log("Opening Browser")
+			var exec = require('child_process').exec
+
+			exec('chrome http://localhost:3000' , function(err) {
+				if(err){ 
+					console.log("error: "+err)
+				}
+				else{ console.log("success open")
+				}
+			})*/
 		}
 		//Not Used
 		function copy_node_modules() {
@@ -124,6 +147,7 @@
 		var app = vars[1]
 
 		document.getElementById("app").innerHTML = app
+		first_time = true
 		start_app(app)
 	</script>
 </body>

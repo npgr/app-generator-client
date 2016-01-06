@@ -51,8 +51,8 @@ app.on('ready', function() {
 	});
 	ipcMain.on('start-app', function(event, arg) {
 		var startAppWindow = new BrowserWindow({
-		width: 300,
-		height: 200,
+		width: 520,
+		height: 360,
 		y: 50,
 		show: false
 		//frame: false  //frameless window
