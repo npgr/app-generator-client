@@ -57,7 +57,7 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg)
+		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg.app+'&port='+arg.port)
 		startAppWindow.show();
 	});
 })
