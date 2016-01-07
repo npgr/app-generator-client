@@ -37,5 +37,14 @@ exports.set_port = function(app, port)
 	
 	fs.writeFileSync('./apps/'+app+'/config/env/development.js', file2, 'utf8')
 	
+	var file = fs.readFileSync('./apps/'+app+'/config/env/production.js', 'utf8')
+	
+	var start = file.indexOf('port:')
+	var end = file.indexOf('\n',start+4)
+	
+	var file2 = file.substring(0, start) + 'port: ' + port + file.substring(end)
+	
+	fs.writeFileSync('./apps/'+app+'/config/env/production.js', file2, 'utf8')
+	
 	return 'Success'
 }
