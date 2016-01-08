@@ -50,6 +50,9 @@
 		function endApp()
 		{
 			child.kill()
+			//append_html('Ending App')
+			//child.stdin.setEncoding('utf-8');
+			//child.stdin.write('\x03')
 		}
 		function start_app(app, port)
 		{
@@ -69,6 +72,7 @@
 				if (first_time) {
 					first_time = false
 					setTimeout(function() { open_browser(port) } , 3500);
+					//setTimeout(function() { endApp() } , 10000);	
 				}
 				/*cont ++
 				if (cont % 200 == 0)
