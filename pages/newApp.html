@@ -56,7 +56,7 @@
 			document.getElementById("list").appendChild(textnode);
 			//node.scrollIntoView()
 		}
-		function create_app(app)
+		function create_app(app, port)
 		{	
 			var spawn = require('child_process').spawn;
 			//var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
@@ -79,6 +79,11 @@
 				{
 					//copy_node_modules()
 					//append_html("Process End with code: "+code)
+					append_html('Setting Application Port...')
+					const remote = require('electron').remote
+					var app_util = remote.require('./app_util.js')
+					app_util.set_port(app, port)
+					
 					append_html('Application Created Succefully on Path ...Generator/Client/Apps/'+app)
 					append_html('For start Server, run node app in above Path')
 					append_html('===')
@@ -122,12 +127,14 @@
 		//Main Logic
 		//console.log('URL: ', window.location.href )
 		var par = window.location.search.substring(1)
-		var vars = par.split("=");
-
+		var regex = /[=&]/
+		var vars = par.split(regex);
+		
 		var app = vars[1]
+		var port = vars[3]
 
 		document.getElementById("app").innerHTML = app
-		create_app(app)
+		create_app(app, port)
 	</script>
 </body>
 </html>
