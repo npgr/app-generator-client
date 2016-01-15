@@ -1,4 +1,4 @@
-<!-- list template: version 6.34 -->
+<!-- list template: version 6.35 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {

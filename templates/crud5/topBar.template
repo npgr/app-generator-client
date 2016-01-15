@@ -1,4 +1,4 @@
-<!-- topBar template: version 1.20 -->
+<!-- topBar template: version 1.21 -->
 
 <dom-module id="top-bar">
 <template>
@@ -86,7 +86,8 @@
 		margin-right: 5px;
 	}
 </style>
-	<div id="menubar" class="hide"><%
+	<div id="menubar" class="hide">
+	  <div on-click="back">Back</div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>
@@ -131,6 +132,9 @@
 <script>
 	Polymer({
 		is: "top-bar",
+		back: function() {
+			window.history.back();
+		},
 		open_user_menu: function() {
 			this.$.dropdown_user.toggle()
 		},
