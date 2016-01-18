@@ -1,14 +1,34 @@
+0) Prerequisites for Generator: Git, Node, sails module (global), nodemon (?) ***
+
+4) Generate Model (1)  -> Model.template, Controller.template
+
+19) Force Capital first letter of Model Name 
+
+13) asar electron app (2)
+
+10) Generate Function (3)
+
+17) include & filter app name on select model
+
+18) Order Attributes by Pos on list
+
+14) detail menu web-component equal to top-bar menu
+
+15) check authorization over page or api (reject).
+
+17) Load i18n file for application
+
+18) Check expiring time for sessions, when close window without end session (logout).
+
+16) When select columns on list, change the filter (error)
+
 1) back: fire event -> event listener -> go url with par
 
-2) Add on menu: settings, config, help/about
+2) Add on menu: settings, config (language, app path), help/about
 
 3) ¿ move menu from page to window (first duplicate) ?
 
-4) Generate Model
-
 11) Edit FunctionList Attributes
-
-10) Generate Function
 
 5) Add option "Tasks" on App
 
@@ -21,3 +41,4 @@
 9) Show Loading message when navigate pages
 
 12) Configure access user / app / role
+
