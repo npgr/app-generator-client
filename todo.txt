@@ -1,0 +1,23 @@
+1) back: fire event -> event listener -> go url with par
+
+2) Add on menu: settings, config, help/about
+
+3) ¿ move menu from page to window (first duplicate) ?
+
+4) Generate Model
+
+11) Edit FunctionList Attributes
+
+10) Generate Function
+
+5) Add option "Tasks" on App
+
+6) protect call pages from browser with key on http request. Configure this key on server & client
+
+7) Show About before Login (set time out)
+
+8) check framebox (design)
+
+9) Show Loading message when navigate pages
+
+12) Configure access user / app / role
