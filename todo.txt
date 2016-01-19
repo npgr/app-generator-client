@@ -6,6 +6,8 @@
 
 10) Generate Function (3)
 
+21) Minify all rest data, for example, Attrs in ModelFunction/list
+
 20) Register Tracking of invocations on server
 
 13) asar electron app (2)
