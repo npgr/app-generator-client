@@ -1,5 +1,5 @@
 var fs = require('fs')
-var jsonic = require('jsonic')
+//var jsonic = require('jsonic')
 var _ = require('lodash')
 
 function getInputType(type) {

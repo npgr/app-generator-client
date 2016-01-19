@@ -1,14 +1,14 @@
 0) Prerequisites for Generator: Git, Node, sails module (global), nodemon (?) ***
 
-4) Generate Model (1)  -> Model.template, Controller.template
+4) Generate Model (1)  -> Casi, listo; solo falta, mantener las funciones - user point
 
-19) Force Capital first letter of Model Name 
+19) Force Capital first letter of Model Name
+
+10) Generate Function (3)
 
 20) Register Tracking of invocations on server
 
 13) asar electron app (2)
-
-10) Generate Function (3)
 
 17) include & filter app name on select model
 

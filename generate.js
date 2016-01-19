@@ -1,5 +1,7 @@
 //console.log(generate_model('newApp03', 'Producto', [{attribute: 'name', type:'string', enum: '', enumdes:''}], 'yy'))
 
+console.log(generate_function())
+
 exports.generate_model = function(app, model, attributes, app_path)
 //function generate_model(app, model, attributes, app_path)
 {
@@ -81,4 +83,13 @@ exports.generate_model = function(app, model, attributes, app_path)
 	return 'Model '+model+' Was Created'
 }
 
-
+//function generate_function()
+exports.generate_function = function(app, model, attributes, options, app_path)
+{
+	var fs = require('fs')
+	var _ = require('lodash')
+	
+	var crud5 = require('./templates/crud5/crud5')
+	
+	crud5.generate(app, model, attributes, options, app_path)
+}
