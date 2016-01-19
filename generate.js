@@ -1,31 +1,38 @@
-console.log(generate_model('newApp03', 'Product', 'xx'))
+//console.log(generate_model('newApp03', 'Producto', 'xx', 'yy'))
 
-function generate_model2(app, model, attributes)
+exports.generate_model = function(app, model, attributes, app_path)
+//function generate_model(app, model, attributes, app_path)
 {
-	return 'YessoooSS, App: '+app+'. Generated Model '+model+' with '+attributes.length+' Attibutes'
-	//return 'Dir: '+ __dirname + 'Apps\\' + app
-}
-
-//exports.generate_model = function(app, model, attributes)
-function generate_model(app, model, attributes)
-{
-	//return generate_model2(app, model, attributes)
-	//return 'Yesso, App: '+app+'. Generated Model '+model+' with '+attributes.length+' Attibutes'
 	var fs = require('fs')
-	var fileName = './apps/'+app+'/api/model/'+model+'.js'
-	if (!fs.existsSync(fileName))
-	{
-		var exec = require('child_process').exec
-						
-		run = exec('sails generate api '+model, {'cwd': __dirname+'Apps\\'+app},
-				function(error, stdout, stderr) {
-					if (error !== null)
-						return 'Error Creating Model:' //+ error;
-					generate_model2(app, model, attributes)
-				})
-	}
-	else 
-		generate_model2(app, model, attributes)	
+	var _ = require('lodash')
+	
+	var fileName = './apps/'+app+'/api/models/'+model+'.js'
+	
+	var MODEL_TEMPLATE = fs.readFileSync('./templates/crud5/model.template', 'utf8');
+	var compiled_Model = _.template(MODEL_TEMPLATE)
+	
+	// Get attributes
+	atrs = JSON.stringify(attributes)
+	// Get options
+	// Get Functions - User Points
+	
+	var model_template = compiled_Model({ 'model': model, 'attributes': '//Attributes', 'options': '//_options' , 'functions': '//functions()'})
+	
+	fs.writeFileSync(fileName, model_template)
+	
+	// controllers
+	
+	var CONTROLLER_TEMPLATE = fs.readFileSync('./templates/crud5/controller.template', 'utf8');
+	var compiled_Controller = _.template(CONTROLLER_TEMPLATE)
+	
+	var controller_template = compiled_Controller({ 'model': model })
+	
+	var fileName = './apps/'+app+'/api/controllers/'+model+'Controller.js'
+	
+	//if (!fs.existsSync(fileName))
+	fs.writeFileSync(fileName, controller_template)	
+	
+	return 'Model '+model+' Was Created'
 }
 
 

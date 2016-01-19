@@ -4,6 +4,8 @@
 
 19) Force Capital first letter of Model Name 
 
+20) Register Tracking of invocations on server
+
 13) asar electron app (2)
 
 10) Generate Function (3)
