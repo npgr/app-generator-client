@@ -6,6 +6,10 @@
 
 10) Generate Function (3)
 
+23) Change all api's from "get" to "post" method (Example on Model Function)
+
+22) Delete "generate" model & functions from Controllers on Server side
+
 21) Minify all rest data, for example, Attrs in ModelFunction/list
 
 20) Register Tracking of invocations on server
