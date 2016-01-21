@@ -1,6 +1,6 @@
 //console.log(generate_model('newApp03', 'Producto', [{attribute: 'name', type:'string', enum: '', enumdes:''}], 'yy'))
 
-console.log(generate_function())
+//console.log(generate_function())
 
 exports.generate_model = function(app, model, attributes, app_path)
 //function generate_model(app, model, attributes, app_path)
