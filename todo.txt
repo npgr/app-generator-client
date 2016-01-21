@@ -4,9 +4,11 @@
 
 19) Force Capital first letter of Model Name
 
-10) Generate Function (3)
+10) *** Generate Function (3)
 
-24) Restrict ModelFunctions & Attributes for one app, restrict select-modelFunction by App
+24) * Restrict ModelFunctions & Attributes for one app, restrict select-modelFunction by App
+
+25) ** Change toJSON on ModelFunction for including FunctionList data  (Test create model - ModelFunction)
 
 23) Change all api's from "get" to "post" method (Example on Model Function)
 
