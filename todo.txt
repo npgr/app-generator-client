@@ -8,11 +8,9 @@
 
 24) * Restrict ModelFunctions & Attributes for one app, restrict select-modelFunction by App
 
-25) ** Change toJSON on ModelFunction for including FunctionList data  (Test create model - ModelFunction)
-
 23) Change all api's from "get" to "post" method (Example on Model Function)
 
-22) Delete "generate" model & functions from Controllers on Server side
+22) **** Delete "generate" model & functions from Controllers on Server side
 
 21) Minify all rest data, for example, Attrs in ModelFunction/list
 

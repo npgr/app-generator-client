@@ -83,13 +83,13 @@ exports.generate_model = function(app, model, attributes, app_path)
 	return 'Model '+model+' Was Created'
 }
 
-//function generate_function()
-exports.generate_function = function(app, model, attributes, options, app_path)
+//function generate_function_list()
+exports.generate_function_list = function(app, model, attributes, options, app_path)
 {
 	var fs = require('fs')
 	var _ = require('lodash')
 	
 	var crud5 = require('./templates/crud5/crud5')
 	
-	crud5.generate(app, model, attributes, options, app_path)
+	crud5.generate_function_list(app, model, attributes, options, app_path)
 }

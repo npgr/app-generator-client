@@ -493,6 +493,86 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 		console.log('Created file '+path)
 	})
 }
+exports.generate_function_list = function(app, model, attrs, options, app_path)
+{
+	jsondata = attrs
+	var keys = Object.keys(attrs)
+	keys.unshift('id')
+	var crud = 'crud6'  // crud5 or crud6
+	
+	// Key
+	/*var key= {}
+	for (k=0; k < keys.length; k++ ) {
+		if (jsondata[keys[k]].primaryKey) {
+			key = jsondata[keys[k]]
+			key.name = keys[k]
+			break
+		}
+	}*/
+	var key = 
+		{
+			description: 'Id',
+			type: "integer",
+			primaryKey: true,
+			autoIncrement: true,
+			unique: true
+		}
+	jsondata.id = key
+	key.name = 'id'
+	
+	// Omit Fields
+	for (k=0; k < keys.length; k++ ) {
+		if (jsondata[keys[k]].omit) {
+			delete jsondata[keys[k]]
+			keys.splice(k, 1)
+		}
+	}
+	// Relations
+	var relation = []
+	var i = 0
+	for (k=0; k < keys.length; k++ ) {
+		if (jsondata[keys[k]].ref_model != 0) {
+			relation[i] = {}
+			relation[i].model = jsondata[keys[k]].ref_model
+			relation[i].description = jsondata[keys[k]].description
+			relation[i].key = jsondata[keys[k]].model_key
+			relation[i].display = jsondata[keys[k]].model_display
+			i++
+		}
+	}
+	// input fields on form
+	set_jsondata_lines(crud, keys)  /*ready pending test */
+	
+	// Models: User, Profile, Resources
+	// Login Form, userController.login, user.controller.validateLogin, policy Authorized
+	// TopBar
+	generate_controller(key, crud) 
+	generate_language(model, keys, jsondata)
+	generate_app_config()
+	generate_app_util()
+	NEW_FORM = ''
+	DISPLAY_FORM = ''
+	DELETE_FORM = ''
+	EDIT_FORM = ''
+	COLUMNS_FORM = ''
+	
+	get_user_points()
+	if (options.list.new == 'e') generate_new_form(keys, key, title, crud)
+	if (options.list.display == 'e') generate_display_form(keys, key, title, crud)
+	if (options.list.delete == 'e') generate_delete_form(keys, key, title, crud)	
+	if (options.list.edit == 'e') generate_edit_form(keys, key, title, crud)
+	
+	if (columns) generate_list_columns(keys, title, crud)
+	
+	SELECT_FORMS = ''
+	for (i=0; i<relation.length; i++)
+		generate_model_select(relation[i].model, relation[i].display, relation[i].key, relation[i].description, crud)
+	
+	generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga)
+	
+	// resume-bar ??
+}
+
 
 exports.generate = function(crud) {
 // ** Crud with Polymer & templates
