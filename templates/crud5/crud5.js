@@ -183,7 +183,7 @@ function set_jsondata_lines(crud, keys) {
 			//end of input field
 			line_r += ' disabled'
 			line_d += ' disabled'
-			if (jsondata[keys[i]].model)
+			if (jsondata[keys[i]].ref_model)
 			{
 				line_c += ' on-click="select_field" readonly'
 				line_u += ' on-click="select_field" readonly'
@@ -493,13 +493,48 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 		console.log('Created file '+path)
 	})
 }
+
 exports.generate_function_list = function(app, model, attrs, options, app_path)
 {
-	jsondata = attrs
+	jsondata = attrs  /* include options */
+	for (i=0; i<jsondata.length; i++)
+	{
+		if (jsondata[i].enum == '') 
+			{ delete jsondata[i].enum; delete jsondata[i].enumdes }
+		if (jsondata[i].model == 0) delete jsondata[i].model
+		if (jsondata[i].maxLength == 0) delete jsondata[i].maxLength
+		if (jsondata[i].min is null) delete jsondata[i].min
+		if (jsondata[i].max is null) delete jsondata[i].max
+		if (jsondata[i].defaultTo == '') delete jsondata[i].defaultTo
+		if (jsondata[i].textarea_cols == 0) 
+			{ delete jsondata[i].textarea_cols; delete jsondata[i].textarea_rows }
+	}
 	var keys = Object.keys(attrs)
 	keys.unshift('id')
 	var crud = 'crud6'  // crud5 or crud6
+	var title = options.model.title
+	var card_width = options.list.card_width
+	var dialog_width = options.list.dialog_width
+	var btn_left = options.list.btn_left
 	
+	var columns = true
+	var print = true
+	var download = true
+	var new_reg = true 
+	var edit = true
+	var delete_reg = true
+	var display = true
+	var ga = false  // Google Analytics
+	
+	if (options.list.columns != 'e') columns = false
+	if (options.list.print != 'e') print = false
+	if (options.list.download != 'e') download = false
+	if (options.list.new != 'e') new_reg = false
+	if (options.list.edit != 'e') edit = false
+	if (options.list.delete != 'e') delete_reg = false
+	if (options.list.display != 'e') display = false
+	if (options.list.ga == 'e') ga = true
+
 	// Key
 	/*var key= {}
 	for (k=0; k < keys.length; k++ ) {
