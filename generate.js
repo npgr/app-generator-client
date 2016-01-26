@@ -8,7 +8,7 @@ exports.generate_model = function(app, model, attributes, app_path)
 	var fs = require('fs')
 	var _ = require('lodash')
 	
-	var fileName = './apps/'+app+'/api/models/'+model+'.js'
+	var fileName = app_path+'/'+app+'/api/models/'+model+'.js'
 	
 	var MODEL_TEMPLATE = fs.readFileSync('./templates/crud5/model.template', 'utf8');
 	var compiled_Model = _.template(MODEL_TEMPLATE)
@@ -75,7 +75,7 @@ exports.generate_model = function(app, model, attributes, app_path)
 	
 	var controller_template = compiled_Controller({ 'model': model })
 	
-	var fileName = './apps/'+app+'/api/controllers/'+model+'Controller.js'
+	var fileName = app_path+'/'+app+'/api/controllers/'+model+'Controller.js'
 	
 	//if (!fs.existsSync(fileName))
 	fs.writeFileSync(fileName, controller_template)	
