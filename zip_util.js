@@ -1,10 +1,8 @@
 var app = process.argv[2]
+var path = process.argv[3]
 
 // check for App
-console.log('Creating App: '+app)
-console.log('Creating App: '+app)
-console.log('')
-console.log('It Takes Between 3 and 4 Minutes. Depending on the speed of this PC')
+console.log('Path: '+path+'\\'+app)
 console.log('')
 
 var AdmZip = require('adm-zip')
@@ -39,7 +37,7 @@ var entries = [
 var i=1
 entries.forEach(function(entry) {
 	console.log('Extracting ('+i+'/40): '+entry)
-	zip.extractEntryTo(entry, "./apps/"+app, /*maintain path*/true, /*overwrite*/false);
+	zip.extractEntryTo(entry, path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 	i++
 })
 
@@ -80,7 +78,7 @@ entries = [
 
 entries.forEach(function(entry) {
 	console.log('Extracting ('+i+'/40): '+entry)
-	zip2.extractEntryTo(entry, "./apps/"+app, /*maintain path*/true, /*overwrite*/false);
+	zip2.extractEntryTo(entry, path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 	i++
 })
 
@@ -91,7 +89,7 @@ delete zip2
 var zip3 = new AdmZip("./templates/sails.zip");
 
 console.log('Extracting ('+i+'/40): node_modules/sails')
-zip3.extractEntryTo('node_modules/sails/', "./apps/"+app, /*maintain path*/true, /*overwrite*/false);
+zip3.extractEntryTo('node_modules/sails/', path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 
 delete zip3 
 

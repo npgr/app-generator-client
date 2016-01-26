@@ -1,6 +1,6 @@
 <html>
 <head>
- <title>Start App</title>
+ <title id='title'>Start App</title>
  <style>
 		html, div {
 			background-color: rgb(30, 30, 30);
@@ -27,6 +27,7 @@
 	<div yellow>> Starting Application 
 		<strong id="app"></strong>
 		<br>
+		<strong id="path"></strong>
 	</div>
 	
 	<div id="list"></div>
@@ -35,7 +36,7 @@
 		cont = 0
 		function append_html(txt)
 		{
-			var node = document.createElement("P");               
+			var node = document.createElement("DIV");               
 			var textnode = document.createTextNode(txt);       
 			node.appendChild(textnode); 
 			document.getElementById("list").appendChild(node);
@@ -54,12 +55,12 @@
 			//child.stdin.setEncoding('utf-8');
 			//child.stdin.write('\x03')
 		}
-		function start_app(app, port)
+		function start_app(app, port, path)
 		{
-			append_html('Executing: .../Apps/'+app+'/node app ()')
+			append_html('Starting:')
 			
 			var spawn = require('child_process').spawn;
-			child = spawn('node',['Apps/'+app+'/app'])
+			child = spawn('node',[path+'/'+app+'/app'])
 			
 			//var exec = require('child_process').exec;
 			//child = exec('nodemon Apps/'+app+'/app')
@@ -88,13 +89,8 @@
 				//console.log('child process terminated due to receipt of signal ' + signal);	
 				if (code == 0)
 				{
-					//copy_node_modules()
 					//append_html("Process End with code: "+code)
-					append_html('Application Created Succefully on Path ...Generator/Client/Apps/'+app)
-					append_html('For start Server, run node app in above Path')
-					append_html('===')
-					append_html('Enjoy your New Application. Find Help on path ...')
-					append_html('Close this Window for Continue')	
+					append_html('Application Ended')
 				}
 				else 
 					append_html("Process End with code: "+code)
@@ -120,36 +116,7 @@
 				}
 			})*/
 		}
-		//Not Used
-		function copy_node_modules() {
-			cont = 0
-			append_html('Intalling Node Modules')
-			var spawn = require('child_process').spawn;
-			var child2 = spawn('cp',['-R', '-v', '../server/node_modules/*', 'apps/app01/node_modules/']);
-			//var execFile = require('child_process').execFile;
-			//var child2 = execFile('npm',['install'], {cwd: 'apps/app01'} );
-	
-			child2.stdout.on('data', function(data) {
-				//append_html(data.toString())
-				cont ++
-				if (cont % 30 == 0)
-				  append_text('* ')	
-			})
-	
-			child2.stderr.on('data', function (data) {
-				append_html('stderr: '+ data.toString())
-			});
-	
-			child2.on('close', function (code, signal) {
-				if (code == 0 || code == 1) 
-				{
-					append_html('Application Created Sunccefully on Path Apps/app01')
-					append_html('For start Server, run node app')
-				}
-				else 
-					append_html('Process End with code: '+ code)
-			})
-		}
+		
 		//Main Logic
 		//console.log('URL: ', window.location.href )
 		var par = window.location.search.substring(1)
@@ -158,10 +125,13 @@
 		
 		var app = vars[1]
 		var port = vars[3]
+		var path = vars[5]
 
+		document.getElementById("title").innerHTML = 'Start App: '+app
 		document.getElementById("app").innerHTML = app
+		document.getElementById("path").innerHTML = 'Path: '+path
 		first_time = true
-		start_app(app, port)
+		start_app(app, port, path)
 	</script>
 </body>
 </html>

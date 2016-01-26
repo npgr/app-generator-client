@@ -26,8 +26,6 @@
 	
 	<div yellow>> Creating Application 
 		<strong id="app"></strong>
-		<span green> (It takes 1 minute...)</span>
-		<br>
 	</div>
 	
 	<div id="list"></div>
@@ -56,11 +54,11 @@
 			document.getElementById("list").appendChild(textnode);
 			//node.scrollIntoView()
 		}
-		function create_app(app, port)
+		function create_app(app, port, path)
 		{	
 			var spawn = require('child_process').spawn;
 			//var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
-			var child = spawn('node', ['zip_util', app]);
+			var child = spawn('node', ['zip_util', app, path]);
 
 			child.stdout.on('data', function(data) {
 				append_html(data.toString())
@@ -82,9 +80,9 @@
 					append_html('Setting Application Port...')
 					const remote = require('electron').remote
 					var app_util = remote.require('./app_util.js')
-					app_util.set_port(app, port)
+					app_util.set_port(app, port, path)
 					
-					append_html('Application Created Succefully on Path ...Generator/Client/Apps/'+app)
+					append_html('Application Created Succefully on Path '+path+'\\'+app)
 					append_html('For start Server, run node app in above Path')
 					append_html('===')
 					append_html('Enjoy your New Application. Find Help on path ...')
@@ -117,7 +115,7 @@
 			child2.on('close', function (code, signal) {
 				if (code == 0 || code == 1) 
 				{
-					append_html('Application Created Sunccefully on Path Apps/app01')
+					append_html('Application Created Sunccefully on Path '+path+'\\'+app)
 					append_html('For start Server, run node app')
 				}
 				else 
@@ -132,9 +130,11 @@
 		
 		var app = vars[1]
 		var port = vars[3]
+		var path = vars[5]
 
 		document.getElementById("app").innerHTML = app
-		create_app(app, port)
+		//document.getElementById("path").innerHTML = 'Path: '+path
+		create_app(app, port, path)
 	</script>
 </body>
 </html>
