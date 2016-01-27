@@ -24,12 +24,12 @@ function getInputType(type) {
 	}
 }
 
-function generate_app_config() {
+function generate_app_config(app_path) {
 	var APP_CONFIG = fs.readFileSync('./templates/crud5/app-config.template', 'utf8');
-	if (!fs.existsSync('assets/components/app-config'))
+	if (!fs.existsSync(app_path+'\\assets\\components\\app-config'))
 	{
-		fs.mkdirSync('assets/components/app-config')
-		fs.writeFile('assets/components/app-config/app-config.js', APP_CONFIG, function (err) {
+		fs.mkdirSync(app_path+'\\assets\\components\\app-config')
+		fs.writeFile(app_path+'\\assets\\components\\app-config\\app-config.js', APP_CONFIG, function (err) {
 			if (err) console.log(err);
 			console.log('Created file assets/components/app-config/app-config.js')
 		})
@@ -37,12 +37,12 @@ function generate_app_config() {
 	else console.log('File assets/components/app-config/app-config.js already exist')
 }
 
-function generate_app_util() {
+function generate_app_util(app_path) {
 	var APP_UTIL = fs.readFileSync('./templates/crud5/app-util.template', 'utf8');
-	if (!fs.existsSync('assets/components/app-util'))
+	if (!fs.existsSync(app_path+'\\assets\\components\\app-util'))
 	{
-		fs.mkdirSync('assets/components/app-util')
-		fs.writeFile('assets/components/app-util/app-util.js', APP_UTIL, function (err) {
+		fs.mkdirSync(app_path+'\\assets\\components\\app-util')
+		fs.writeFile(app_path+'\\assets\\components\\app-util\\app-util.js', APP_UTIL, function (err) {
 			if (err) console.log(err);
 			console.log('Created file assets/components/app-util/app-util.js')
 		})
@@ -50,25 +50,25 @@ function generate_app_util() {
 	else console.log('File assets/components/app-util/app-util.js already exist')
 }
 
-function generate_controller(key, crud) {
+function generate_controller(key, crud, app_path) {
 	var CONTROLLER_TEMPLATE = fs.readFileSync('./templates/crud5/controller.template', 'utf8');
 	var compiled_Controller = _.template(CONTROLLER_TEMPLATE)
 
 	var controller = compiled_Controller({ 'model': model, 'key': key, 'crud': crud})
 				
-	fs.writeFile('templates/crud5/controller.js', controller, function (err) {
+	fs.writeFile(app_path+'\\templates\\crud5\\controller.js', controller, function (err) {
 		if (err) console.log(err);
 		console.log('Created file templates/crud5/controller.js')
 	})
 }
 
-function generate_language(title, keys, jsondata) {
+function generate_language(title, keys, jsondata, app_path) {
 	var LANGUAGE_TEMPLATE = fs.readFileSync('./templates/crud5/language.template', 'utf8');
 	var compiled_Language = _.template(LANGUAGE_TEMPLATE)
 
 	var language = compiled_Language({ 'title': title, 'keys': keys, 'jsondata': jsondata })
 				
-	fs.writeFile('templates/crud5/language.json', language, function (err) {
+	fs.writeFile(app_path+'\\templates\\crud5\\language.json', language, function (err) {
 		if (err) console.log(err);
 		console.log('Created file templates/crud5/language.json')
 	})
@@ -366,7 +366,7 @@ function generate_model_select(model, display, key, description, crud) {
 	//else  console.log('File '+path+' already Exist')
 }
 
-function get_user_points(){
+function get_user_points(app_path){
 	user_point = {
 		'list_style': '<!--USER POINT - List Style-->\n'+
 					  '<!--END USER POINT - List Style-->',
@@ -382,9 +382,9 @@ function get_user_points(){
 						  '//END USER POINT - List Functions'
 	}
 	
-	if (fs.existsSync('./views/'+model+'/list.ejs'))
+	if (fs.existsSync(app_path +'\\views\\'+model+'\\list.ejs'))
 	{
-		var list_file = fs.readFileSync('./views/'+model+'/list.ejs', 'utf8');
+		var list_file = fs.readFileSync(app_path +'\\views\\'+model+'\\list.ejs', 'utf8');
 		
 		var start = list_file.indexOf("<!--USER POINT - List Style-->")
 		var end = list_file.indexOf("<!--END USER POINT - List Style-->")		
@@ -418,7 +418,7 @@ function get_user_points(){
 	}
 }
 
-function generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga) {
+function generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path) {
 	var LIST_TEMPLATE = fs.readFileSync('./templates/crud5/list.template', 'utf8');
 	var compiled_List = _.template(LIST_TEMPLATE)
 	
@@ -479,14 +479,14 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 	
 	// Create Folder if not exist
 	var path = 'assets/'+model
-	if (crud == 'crud6')  path = 'views/'+model
+	if (crud == 'crud6')  path = app_path + '\\views\\'+model
 		
 	if (!fs.existsSync(path))	fs.mkdirSync(path)
 
 	if (crud == 'crud6')
-		path += '/list.ejs'
+		path += '\\list.ejs'
 	  else
-		path += '/list.html'
+		path += '\\list.html'
 
 	fs.writeFile(path, list_template, function (err) {
 		if (err) console.log(err);
@@ -496,6 +496,7 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 
 exports.generate_function_list = function(app, model, attrs, options, app_path)
 {
+	app_path = app_path +'\\'+app
 	jsondata = attrs  /* include options */
 	for (i=0; i<jsondata.length; i++)
 	{
@@ -581,10 +582,10 @@ exports.generate_function_list = function(app, model, attrs, options, app_path)
 	// Models: User, Profile, Resources
 	// Login Form, userController.login, user.controller.validateLogin, policy Authorized
 	// TopBar
-	generate_controller(key, crud) 
-	generate_language(model, keys, jsondata)
-	generate_app_config()
-	generate_app_util()
+	generate_controller(key, crud, app_path) 
+	generate_language(model, keys, jsondata, app_path)
+	generate_app_config(app_path)
+	generate_app_util(app_path)
 	NEW_FORM = ''
 	DISPLAY_FORM = ''
 	DELETE_FORM = ''
@@ -603,7 +604,7 @@ exports.generate_function_list = function(app, model, attrs, options, app_path)
 	for (i=0; i<relation.length; i++)
 		generate_model_select(relation[i].model, relation[i].display, relation[i].key, relation[i].description, crud)
 	
-	generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga)
+	generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path)
 	
 	// resume-bar ??
 }
