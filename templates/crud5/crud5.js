@@ -506,12 +506,12 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 		if (jsondata[i].maxLength == 0) delete jsondata[i].maxLength
 		if (jsondata[i].min is null) delete jsondata[i].min
 		if (jsondata[i].max is null) delete jsondata[i].max
-		if (jsondata[i].defaultTo == '') delete jsondata[i].defaultTo
+		//if (jsondata[i].defaultTo == '') delete jsondata[i].defaultTo
 		if (jsondata[i].textarea_cols == 0) 
 			{ delete jsondata[i].textarea_cols; delete jsondata[i].textarea_rows }
 	}
 	var keys = Object.keys(attrs)
-	keys.unshift('id')
+	keys.unshift('id') // insert at beginning of array
 	var crud = 'crud6'  // crud5 or crud6
 	var title = mfunction.model.title
 	var card_width = mfunction.list.card_width
@@ -582,10 +582,12 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 	// Models: User, Profile, Resources
 	// Login Form, userController.login, user.controller.validateLogin, policy Authorized
 	// TopBar
-	generate_controller(key, crud, app_path) 
-	generate_language(model, keys, jsondata, app_path)
-	generate_app_config(app_path)
-	generate_app_util(app_path)
+	
+	//generate_controller(key, crud, app_path) 
+	//generate_language(model, keys, jsondata, app_path)
+	//generate_app_config(app_path)
+	//generate_app_util(app_path)
+	
 	NEW_FORM = ''
 	DISPLAY_FORM = ''
 	DELETE_FORM = ''
