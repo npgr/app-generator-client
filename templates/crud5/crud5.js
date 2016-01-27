@@ -494,10 +494,10 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 	})
 }
 
-exports.generate_function_list = function(app, model, attrs, options, app_path)
+exports.generate_function_list = function(app, model, attrs, mfunction, app_path)
 {
 	app_path = app_path +'\\'+app
-	jsondata = attrs  /* include options */
+	jsondata = attrs  /* include mfunction */
 	for (i=0; i<jsondata.length; i++)
 	{
 		if (jsondata[i].enum == '') 
@@ -513,10 +513,10 @@ exports.generate_function_list = function(app, model, attrs, options, app_path)
 	var keys = Object.keys(attrs)
 	keys.unshift('id')
 	var crud = 'crud6'  // crud5 or crud6
-	var title = options.model.title
-	var card_width = options.list.card_width
-	var dialog_width = options.list.dialog_width
-	var btn_left = options.list.btn_left
+	var title = mfunction.model.title
+	var card_width = mfunction.list.card_width
+	var dialog_width = mfunction.list.dialog_width
+	var btn_left = mfunction.list.btn_left
 	
 	var columns = true
 	var print = true
@@ -527,14 +527,14 @@ exports.generate_function_list = function(app, model, attrs, options, app_path)
 	var display = true
 	var ga = false  // Google Analytics
 	
-	if (options.list.columns != 'e') columns = false
-	if (options.list.print != 'e') print = false
-	if (options.list.download != 'e') download = false
-	if (options.list.new != 'e') new_reg = false
-	if (options.list.edit != 'e') edit = false
-	if (options.list.delete != 'e') delete_reg = false
-	if (options.list.display != 'e') display = false
-	if (options.list.ga == 'e') ga = true
+	if (mfunction.list.columns != 'e') columns = false
+	if (mfunction.list.print != 'e') print = false
+	if (mfunction.list.download != 'e') download = false
+	if (mfunction.list.new != 'e') new_reg = false
+	if (mfunction.list.edit != 'e') edit = false
+	if (mfunction.list.delete != 'e') delete_reg = false
+	if (mfunction.list.display != 'e') display = false
+	if (mfunction.list.ga == 'e') ga = true
 
 	// Key
 	/*var key= {}
@@ -593,10 +593,10 @@ exports.generate_function_list = function(app, model, attrs, options, app_path)
 	COLUMNS_FORM = ''
 	
 	get_user_points()
-	if (options.list.new == 'e') generate_new_form(keys, key, title, crud)
-	if (options.list.display == 'e') generate_display_form(keys, key, title, crud)
-	if (options.list.delete == 'e') generate_delete_form(keys, key, title, crud)	
-	if (options.list.edit == 'e') generate_edit_form(keys, key, title, crud)
+	if (mfunction.list.new == 'e') generate_new_form(keys, key, title, crud)
+	if (mfunction.list.display == 'e') generate_display_form(keys, key, title, crud)
+	if (mfunction.list.delete == 'e') generate_delete_form(keys, key, title, crud)	
+	if (mfunction.list.edit == 'e') generate_edit_form(keys, key, title, crud)
 	
 	if (columns) generate_list_columns(keys, title, crud)
 	
