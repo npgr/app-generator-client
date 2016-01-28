@@ -1,9 +1,11 @@
-//console.log(generate_model('newApp03', 'Producto', [{attribute: 'name', type:'string', enum: '', enumdes:''}], 'yy'))
+//var fs = require('fs')
+//var jsonic = require('jsonic')
+//var _ = require('lodash')
 
 //console.log(generate_function())
 
-exports.generate_model = function(app, model, attributes, app_path)
 //function generate_model(app, model, attributes, app_path)
+exports.generate_model = function(app, model, attributes, app_path)
 {
 	var fs = require('fs')
 	var _ = require('lodash')
@@ -83,13 +85,13 @@ exports.generate_model = function(app, model, attributes, app_path)
 	return 'Model '+model+' Was Created'
 }
 
-//function generate_function_list()
+//function generate_function_list(app, mfunction, attributes)
 exports.generate_function_list = function(app, mfunction, attributes)
 {
-	var fs = require('fs')
-	var _ = require('lodash')
+	//var fs = require('fs')
+	//var _ = require('lodash')
 	
-	var crud5 = require('./templates/crud5/crud5')
+	var crud5 = require('./templates/crud5/crud5.js')
 	
 	return crud5.generate_function_list(app.name, mfunction.model.name, attributes, mfunction, app.path)
 }

@@ -50,7 +50,7 @@ function generate_app_util(app_path) {
 	else console.log('File assets/components/app-util/app-util.js already exist')
 }
 
-function generate_controller(key, crud, app_path) {
+function generate_controller(model, key, crud, app_path) {
 	var CONTROLLER_TEMPLATE = fs.readFileSync('./templates/crud5/controller.template', 'utf8');
 	var compiled_Controller = _.template(CONTROLLER_TEMPLATE)
 
@@ -209,7 +209,7 @@ function set_jsondata_lines(crud, keys) {
 	}
 }
 
-function generate_new_form(keys, key, title, crud) {
+function generate_new_form(model, keys, key, title, crud) {
 	var NEW_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/new-form.template', 'utf8');
 	var compiled_New_Form = _.template(NEW_FORM_TEMPLATE)
 	// crud = crud6 : Server Side (views/.ejs)) else client side (assets/components/.html)
@@ -234,7 +234,7 @@ function generate_new_form(keys, key, title, crud) {
 	}*/
 }
 
-function generate_display_form(keys, key, title, crud){
+function generate_display_form(model, keys, key, title, crud){
 	var DISPLAY_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/display-form.template', 'utf8');
 	var compiled_Display_Form = _.template(DISPLAY_FORM_TEMPLATE)
 	
@@ -260,7 +260,7 @@ function generate_display_form(keys, key, title, crud){
 	}*/
 }
 
-function generate_delete_form(keys, key, title, crud) {
+function generate_delete_form(model, keys, key, title, crud) {
 	var DELETE_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/delete-form.template', 'utf8');
 	var compiled_Delete_Form = _.template(DELETE_FORM_TEMPLATE)
 	
@@ -285,7 +285,7 @@ function generate_delete_form(keys, key, title, crud) {
 	}*/
 }
 
-function generate_edit_form(keys, key, title, crud) {
+function generate_edit_form(model, keys, key, title, crud) {
 	var EDIT_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/edit-form.template', 'utf8');
 	var compiled_Edit_Form = _.template(EDIT_FORM_TEMPLATE)
 	
@@ -366,7 +366,7 @@ function generate_model_select(model, display, key, description, crud) {
 	//else  console.log('File '+path+' already Exist')
 }
 
-function get_user_points(app_path){
+function get_user_points(model, app_path){
 	user_point = {
 		'list_style': '<!--USER POINT - List Style-->\n'+
 					  '<!--END USER POINT - List Style-->',
@@ -418,7 +418,7 @@ function get_user_points(app_path){
 	}
 }
 
-function generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path) {
+function generate_list_page(model, keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path) {
 	var LIST_TEMPLATE = fs.readFileSync('./templates/crud5/list.template', 'utf8');
 	var compiled_List = _.template(LIST_TEMPLATE)
 	
@@ -495,7 +495,7 @@ function generate_list_page(keys, key, title, crud, card_width, dialog_width, bt
 }
 
 exports.generate_function_list = function(app, model, attrs, mfunction, app_path)
-{
+{	
 	app_path = app_path +'\\'+app
 	jsondata = attrs  /* include mfunction */
 	for (i=0; i<jsondata.length; i++)
@@ -504,8 +504,8 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 			{ delete jsondata[i].enum; delete jsondata[i].enumdes }
 		if (jsondata[i].model == 0) delete jsondata[i].model
 		if (jsondata[i].maxLength == 0) delete jsondata[i].maxLength
-		if (jsondata[i].min is null) delete jsondata[i].min
-		if (jsondata[i].max is null) delete jsondata[i].max
+		if (jsondata[i].min == 0) delete jsondata[i].min
+		if (jsondata[i].max == 0) delete jsondata[i].max
 		//if (jsondata[i].defaultTo == '') delete jsondata[i].defaultTo
 		if (jsondata[i].textarea_cols == 0) 
 			{ delete jsondata[i].textarea_cols; delete jsondata[i].textarea_rows }
@@ -567,12 +567,12 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 	var relation = []
 	var i = 0
 	for (k=0; k < keys.length; k++ ) {
-		if (jsondata[keys[k]].ref_model != 0) {
+		if (typeof jsondata[keys[k]].ref_model !== 'undefined') {
 			relation[i] = {}
-			relation[i].model = jsondata[keys[k]].ref_model
+			relation[i].model = jsondata[keys[k]].ref_model.name
 			relation[i].description = jsondata[keys[k]].description
-			relation[i].key = jsondata[keys[k]].model_key
-			relation[i].display = jsondata[keys[k]].model_display
+			relation[i].key = 'id'
+			relation[i].display = jsondata[keys[k]].ref_model.title
 			i++
 		}
 	}
@@ -583,7 +583,7 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 	// Login Form, userController.login, user.controller.validateLogin, policy Authorized
 	// TopBar
 	
-	//generate_controller(key, crud, app_path) 
+	//generate_controller(model, key, crud, app_path) 
 	//generate_language(model, keys, jsondata, app_path)
 	//generate_app_config(app_path)
 	//generate_app_util(app_path)
@@ -594,123 +594,27 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 	EDIT_FORM = ''
 	COLUMNS_FORM = ''
 	
-	get_user_points()
-	if (mfunction.list.new == 'e') generate_new_form(keys, key, title, crud)
-	if (mfunction.list.display == 'e') generate_display_form(keys, key, title, crud)
-	if (mfunction.list.delete == 'e') generate_delete_form(keys, key, title, crud)	
-	if (mfunction.list.edit == 'e') generate_edit_form(keys, key, title, crud)
-	
-	if (columns) generate_list_columns(keys, title, crud)
+	get_user_points(model, app_path)
+
+	if (mfunction.list.new == 'e') generate_new_form(model, keys, key, title, crud)
+	if (mfunction.list.display == 'e') generate_display_form(model, keys, key, title, crud)
+	if (mfunction.list.delete == 'e') generate_delete_form(model, keys, key, title, crud)	
+	if (mfunction.list.edit == 'e') generate_edit_form(model, keys, key, title, crud)
+
+	//return 'before generate_list_columns'
+	//if (columns) generate_list_columns(keys, title, crud)
 	
 	SELECT_FORMS = ''
+	
+	//return 'before generate_model_select'
 	for (i=0; i<relation.length; i++)
-		generate_model_select(relation[i].model, relation[i].display, relation[i].key, relation[i].description, crud)
+		generate_model_select(model, relation[i].model, relation[i].display, relation[i].key, relation[i].description, crud)
 	
-	generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path)
+	//return 'after generate_model_select'
 	
-	// resume-bar ??
-}
-
-
-exports.generate = function(crud) {
-// ** Crud with Polymer & templates
-	var keys = Object.keys(jsondata)
-	var title = model
-	var card_width = '80em'
-	var dialog_width = '30em'
-	var btn_left = '80px'
-	var columns = true
-	var print = true
-	var download = true
-	var new_reg = true 
-	var edit = true
-	var delete_reg = true
-	var display = true
-	var ga = false  // Google Analytics
+	generate_list_page(model, keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path)
 	
-	if (keys.indexOf('_title') >= 0)  
-		title = jsondata._title
-	if (keys.indexOf('_card_width') >= 0)
-		card_width = jsondata._card_width
-	if (keys.indexOf('_dialog_width') >= 0)
-		dialog_width = jsondata._dialog_width
-	if (keys.indexOf('_btn_left') >= 0)
-		btn_left = jsondata._btn_left
-	if (keys.indexOf('_columns') >= 0 & jsondata._columns == 'disabled')
-		columns = false
-	if (keys.indexOf('_print') >= 0 & jsondata._print == 'disabled')
-		print = false
-	if (keys.indexOf('_download') >= 0 & jsondata._download == 'disabled')
-		download = false
-	if (keys.indexOf('_new') >= 0 & jsondata._new == 'disabled')
-		new_reg = false
-	if (keys.indexOf('_edit') >= 0 & jsondata._edit == 'disabled')
-		edit = false
-	if (keys.indexOf('_delete') >= 0 & jsondata._delete == 'disabled')
-		delete_reg = false
-	if (keys.indexOf('_display') >= 0 & jsondata._display == 'disabled')
-		display = false
-	if (keys.indexOf('_ga') >= 0 & jsondata._ga == 'enabled')
-		ga = true
-	// Key
-	var key= {}
-	for (k=0; k < keys.length; k++ ) {
-		if (jsondata[keys[k]].primaryKey) {
-			key = jsondata[keys[k]]
-			key.name = keys[k]
-			break
-		}
-	}
-	// Omit Fields
-	for (k=0; k < keys.length; k++ ) {
-		if (jsondata[keys[k]].omit) {
-			delete jsondata[keys[k]]
-			keys.splice(k, 1)
-		}
-	}
-	// Relations
-	var relation = []
-	var i = 0
-	for (k=0; k < keys.length; k++ ) {
-		if (jsondata[keys[k]].model) {
-			relation[i] = {}
-			relation[i].model = jsondata[keys[k]].model
-			relation[i].description = jsondata[keys[k]].description
-			relation[i].key = jsondata[keys[k]].key
-			relation[i].display = jsondata[keys[k]].display
-			i++
-		}
-	}
-	// input field on form
-	set_jsondata_lines(crud, keys)
-	
-	// Models: User, Profile, Resources
-	// Login Form, userController.login, user.controller.validateLogin, policy Authorized
-	// TopBar
-	generate_controller(key, crud)
-	generate_language(model, keys, jsondata)
-	generate_app_config()
-	generate_app_util()
-	NEW_FORM = ''
-	DISPLAY_FORM = ''
-	DELETE_FORM = ''
-	EDIT_FORM = ''
-	COLUMNS_FORM = ''
-	
-	get_user_points()
-	if (new_reg) generate_new_form(keys, key, title, crud)
-	if (display) generate_display_form(keys, key, title, crud)
-	if (delete_reg) generate_delete_form(keys, key, title, crud)	
-	if (edit) generate_edit_form(keys, key, title, crud)
-	
-	if (columns) generate_list_columns(keys, title, crud)
-	
-	SELECT_FORMS = ''
-	for (i=0; i<relation.length; i++)
-		generate_model_select(relation[i].model, relation[i].display, relation[i].key, relation[i].description, crud)
-	
-	generate_list_page(keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga)
-	
+	return 'Generated Function List'
 	// resume-bar ??
 }
 
