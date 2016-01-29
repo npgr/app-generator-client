@@ -588,6 +588,7 @@ exports.generate_function_list = function(app, model, attrs, mfunction, app_path
 	//generate_app_config(app_path)
 	//generate_app_util(app_path)
 	
+	
 	NEW_FORM = ''
 	DISPLAY_FORM = ''
 	DELETE_FORM = ''
