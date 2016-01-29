@@ -325,18 +325,22 @@ function generate_edit_form(model, keys, key, title, crud) {
   	}*/
 }
 
-function generate_list_columns(keys, title, crud) {
+
+function generate_list_columns(model, keys, title, crud) 
+{
   var LIST_COLUMNS_TEMPLATE = fs.readFileSync('./templates/crud5/columns-form.template', 'utf8');
   var compiled_List_Columns = _.template(LIST_COLUMNS_TEMPLATE);
 
-  var list_columns = compiled_List_Columns({ title:title, keys:keys, crud: crud });
+  var list_columns = compiled_List_Columns({ model:model, title:title, keys:keys, crud: crud });
 
   list_columns = list_columns.replace(/>%/g, '<%');
   list_columns = list_columns.replace(/%</g, '%>');
 
   // Create Folder if not exist
   //if (crud == 'crud6')
+
   COLUMNS_FORM = list_columns;
+
   /*else {
   		var path = 'assets/components/'+model+'-list-columns'
 
@@ -630,7 +634,7 @@ exports.generate_function_list = function (app, model, attrs, mfunction, app_pat
   if (mfunction.list.edit == 'e') generate_edit_form(model, keys, key, title, crud);
 
   //return 'before generate_list_columns'
-  //if (columns) generate_list_columns(keys, title, crud)
+  if (columns) generate_list_columns(model, keys, title, crud)
 
   SELECT_FORMS = '';
 
