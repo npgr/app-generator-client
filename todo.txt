@@ -8,6 +8,10 @@
 
 24) * Restrict ModelFunctions & Attributes for one app, restrict select-modelFunction by App
 
+26) Define fields to show on attributes/list, When change list columns, do not change filtes on list
+
+27) Delete Model & Function (Delete DB and files)
+
 23) Change all api's from "get" to "post" method (Example on Model Function)
 
 22) **** Delete "generate" model & functions from Controllers on Server side
