@@ -16,6 +16,8 @@
 
 20) Register Tracking of invocations on server
 
+25) jscs style for all js 
+
 13) asar electron app (2)
 
 17) include & filter app name on select model
