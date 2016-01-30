@@ -1,28 +1,30 @@
 0) Prerequisites for Generator: Git, Node, sails module (global), nodemon (?) ***
 
-4) Generate Model (1)  -> Casi, listo; solo falta, mantener las funciones - user point
+13) *** asar electron app (2)
 
-19) Force Capital first letter of Model Name
+1) * Deny access to data, include apps; acording authorization
 
-10) *** Generate Function (3)
+4) * Generate Language
 
-24) * Restrict ModelFunctions & Attributes for one app, restrict select-modelFunction by App
+19) * Force Capital first letter of Model Name
+
+10) * Generate Function (3), Compare with crud6
+
+29) Include User Points for each dialog (edit, new, display, delete)
 
 26) Define fields to show on attributes/list, When change list columns, do not change filtes on list
 
 27) Delete Model & Function (Delete DB and files)
 
-23) Change all api's from "get" to "post" method (Example on Model Function)
+28) error duplicate model-select dom module reference & module
 
-22) **** Delete "generate" model & functions from Controllers on Server side
+23) Change all api's from "get" to "post" method (Example on Model Function)
 
 21) Minify all rest data, for example, Attrs in ModelFunction/list
 
 20) Register Tracking of invocations on server
 
 25) jscs style for all js 
-
-13) asar electron app (2)
 
 17) include & filter app name on select model
 
