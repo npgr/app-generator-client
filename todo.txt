@@ -2,17 +2,19 @@
 
 13) *** asar electron app (2)
 
+29) Include User Points for each dialog (edit, new, display, delete)
+
+31) *** Configure encrypted license for client app: Quantity of generated functions
+
 1) * Deny access to data, include apps; acording authorization
 
 4) * Generate Language
 
 19) * Force Capital first letter of Model Name & replace spaces by underscore
 
-29) Error on repeat new record for all models
+30) Error on repeat new record for all models
 
 10) * Generate Function (3), Compare with crud6
-
-29) Include User Points for each dialog (edit, new, display, delete)
 
 26) Define fields to show on attributes/list, When change list columns, do not change filtes on list
 
