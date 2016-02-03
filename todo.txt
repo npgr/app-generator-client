@@ -6,7 +6,9 @@
 
 4) * Generate Language
 
-19) * Force Capital first letter of Model Name
+19) * Force Capital first letter of Model Name & replace spaces by underscore
+
+29) Error on repeat new record for all models
 
 10) * Generate Function (3), Compare with crud6
 
