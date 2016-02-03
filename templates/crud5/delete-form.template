@@ -7,7 +7,7 @@
 } %>
 <dom-module id="<%= model%>-delete">
 <template>
-	<iron-ajax id="ajax" method='DELETE' handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="DELETE" handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
 	  if (crud == "crud6") { %>
 		<h2 class="card_title">>%= lng("%s %s",lng("Delete"),lng("<%= title%>"))%<</h2><% 

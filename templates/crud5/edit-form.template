@@ -7,7 +7,7 @@
 } %>
 <dom-module id="<%= model%>-edit">
 <template>
-	<iron-ajax id="ajax" method='PUT' handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation"><%
 		for (i=0; i < keys.length; i++) {
 				if (jsondata[keys[i]].model) {%>
