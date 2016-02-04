@@ -4,6 +4,8 @@
 
 29) Include User Points for each dialog (edit, new, display, delete)
 
+30) create a calculated field for generator
+
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
 1) * Deny access to data, include apps; acording authorization

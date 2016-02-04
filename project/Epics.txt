@@ -1,0 +1,23 @@
+1) Protect App - Asar, JS scramber, encrypted license (by models, generations)
+
+2) Team Work: access user -> app/model/functions by user
+
+	2.1) Tasks (incidents, etc)
+	2.2) Agile Methodology (User Stories -> Epics -> features -> Sprints -> versions)
+
+3) Generate diferents technologies: ionic, diferents dbs, angular, etc.
+
+3) Create Bussiness Model Canvas
+
+4) Partnership with providers: Sails.js. Contact Victor, Contact StartUps
+
+4) Book, Training, Support
+
+5) Marketing:
+
+	5.1) Book
+	5.2) Twitter
+	5.3) YouTube channel
+	5.4) Blog
+	5.5) Web Page (scrambler)
+
