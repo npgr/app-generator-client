@@ -8,6 +8,8 @@
 
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
+32) *** No manejar los recursos en session data sino Model (BD).
+
 1) * Deny access to data, include apps; acording authorization
 
 4) * Generate Language
