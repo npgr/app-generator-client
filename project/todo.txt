@@ -1,3 +1,19 @@
+- Profile Resource include "data" attribute, diferenciate data per profile (all o selected)
+
+- implement resource all & select / all for one profile & select for anothers
+
+- When create app, authorize this user for this App on User Resource
+
+- Implement filter for models equal as Apps
+
+- Authorize post & Put Apis
+
+- Replace localDisk by MongoDB (If it is possible)
+
+32) ***** No manejar los recursos en session data sino Model (BD).
+
+-----------------
+
 0) Prerequisites for Generator: Git, Node, sails module (global), nodemon (?) ***
 
 13) *** asar electron app (2)
@@ -8,7 +24,9 @@
 
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
-32) *** No manejar los recursos en session data sino Model (BD).
+
+
+33) Error set all i variables as local (var i=0)
 
 1) * Deny access to data, include apps; acording authorization
 

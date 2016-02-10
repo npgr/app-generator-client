@@ -4,6 +4,34 @@
 
 	2.1) Tasks (incidents, etc)
 	2.2) Agile Methodology (User Stories -> Epics -> features -> Sprints -> versions)
+	
+2) Find Partners: Victor (1 or 2), EEUU:
+
+		- VP - Product Manager
+		
+		- CEO - Bussiness Partner: Find Customers, Sales, validate Model Bussiness (Victor, Martin, Angelist)
+								   Victor: Nanodegree of Steve Blank in Udacity
+		
+		- Back-End Developer: Expert on Node.js, Sails.js (?, EEUU, angellist, Freelance).
+		                      David -> train with videos (30), pull request
+		
+		- Front-End Developer: UX. (Page for sale thye service, electronic Payment)
+
+2) Find Customers: Victor, Manuel, etc. (validate) (Develop Customers)
+
+3) Create Page Suscription (electronic payment) !!!!   (Channel Delivery on Model Canvas)
+ 
+2) Accelerator: Y-Combinetor, etc. Incubator. Angel: Angelist.co 
+	
+30) Create Tutorial for CRUD (youtube, Medium, twitter, yeoman):
+
+	1) Concept -> Product, Person, etc.
+	2) Prerequisites: Node.js, Sails.js, Polymer. (links)
+	2) BackEnd (Sails)
+	2) List
+	3) Forms: Create, display, Edit, Delete
+	4) User, Profiles, Resources, Menu
+	5) Download, Print, 
 
 3) Generate diferents technologies: ionic, diferents dbs, angular, etc.
 
@@ -16,7 +44,7 @@
 5) Marketing:
 
 	5.1) Book
-	5.2) Twitter
+	5.2) Twitter, ¿ Instagram ?
 	5.3) YouTube channel
 	5.4) Blog
 	5.5) Web Page (scrambler)
