@@ -1,30 +1,27 @@
-- Profile Resource include "data" attribute, diferenciate data per profile (all o selected)
+13) *** asar electron app (2)
 
-- implement resource all & select / all for one profile & select for anothers
+31) *** Configure encrypted license for client app: Quantity of generated functions
+
+- reject Autorizations (After load all in DB)
 
 - When create app, authorize this user for this App on User Resource
 
 - Implement filter for models equal as Apps
 
-- Authorize post & Put Apis
-
 - Replace localDisk by MongoDB (If it is possible)
 
-32) ***** No manejar los recursos en session data sino Model (BD).
+- upgrage node v0.12.3 to v4.3.0 (LTS) & upgrade sails.js & upgrade electron (package, asar, etc)
+
+32) ##### No manejar los recursos en session data sino Model (BD). -> Se dejo comentado el uso por DB,
+        No se hizo el cambio porque todos los menus requieren de los recursos (list function)
 
 -----------------
 
 0) Prerequisites for Generator: Git, Node, sails module (global), nodemon (?) ***
 
-13) *** asar electron app (2)
-
 29) Include User Points for each dialog (edit, new, display, delete)
 
 30) create a calculated field for generator
-
-31) *** Configure encrypted license for client app: Quantity of generated functions
-
-
 
 33) Error set all i variables as local (var i=0)
 
