@@ -1,0 +1,74 @@
+<html>
+<head>
+ <title id='title'>Create Model</title>
+ <style>
+		html, div {
+			background-color: rgb(30, 30, 30);
+			color: rgb(240,240,240);
+			font-family: sans-serif;
+			font-size: 15px;
+		}
+		[red] {
+			color: red;
+		}
+		[orange] {
+			color: orange;
+		}
+		[green] {
+			color: green;
+		}
+		[yellow] {
+			color: yellow;
+		}
+	</style>
+</head>
+<body onload="createModel();">
+	
+	<div yellow>> Creating Model 
+		<strong id="model"></strong>
+	</div>
+	
+	<div id="list"></div>
+
+	<script>
+		function append_html(txt)
+		{
+			var node = document.createElement("DIV");               
+			var textnode = document.createTextNode(txt);       
+			node.appendChild(textnode); 
+			document.getElementById("list").appendChild(node);
+			node.scrollIntoView()
+		}
+		function createModel() {
+			var par = window.location.search.substring(1)
+			var regex = /[=&]/
+			var vars = par.split(regex);
+		
+			var model = vars[1]
+			var path = vars[3]
+			
+			var spawn = require('child_process').spawn;
+			child = spawn('./generator/generate.exe',['model', path])
+			
+			child.stdout.on('data', function(data) {
+				append_html(data.toString())
+			});
+			
+			child.stderr.on('data', function (data) {
+				append_html('Message: '+ data.toString())
+				
+			});
+			
+			child.on('close', function (code, signal) {
+				//console.log('child process terminated due to receipt of signal ' + signal);	
+				if (code == 0)
+				{
+					append_html('Close this Window for Continue')	
+				}
+				else 
+					append_html("Process End with code: "+code)
+			});
+		} 
+	</script>
+</body>
+</html>

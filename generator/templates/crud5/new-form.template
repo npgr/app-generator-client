@@ -1,0 +1,132 @@
+<!-- new-form: version 5.10 -->
+<% function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+<dom-module id="<%= model%>-new">
+<template>
+	<iron-ajax id="ajax" handle-as="json" on-response="validate_record" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax2" method="POST" handle-as="json" on-response="record_created" on-error="ajax_error"></iron-ajax>
+	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
+		for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].model) {%>
+		<<%= jsondata[keys[i]].model%>-select id="<%= jsondata[keys[i]].model%>_select_dialog" on-item_selected="set_select_field"></<%= jsondata[keys[i]].model%>-select><%
+		} }
+	  if (crud == "crud6") { %>
+		<h2 class="card_title">>%= lng("%s %s",lng("Create"),lng("<%= title%>"))%<</h2><% 
+	  } else { %>	
+		<h2 class="card_title">Create <%= title%></h2><% 
+	  } %>
+		<paper-dialog-scrollable>
+		  <form id="form" action="javascript:void(0);" on-submit="create">
+			<table class="table_dialog" style="width:100%"><%
+			for (i=0; i < keys.length; i++) { 
+				if (jsondata[keys[i]].line_c) {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>"><%= srv(crud, jsondata[keys[i]].description)%><%
+				if (jsondata[keys[i]].required) {%><strong class="red"> *</strong><%}%></label></td>
+				<td><%if (jsondata[keys[i]].model) {
+				    %><iron-icon icon="find-in-page" field="<%= keys[i]%>" on-click="select_field_b"></iron-icon><%}
+				%><%= jsondata[keys[i]].line_c %></td>
+			</tr><% } }%>
+			</table>
+			<div class="buttons">
+				<input id="submit_btn" class="hide" type="submit" value="CREAR">
+				<div class="card_line">
+					<%= srv(crud, "Repeat ")%><input id="repeat" type="checkbox" name="repeat">
+					<paper-button id="create_btn" class="btn" on-click="submit_form" raised><%= srv(crud, "Create")%></paper-button>
+					<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= srv(crud, "Exit")%></paper-button>
+				</div>
+			</div>
+		  </form>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-new",
+		open_dialog: function() {
+			this.clear()
+			this.$.dialog.open()
+		},
+		clear: function() {<%
+			for (i=0; i < keys.length; i++) { 
+				if (keys[i].substring(0,1) != "_" && !(jsondata[keys[i]].enum) && !(jsondata[keys[i]].defaultsTo)) {%>
+			this.$.<%= keys[i]%>.value = ''<%
+				if (jsondata[keys[i]].model) {
+				   if (jsondata[keys[i]].key_type == "integer") {%>
+			this.$.<%= keys[i]%>.key = 0<% 
+				} else { %>
+			this.$.<%= keys[i]%>.key = ''<%
+			} } } }%>
+		},
+		select_field_b: function(e) {
+			this.$[e.toElement.getAttribute("field")].click()
+		},
+		select_field: function(e) {
+			this.field = e.toElement.id<% 
+			for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].model) {%>
+			if (this.field == "<%= keys[i]%>")
+				this.$.<%= jsondata[keys[i]].model%>_select_dialog.open_select_dialog()<%
+			} }%>
+		},
+		set_select_field: function(e) {
+			this.$[this.field].value = this.$[e.srcElement.id].item.name
+			this.$[this.field].key = this.$[e.srcElement.id].item.key
+		},
+		create: function() {
+			this.$.ajax2.url = config_server() + "<%= model%>"
+			var record = {}<%
+			for (i=0; i < keys.length; i++) { 
+				if ((keys[i].substring(0,1) != "_") && !(jsondata[keys[i]].autoIncrement))  {
+				  if (jsondata[keys[i]].type === "string" || jsondata[keys[i]].type === "date" || jsondata[keys[i]].type === "boolean")  {
+				    if (jsondata[keys[i]].type === "date") {%>
+			if (this.$.<%= keys[i]%>.value)<%  
+			        }  
+					if (!jsondata[keys[i]].model) {%>
+			  record.<%= keys[i]%> = this.$.<%= keys[i]%>.value<%
+					} else { %>
+			record.<%= keys[i]%> = this.$.<%= keys[i]%>.key<%
+				} } else { %>
+			record.<%= keys[i]%> = Number(this.$.<%= keys[i]%>.value)<% 
+			} } }%>			
+			this.$.ajax2.params = record
+			this.$.ajax2.generateRequest()
+		},
+		record_created: function() {
+			alert("Created <%= title%> <%= key.name%>="+this.$.ajax2.lastResponse.<%= key.name%>)
+			// ask for create another one
+			if (!this.$.repeat.checked) {
+				this.$.dialog.close()
+				this.fire('close')
+			} else 
+				this.clear()
+		},
+		submit_form: function() {
+			if (!isNaN(this.$.<%= key.name%>.value))
+			{
+				if (this.$.<%= key.name%>.value > 0)
+				{
+					this.$.ajax.url = config_server() + "<%= model%>/exist/"+this.$.<%= key.name%>.value
+					this.$.ajax.generateRequest()
+				}
+				else this.$.submit_btn.click()
+			} else
+				this.$.submit_btn.click()
+		},
+		validate_record: function() {
+			if (this.$.ajax.lastResponse.exist) 
+				alert("<%= srv(crud, "Record already Exist")%>")
+			else
+				this.$.submit_btn.click()
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
+		}  
+	})
+</script>
+</dom-module>

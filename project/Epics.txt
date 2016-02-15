@@ -1,4 +1,11 @@
-1) Protect App - Asar, JS scramber, encrypted license (by models, generations)
+1) Protect App - Asar, JX, JS scramber, encrypted license (by models, generations)
+		- Compile version of generate: languaje C, java or Phyton
+
+2)	On Server change disk DB for MongoDB
+		
+2)	Generate Movil App
+
+3)	Choose DB for app
 
 2) Team Work: access user -> app/model/functions by user
 
@@ -17,7 +24,10 @@
 		
 		- Front-End Developer: UX. (Page for sale thye service, electronic Payment)
 
-2) Find Customers: Victor, Manuel, etc. (validate) (Develop Customers)
+2) Find Customers: Victor, Manuel, etc. (validate) (Develop Customers) - Value Proposition Canvas
+	Segments:  	- Freemium (non Commercial Apps)
+				- Software developers (Channels)
+				- Enterprise
 
 3) Create Page Suscription (electronic payment) !!!!   (Channel Delivery on Model Canvas)
  

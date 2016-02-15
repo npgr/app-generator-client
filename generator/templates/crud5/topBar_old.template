@@ -1,0 +1,120 @@
+<!-- topBar template: version 1.16 -->
+
+<dom-module id="top-bar">
+<template>
+<style>
+	.topbar1 {
+		position: fixed;
+		top: 0;
+		margin-top: 0;
+		width: 100%;
+		z-index: 1;
+		//background-color: #039BE5;
+		//background-color: #26A69A;
+		background-color: #0097A7; //cyan 700
+		color: white;
+		//height: 40px;
+		font-family: verdana, sans-serif;
+	}
+	.topBar {
+		display: flex;
+		justify-content: space-between;
+		width: 94%;
+		margin-top: 10px;
+		margin-left:3%;
+		z-index: 1;
+		//background-color: #039BE5; blue
+		//background-color: #26A69A; green
+		background-color: #0097A7; 
+		color: white;
+		height: 30px;
+	}
+	.barTitle {
+		margin-top: -3px;
+		font-size: 20px;
+	}
+	.barItem {
+		font-size: 15px;
+	}
+	.dropdown-content {
+		margin-top: 30px;
+		//margin-left: 0px,
+		display: block;
+		position: relative;
+		background-color: #fff;
+		color: black;
+		box-shadow: 0px 2px 6px #ccc;
+		padding: 10px;
+		border-radius: 3px;
+    }
+	.dropdown-item {
+		padding: 5px;
+	}
+	.dropdown-item:not(:last-of-type) {
+		border-bottom: 1px solid #eee;
+	}
+	.top_border {
+		border-top: 1px solid #eee;
+	}
+	.bar_icon {
+		padding: 0;
+	}
+	.inline {
+		display: inline;
+	}
+</style>
+	<div class="topbar1">
+	  <div class="topBar">
+		<div class="barItem" on-click="open_app_menu">
+		  <paper-icon-button class="bar_icon" icon="menu"></paper-icon-button>
+		  <div class="inline dropdown-trigger">Menu</div>
+		  <iron-dropdown id="dropdown_menu"  horizontal-align="left" vertical-align="top">
+			<ul class="dropdown-content" tabindex="0"><%
+		_.forEach(resources, function(n, key) { 
+		  if (n.resource.type == "page") {%>
+			  <li class="dropdown-item" on-click="<%= n.name%>"><%= lng(n.name)%></li><%
+		}})%>
+			  <li class="dropdown-item">Models</li>
+			  <li class="dropdown-item">About</li>
+			</ul>
+		  </iron-dropdown>
+		</div>
+		<div class="barTitle"><content></content></div>
+		<div class="barItem" on-click="open_user_menu">
+		  <paper-icon-button class="bar_icon" icon="account-circle"></paper-icon-button>
+		  <div class="inline dropdown-trigger">>%= user.user%<</div>
+		  <iron-dropdown id="dropdown_user"  horizontal-align="right" vertical-align="top">
+			<ul class="dropdown-content" tabindex="0">
+			  <li class="dropdown-item">Info</li>
+			  <li class="dropdown-item">Change Password</li>
+			  <li class="dropdown-item" on-click="signout">Signout</li>
+			</ul>
+		  </iron-dropdown>
+		</div>
+	  </div>
+	</div>
+</template>
+<script>
+	Polymer({
+		is: "top-bar",
+		ready: function() {
+			//this.user = >%= user.user%< // Name: >%= user.name%<'
+		},
+		open_user_menu: function() {
+			this.$.dropdown_user.toggle()
+		},
+		open_app_menu: function() {
+			this.$.dropdown_menu.toggle()
+		},
+		signout: function() {
+			window.location.assign(config_server() + "signout")
+		}<%
+	_.forEach(resources, function(n, key) { 
+	  if (n.resource.type == "page") {%>
+		,<%= n.name %>: function() {
+			window.location.assign(config_server() + "<%= n.path.substring(1) %>")
+		}<%
+	}})%>
+	})
+</script>
+</dom-module>

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron --enabled-logging app.js",
     "asar": "asar pack App-win32-x64/resources/app App-win32-x64/resources/app.asar",
+	"asar2": "asar pack pages pages.asar",
     "build": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite",
 	"build_old": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite && mv App-win32-x64/resources/app/primas App-win32-x64/primas",
 	"jscs": "jscs generate.js --preset=airbnb --fix",

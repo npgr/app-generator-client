@@ -46,7 +46,7 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		newAppWindow.loadURL('file://'+__dirname+'/pages.asar/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
 		newAppWindow.show();
 	});
 	ipcMain.on('start-app', function(event, arg) {
@@ -57,8 +57,19 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		startAppWindow.loadURL('file://'+__dirname+'/pages.asar/startApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
 		startAppWindow.show();
+	});
+	ipcMain.on('create-model', function(event, arg) {
+		var createModel = new BrowserWindow({
+		width: 360,
+		height: 240,
+		y: 50,
+		show: false
+		//frame: false  //frameless window
+		})
+		createModel.loadURL('file://'+__dirname+'/pages.asar/createModel.html?model='+arg.model+'&path='+arg.path)
+		createModel.show();
 	});
 })
 
