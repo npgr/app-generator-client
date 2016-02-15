@@ -71,6 +71,17 @@ app.on('ready', function() {
 		createModel.loadURL('file://'+__dirname+'/pages.asar/createModel.html?model='+arg.model+'&path='+arg.path)
 		createModel.show();
 	});
+	ipcMain.on('create-mfunction', function(event, arg) {
+		var createMFunc = new BrowserWindow({
+		width: 360,
+		height: 240,
+		y: 50,
+		show: false
+		//frame: false  //frameless window
+		})
+		createMFunc.loadURL('file://'+__dirname+'/pages.asar/createMFunction.html?mfunc='+arg.mfunc+'&path='+arg.path)
+		createMFunc.show();
+	});
 })
 
 app.on('window-all-closed', () => {
