@@ -1,5 +1,7 @@
 13) obfuscate & encrypt files, asar & jx
 
+- Try / Catch with all: JSON.parse, readfile, etc
+
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
 - reject Autorizations (After load all in DB)

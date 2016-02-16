@@ -27,27 +27,17 @@ prompt.start();
 	console.log('result: ', result)
 	
 	var encryptedPassword = encrypt(JSON.stringify(result))
-	var decryptedPassword = decrypt(encryptedPassword)
 	
 	console.log('encrypted :', encryptedPassword);
-	console.log('decrypted :', decryptedPassword);
 	
 	fs = require('fs')
-	fs.writeFile('license.cfg',encryptedPassword,'utf8')
+	fs.writeFile('key',encryptedPassword,'utf8')
   });
   
   function encrypt(text){
   var crypto = require('crypto')
-  var cipher = crypto.createCipher('aes-256-cbc','d6F3Efeq')
+  var cipher = crypto.createCipher('aes-256-cbc','iydc9i376cdp06dcop862dxo%/#OIGC23864LUCD795')
   var crypted = cipher.update(text,'utf8','hex')
   crypted += cipher.final('hex');
   return crypted;
-}
-
-function decrypt(text){
-  var crypto = require('crypto')
-  var decipher = crypto.createDecipher('aes-256-cbc','d6F3Efeq')
-  var dec = decipher.update(text,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
 }
