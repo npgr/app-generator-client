@@ -6,10 +6,10 @@
   "scripts": {
     "start": "electron --enabled-logging app.js",
     "asar": "asar pack App-win32-x64/resources/app App-win32-x64/resources/app.asar",
-	"asar2": "asar pack pages pages.asar",
+    "asar2": "asar pack pages pages.asar",
     "build": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite",
-	"build_old": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite && mv App-win32-x64/resources/app/primas App-win32-x64/primas",
-	"jscs": "jscs generate.js --preset=airbnb --fix",
+    "build_old": "electron-packager . App --platform=win32 --arch=x64 --version=0.35.0 --overwrite && mv App-win32-x64/resources/app/primas App-win32-x64/primas",
+    "jscs": "jscs generate.js --preset=airbnb --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "lodash": "^4.0.0"
+    "lodash": "^4.0.0",
+    "prompt": "^1.0.0"
   }
 }

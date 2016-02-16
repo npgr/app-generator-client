@@ -1,4 +1,4 @@
-13) *** asar electron app (2)
+13) obfuscate & encrypt files, asar & jx
 
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
