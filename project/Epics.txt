@@ -2,6 +2,8 @@
 		- Compile version of generate: languaje C, java or Phyton
 
 2)	On Server change disk DB for MongoDB
+
+3) Create Page Suscription (electronic payment) !!!!   (Channel Delivery on Model Canvas)
 		
 2)	Generate Movil App
 
@@ -12,7 +14,7 @@
 	2.1) Tasks (incidents, etc)
 	2.2) Agile Methodology (User Stories -> Epics -> features -> Sprints -> versions)
 	
-2) Find Partners: Victor (1 or 2), EEUU:
+2) Find Partners: Victor (1 or 2), Sails.js / Polymer, Software Vendors/Software developers EEUU:   
 
 		- VP - Product Manager
 		
@@ -24,12 +26,14 @@
 		
 		- Front-End Developer: UX. (Page for sale thye service, electronic Payment)
 
+2) Legal Protection
+
+2) Open source on Github App Template (Sails-Polymer)		
+		
 2) Find Customers: Victor, Manuel, etc. (validate) (Develop Customers) - Value Proposition Canvas
 	Segments:  	- Freemium (non Commercial Apps)
 				- Software developers (Channels)
 				- Enterprise
-
-3) Create Page Suscription (electronic payment) !!!!   (Channel Delivery on Model Canvas)
  
 2) Accelerator: Y-Combinetor, etc. Incubator. Angel: Angelist.co 
 	
