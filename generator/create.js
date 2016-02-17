@@ -1,4 +1,38 @@
-validate()
+
+	const http = require('http');
+	// get url of server
+  var options2 = {
+	host: 'www.google.com',
+  }
+  var options = {
+    host: '127.0.0.1',
+	hostname: 'localhost',
+	port: 5845,
+	path: '/key',
+	method: 'GET'
+  };
+
+  callback = function(res) {
+   str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  res.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  //the whole response has been recieved, so we just print it out here
+  res.on('end', function () {
+    console.log(str);
+  });
+  }
+  
+  var req = http.request(options, callback);
+  req.end();
+ 
+
+
+
+//validate2()
 
 if (process.argv.length < 3)
 {
@@ -44,6 +78,41 @@ switch (process.argv[1])
 		command_help()
 }
 
+function validate2() {
+
+	console.log('validate2...')
+	const http = require('http');
+	// get url of server
+  var options = {
+	host: 'www.google.com',
+  }
+  var options2 = {
+    host: 'localhost',
+	port: 5845,
+	path: '/key',
+	method: 'GET'
+  };
+
+  callback = function(res) {
+  var str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  res.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  //the whole response has been recieved, so we just print it out here
+  res.on('end', function () {
+    console.log(str);
+  });
+}
+
+var req = http.request(options, callback);
+req.end();
+  //process.exit()
+}
+
+
 function validate() {
 	try {
 		var key_data = require('fs').readFileSync('key','utf8')
@@ -77,6 +146,36 @@ function validate() {
 	   console.log('License Expired')
 	   process.exit()
 	}
+
+	var machine = get_machine()
+	if (machine.cores != key.machine.cores || machine.cpu != key.machine.cpu || 
+	    machine.speed != key.machine.speed || machine.net != key.machine.net ||
+		machine.mac != key.machine.mac || machine.scope_id != key.machine.scope_id) 
+	{
+		console.log('Error MATCH on key')
+		console.log('key machine', key.machine)
+		console.log('machine', machine)
+		process.exit()
+	}
+	
+}
+
+function get_machine() {
+	var os = require('os')
+
+	var cpus = os.cpus()
+	var net = os.networkInterfaces()
+	var keys = Object.keys(net)
+
+	var machine = {
+		cores: cpus.length,
+		cpu: cpus[0].model,
+		speed: cpus[0].speed,
+		net: keys[0],
+		mac: net[keys[0]][0].mac,
+		scope_id: net[keys[0]][0].scopeid	
+	}
+	return machine
 }
 
 function decrypt(text){

@@ -2,6 +2,9 @@
 
 - Try / Catch with all: JSON.parse, readfile, etc
 
+*** Option for moving license from one machine to other and check license online (not put end_license more than 1  month),
+1 month for the first time and after 2 o 3 months  (study this.) 
+
 31) *** Configure encrypted license for client app: Quantity of generated functions
 
 - reject Autorizations (After load all in DB)

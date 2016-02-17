@@ -13,29 +13,88 @@
 
 	2.1) Tasks (incidents, etc)
 	2.2) Agile Methodology (User Stories -> Epics -> features -> Sprints -> versions)
+
+3)  Bussiness Model Canvas
+
+	3.1) Value Proposition
+		
+		¿Support ?, ¿ Training ?, ¿ Consulting ?, ¿ Updates ?, ¿ Project Consulting / developing ?
 	
-2) Find Partners: Victor (1 or 2), Sails.js / Polymer, Software Vendors/Software developers EEUU:   
-
-		- VP - Product Manager
+	3.2) Customer Segments
+	
+		Software Development Companies
+		StartUps
+		Individual Developers (Freemiun - restricted - Non Commercial)
+		Enterprises (Big)
 		
-		- CEO - Bussiness Partner: Find Customers, Sales, validate Model Bussiness (Victor, Martin, Angelist)
-								   Victor: Nanodegree of Steve Blank in Udacity
+	3.3) Channels
+			
+		Channels (develop companies)
+		Web (only for contact)
+	
+	3.4) Customer Relationship
+	
+		¿?
+	
+	3.5) Key Partners
+	
+		Sails.js **
+		Polymer
+		¿ Software Vendors ?
+		¿ Trainning ?
+		¿ Support ?
+		¿ Marketing ?
+		Community ¿? impruving templates
+	
+	3.6) Key Activities  (¿Angelist ?, etc)
+	
+		Market Fit - Customer development
 		
-		- Back-End Developer: Expert on Node.js, Sails.js (?, EEUU, angellist, Freelance).
-		                      David -> train with videos (30), pull request
+		Product Management (VP Product Manager) (Sw Engineer - Me)
+			- Back-End Developer		
+			- Front-End Developer
+			- UX / Graphic Design
+			- Ops (cloud, Continue integration)
+			- Documentation (training & Support)
+		Marketing & Sales (Product Marketing Manager) ¿Separate Marketing & Sales ?  (Martin ?) - by comisions
+			Marketing (Definig Strategy)
+				Social Marketing, etc
+			Sales
+			Pos-Sales Service
+				Suppport
+				Trainning
+		Administrative, Finance, legal, RRHH -> ¿ CEO ?  (MBA - Victor ?)  (Nanodegree of Steve Blank in Udacity)
+			Funding rise (Accelerator, VC, Crowdfunding)
 		
-		- Front-End Developer: UX. (Page for sale thye service, electronic Payment)
-
-2) Legal Protection
-
-2) Open source on Github App Template (Sails-Polymer)		
+	3.7) Key Resources
+	
+		1. Hardware (minimice Data Center with hosting/cloud)
+		2. Software (Development & Productive)
+			- Development
+			- CRM
+			- 
+		3. Internet + Hosting / Cloud (SAAS, PAAS)
+		4. Office & Mobiliario
 		
-2) Find Customers: Victor, Manuel, etc. (validate) (Develop Customers) - Value Proposition Canvas
-	Segments:  	- Freemium (non Commercial Apps)
-				- Software developers (Channels)
-				- Enterprise
- 
-2) Accelerator: Y-Combinetor, etc. Incubator. Angel: Angelist.co 
+	3.8) Cost Estructure
+	
+		3.7.1
+		3.7.2
+		3.7.3
+		3.7.4
+		RRHH
+		Marketing
+		Translates to Customers
+		
+	3.9) Revenue Streams
+	
+		1) License (Include Support(hours) + Upgrades + incident)
+		2) Trainning (for Customers & individuals)
+		3) Support (hours outside the license basic)
+		4) Consulting (Developing, Project Management, Design Phase)
+		
+		
+	
 	
 30) Create Tutorial for CRUD (youtube, Medium, twitter, yeoman):
 
@@ -48,10 +107,6 @@
 	5) Download, Print, 
 
 3) Generate diferents technologies: ionic, diferents dbs, angular, etc.
-
-3) Create Bussiness Model Canvas
-
-4) Partnership with providers: Sails.js. Contact Victor, Contact StartUps
 
 4) Book, Training, Support
 
