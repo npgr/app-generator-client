@@ -1,51 +1,46 @@
 
-	const http = require('http');
-	// get url of server
-  var options2 = {
-	host: 'www.google.com',
-  }
-  var options = {
-    host: '127.0.0.1',
-	hostname: 'localhost',
-	port: 5845,
-	path: '/key',
-	method: 'GET'
-  };
+/** GET Command Line Arguments **/
 
-  callback = function(res) {
-   str = '';
-
-  //another chunk of data has been recieved, so append it to `str`
-  res.on('data', function (chunk) {
-    str += chunk;
-  });
-
-  //the whole response has been recieved, so we just print it out here
-  res.on('end', function () {
-    console.log(str);
-  });
-  }
-  
-  var req = http.request(options, callback);
-  req.end();
- 
-
-
-
-//validate2()
-
-if (process.argv.length < 3)
-{
+  if (process.argv.length < 3)
+  {
 	command_help()
 	process.exit()
-}
+  }
 
-var file_path = process.argv[2]
+  var file_path = process.argv[2]
+
+/** Get License Information **/
+
+const http = require('http'); 
+var options = {
+    host: 'localhost',
+    port: 8787,
+    path: '/key',
+    method: 'POST',
+    //headers: {
+    //    accept: 'application/json'
+    //}
+};
+
+	var request = http.request(options,function(res){
+		res.on('data',function(data){
+			//console.log(data.toString());
+			if (validate_key(data.toString()))
+			    generate()
+		});
+	});
+	
+	request.on('error', function(err) {
+		console.log('Cannot Get License Information')
+	})
+	
+	request.end();
 
 //*** Validate license, crypt file
 
-switch (process.argv[1])
-{
+function generate () {
+  switch (process.argv[1])
+  {
 	case 'model':
 		
 		console.log('Generating Model...')
@@ -76,57 +71,23 @@ switch (process.argv[1])
 	break;
 	default:
 		command_help()
+ }
 }
 
-function validate2() {
-
-	console.log('validate2...')
-	const http = require('http');
-	// get url of server
-  var options = {
-	host: 'www.google.com',
-  }
-  var options2 = {
-    host: 'localhost',
-	port: 5845,
-	path: '/key',
-	method: 'GET'
-  };
-
-  callback = function(res) {
-  var str = '';
-
-  //another chunk of data has been recieved, so append it to `str`
-  res.on('data', function (chunk) {
-    str += chunk;
-  });
-
-  //the whole response has been recieved, so we just print it out here
-  res.on('end', function () {
-    console.log(str);
-  });
-}
-
-var req = http.request(options, callback);
-req.end();
-  //process.exit()
-}
-
-
-function validate() {
-	try {
+function validate_key(key_data) {
+	/*try {
 		var key_data = require('fs').readFileSync('key','utf8')
 	}
 	catch(err) {
 		console.log('Error opening Key File')
 		process.exit()
-	}
+	}*/
 	var key_decrypt = decrypt(key_data)
 	try { 
 		var key = JSON.parse(key_decrypt)
 	} catch(err) {
 		console.log('Key data invalid')
-		process.exit()
+		return false
 	}
 	
 	var today = new Date();
@@ -144,10 +105,13 @@ function validate() {
 	
 	if (today > key.endDate) {
 	   console.log('License Expired')
-	   process.exit()
+	   return false
 	}
+	
+	/** KEY Valid **/
+	return true
 
-	var machine = get_machine()
+	/*var machine = get_machine()
 	if (machine.cores != key.machine.cores || machine.cpu != key.machine.cpu || 
 	    machine.speed != key.machine.speed || machine.net != key.machine.net ||
 		machine.mac != key.machine.mac || machine.scope_id != key.machine.scope_id) 
@@ -156,10 +120,10 @@ function validate() {
 		console.log('key machine', key.machine)
 		console.log('machine', machine)
 		process.exit()
-	}
-	
+	}*/	
 }
 
+/** Not Used **/
 function get_machine() {
 	var os = require('os')
 
@@ -198,5 +162,3 @@ function read_file(file_path) {
 		
 	return fs.readFileSync(file_path, 'utf8')
 }
-
-//fs.writeFileSync('prueba.txt', 'datos', 'utf8')

@@ -98,6 +98,9 @@ prompt.start();
     // 
 	console.log('Command-line input received:');
 	result.machine = machine
+	result.generated_apps = 0
+	result.generated_models = 0
+	result.generated_mfunctions = 0
 	console.log('result: ', result)
 	
 	var encryptedPassword = encrypt(JSON.stringify(result))

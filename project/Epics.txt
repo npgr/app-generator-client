@@ -16,25 +16,56 @@
 
 3)  Bussiness Model Canvas
 
+	(Create FODA and )
+
 	3.1) Value Proposition
 		
 		¿Support ?, ¿ Training ?, ¿ Consulting ?, ¿ Updates ?, ¿ Project Consulting / developing ?
 	
 	3.2) Customer Segments
 	
-		Software Development Companies
+		(create a Class Diagram with inheritance)
+		Companies using Node.js
+		Software Development Companies using Nodejs (or not?)
 		StartUps
-		Individual Developers (Freemiun - restricted - Non Commercial)
+		Individual Developers using Node.js (or not?) (Freemiun - restricted - Non Commercial)
 		Enterprises (Big)
 		
+		Client Arquetype: Developer, Tech Enthusiastic, use Full Stack Javascript (or not). Asist or follow 
+		JS Conferences. May be Read CIO, InfoWorld. Interest on Cloud, Mobile, Big Data, ¿ IoT ?. 
+		Use Nodejs on BackEnd (KEY)
+		
+		Archetypes:  (1) Use Nodejs  (2) Not Use Nodejs
+		
 	3.3) Channels
-			
+		
+		Direct Contact, email
 		Channels (develop companies)
 		Web (only for contact)
 	
 	3.4) Customer Relationship
 	
-		¿?
+		Get: 
+		1) [*** List of Companies using Nodejs, Sailsjs]  #1832  (Entrerprise Nodejs)
+		
+		(Contact direct)
+		2) Create Presentation & Youtube video
+		
+		2) Asist to Entreprise Tech / JS Conferences (Line of production), Blogs on JS Magazines. 
+		[*** Create a list of JS Conferences and JS resources (Magazines, blogs)]
+		- Web Summit (Lisboa - Noviembre 7 al 10)
+		- GO TO Conferences
+		- HTML5DevConf
+		- JSConf
+		(Create a Youtube Channel and upload videos of Conferences)
+		(Take as example: Oracle Day or SAP Presentations)
+		(Future: Be sponsor of Conference)
+		
+		
+		
+		Keep: Technical taller of (sails.js and Polymer) upcoming Technologies. Technical Taller about updates of generator. 
+		
+		Grow: Services, trainning, etc
 	
 	3.5) Key Partners
 	
