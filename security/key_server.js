@@ -11,7 +11,6 @@ process.argv.forEach(function(el, i) {
 })
 
 //console.log('port = ',process.env.PORT)
-console.log('port = ',PORT)
 
 //Create a server
 var server = http.createServer(handleRequest);
@@ -25,7 +24,7 @@ server.listen(PORT, function(){
 function handleRequest(req, res){
 	if (req.method == 'POST')
 	{
-		/**console.log('request for: ', req.url) **/
+		console.log('request for: ', req.url) 
 		var response = ''
 		switch (req.url)
 		{
@@ -33,8 +32,23 @@ function handleRequest(req, res){
 				response = JSON.stringify(key)
 				res.end(response)
 			break;
+			case '/can_generate_app':
+				can_generate_app(res)
+			break;
+			case '/can_generate_model':
+				can_generate_model(res)
+			break;
+			case '/can_generate_mfunction':
+				can_generate_mfunction(res)
+			break;
+			case '/generate_app':
+				generate_app(res)
+			break;
 			case '/generate_model':
 				generate_model(res)
+			break;
+			case '/generate_mfunction':
+				generate_mfunction(res)
 			break;
 		}
 		/**console.log('response: ', response)**/
@@ -45,14 +59,88 @@ function handleRequest(req, res){
 	}
 }
 
+function generate_app(res) {
+	key.generated_apps++
+	
+	//key.generated_apps= 1
+	
+	write_key()
+	
+	var response = {
+		generated_apps: key.generated_apps,
+		remains: key.apps - key.generated_apps		
+	}
+	res.end(JSON.stringify(response))
+}
+
 function generate_model(res) {
 	//if (key.generated_model)
 	//	key.generated_model = 1
 	//else
-		key.generated_model++
+		key.generated_models++
 		
 	write_key()
-	res.end(JSON.stringify(key))
+	
+	var response = {
+		generated_models: key.generated_models,
+		remains: key.models - key.generated_models		
+	}
+	res.end(JSON.stringify(response))
+}
+
+function generate_mfunction(res) {
+	//key.generated_mfunctions = 1
+	key.generated_mfunctions++
+	
+	write_key()
+	
+	var response = {
+		generated_mfunctions: key.generated_mfunctions,
+		remains: key.mfunctions - key.generated_mfunctions		
+	}
+	res.end(JSON.stringify(response))
+}
+
+function can_generate_app(res) {
+	var response = {
+			can: true,
+			generated_apps: key.generated_apps,
+			remains: key.apps - key.generated_apps
+	}
+	
+	/** Missing Check Date **/
+	
+	if (key.apps <= key.generated_apps)	response.can = false 
+			
+	res.end(JSON.stringify(response))
+}
+
+function can_generate_model(res) {
+	var response = {	
+			can: true,
+			generated_models: key.generated_models,
+			remains: key.models - key.generated_models
+	}
+	
+	/** Missing Check Date **/
+	
+	if (key.models <= key.generated_models)	response.can = false
+	
+	res.end(JSON.stringify(response))
+}
+
+function can_generate_mfunction(res) {
+	var response = {	
+			can: true,
+			generated_mfunctions: key.generated_mfunctions,
+			remains: key.mfunctions - key.generated_mfunctions
+	}
+	
+	/** Missing Check Date **/
+	
+	if (key.mfunctions <= key.generated_mfunctions) response.can = false
+	
+	res.end(JSON.stringify(response))
 }
 
 function read_key() {
