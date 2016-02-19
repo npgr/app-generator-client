@@ -81,11 +81,13 @@ function generate_model(res) {
 		
 	write_key()
 	
-	var response = {
+	var response_obj = {
 		generated_models: key.generated_models,
 		remains: key.models - key.generated_models		
 	}
-	res.end(JSON.stringify(response))
+	
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function generate_mfunction(res) {
@@ -94,15 +96,16 @@ function generate_mfunction(res) {
 	
 	write_key()
 	
-	var response = {
+	var response_obj = {
 		generated_mfunctions: key.generated_mfunctions,
 		remains: key.mfunctions - key.generated_mfunctions		
 	}
-	res.end(JSON.stringify(response))
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function can_generate_app(res) {
-	var response = {
+	var response_obj = {
 			can: true,
 			generated_apps: key.generated_apps,
 			remains: key.apps - key.generated_apps
@@ -110,13 +113,14 @@ function can_generate_app(res) {
 	
 	/** Missing Check Date **/
 	
-	if (key.apps <= key.generated_apps)	response.can = false 
+	if (key.apps <= key.generated_apps)	response_obj.can = false 
 			
-	res.end(JSON.stringify(response))
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function can_generate_model(res) {
-	var response = {	
+	var response_obj = {	
 			can: true,
 			generated_models: key.generated_models,
 			remains: key.models - key.generated_models
@@ -124,13 +128,14 @@ function can_generate_model(res) {
 	
 	/** Missing Check Date **/
 	
-	if (key.models <= key.generated_models)	response.can = false
+	if (key.models <= key.generated_models)	response_obj.can = false
 	
-	res.end(JSON.stringify(response))
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function can_generate_mfunction(res) {
-	var response = {	
+	var response_obj = {	
 			can: true,
 			generated_mfunctions: key.generated_mfunctions,
 			remains: key.mfunctions - key.generated_mfunctions
@@ -138,9 +143,10 @@ function can_generate_mfunction(res) {
 	
 	/** Missing Check Date **/
 	
-	if (key.mfunctions <= key.generated_mfunctions) response.can = false
+	if (key.mfunctions <= key.generated_mfunctions) response_obj.can = false
 	
-	res.end(JSON.stringify(response))
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function read_key() {

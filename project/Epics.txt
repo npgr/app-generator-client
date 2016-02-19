@@ -1,7 +1,23 @@
 1) Protect App - Asar, JX, JS scramber, js obfuscator, encrypted license (by models, generations)
 		- Compile version of generate: languaje C, java or Phyton
 
-2)	On Server change disk DB for MongoDB
+2)	On Server change disk DB for levelDB
+
+3) Define Price
+
+4) How to "cobrar"
+
+	- Web: electronic payment, Hosting (Companies with Node js). email, twitter
+	- Direct: Registro Mercantil (Victor), generate invoice
+
+----- Product Ready for Sale -----------
+
+
+2) Get First Customers (Venezuela or outside, Victor ?)
+
+2) Pick an Accelerator
+
+3) Open Source App Template
 
 3) Create Page Suscription (electronic payment) !!!!   (Channel Delivery on Model Canvas)
 		
@@ -29,6 +45,8 @@
 		Software Development Companies using Nodejs (or not?)
 		StartUps
 		Individual Developers using Node.js (or not?) (Freemiun - restricted - Non Commercial)
+		**** Freemium (Check): generate unlimited Apps and Models + generate 3 Model Functions (with limited options?), trial of 30 days (after this delete components). Apply this for all Segments.
+			- Pay per generation
 		Enterprises (Big)
 		
 		Client Arquetype: Developer, Tech Enthusiastic, use Full Stack Javascript (or not). Asist or follow 
@@ -42,6 +60,11 @@
 		Direct Contact, email
 		Channels (develop companies)
 		Web (only for contact)
+		
+		charge:
+            Web: electronic payment
+			Direct: Transfer (electronic payment)
+			!!! How to emit invoices !!! (check web services)
 	
 	3.4) Customer Relationship
 	
@@ -125,7 +148,7 @@
 		4) Consulting (Developing, Project Management, Design Phase)
 		
 		
-	
+------------------------------------------------------------	
 	
 30) Create Tutorial for CRUD (youtube, Medium, twitter, yeoman):
 

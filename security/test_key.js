@@ -36,9 +36,9 @@ var options = {
 	var request = http.request(options,function(res){
 		res.on('data',function(data_stream){
 			var data = data_stream.toString()
-			//var obj = JSON.parse(decrypt(key))
+			var obj = JSON.parse(decrypt(data))
 			//console.log('Key ', key)
-			console.log(JSON.parse(data))
+			console.log(obj)
 			/*switch (option)
 			{
 				case 'key':

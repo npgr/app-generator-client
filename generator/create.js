@@ -10,23 +10,24 @@
   var file_path = process.argv[2]
 
 /** Get License Information **/
-
 const http = require('http'); 
+
 var options = {
     host: 'localhost',
-    port: 8787,
-    path: '/key',
+    port: 9797,
+	path: '/generate_model',
     method: 'POST',
     //headers: {
     //    accept: 'application/json'
     //}
 };
 
-	var request = http.request(options,function(res){
-		res.on('data',function(data){
-			//console.log(data.toString());
-			if (validate_key(data.toString()))
-			    generate()
+var request = http.request(options,function(res){
+		res.on('data',function(data_stream){
+			var data = data_stream.toString()
+			var obj = JSON.parse(decrypt(data))
+
+			console.log(obj)
 		});
 	});
 	
@@ -36,7 +37,7 @@ var options = {
 	
 	request.end();
 
-//*** Validate license, crypt file
+/** Functions **/
 
 function generate () {
   switch (process.argv[1])

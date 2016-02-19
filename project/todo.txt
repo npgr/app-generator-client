@@ -1,5 +1,13 @@
 13) obfuscate & encrypt files, asar & jx
 
+- error on generate_app (is necesary ?, I think not. Models neither, only mfunction) - 
+  ** Freemium: generate unlimited Apps and Models + generate 3 Model Functions (with limited options?)
+  - Pay per generation
+
+- Link from App to a Help Video or help Page  
+
+use https instead of http on key server and key on header, csfr, csr
+
 - Try / Catch with all: JSON.parse, readfile, etc
 
 *** Option for moving license from one machine to other and check license online (not put end_license more than 1  month),
