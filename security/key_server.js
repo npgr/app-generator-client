@@ -6,8 +6,8 @@ var http = require('http');
 
 var PORT = 0
 process.argv.forEach(function(el, i) {
-  var pos = el.indexOf('-port=') 
-  if ( pos > -1) PORT = el.substring(pos+6)
+  var pos = el.indexOf('--port=') 
+  if ( pos > -1) PORT = el.substring(pos+7)
 })
 
 //console.log('port = ',process.env.PORT)
@@ -29,8 +29,8 @@ function handleRequest(req, res){
 		switch (req.url)
 		{
 			case '/key':
-				response = JSON.stringify(key)
-				res.end(response)
+				var response = JSON.stringify(key)
+				res.end(encrypt(response))
 			break;
 			case '/can_generate_app':
 				can_generate_app(res)
@@ -66,11 +66,12 @@ function generate_app(res) {
 	
 	write_key()
 	
-	var response = {
+	var response_obj = {
 		generated_apps: key.generated_apps,
 		remains: key.apps - key.generated_apps		
 	}
-	res.end(JSON.stringify(response))
+	var response = JSON.stringify(response_obj)
+	res.end(encrypt(response))
 }
 
 function generate_model(res) {
@@ -106,7 +107,7 @@ function generate_mfunction(res) {
 
 function can_generate_app(res) {
 	var response_obj = {
-			can: true,
+			generate: true,
 			generated_apps: key.generated_apps,
 			remains: key.apps - key.generated_apps
 	}
@@ -121,7 +122,7 @@ function can_generate_app(res) {
 
 function can_generate_model(res) {
 	var response_obj = {	
-			can: true,
+			generate: true,
 			generated_models: key.generated_models,
 			remains: key.models - key.generated_models
 	}
@@ -136,9 +137,13 @@ function can_generate_model(res) {
 
 function can_generate_mfunction(res) {
 	var response_obj = {	
-			can: true,
-			generated_mfunctions: key.generated_mfunctions,
-			remains: key.mfunctions - key.generated_mfunctions
+		generate: true,
+		generated_mfunctions: key.generated_mfunctions,
+		remains: key.mfunctions - key.generated_mfunctions,
+		ga: key.ga,
+		download: key.download,
+		print: key.print,
+		help: key.help
 	}
 	
 	/** Missing Check Date **/
@@ -151,7 +156,7 @@ function can_generate_mfunction(res) {
 
 function read_key() {
 	
-	var key_encrypt = require('fs').readFileSync('key', 'utf8')
+	var key_encrypt = require('fs').readFileSync('./security/key', 'utf8')
 	
 	return JSON.parse(decrypt(key_encrypt))
 }
