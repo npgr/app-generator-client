@@ -10,17 +10,27 @@
   var file_path = process.argv[2]
 
 /** Get License Information **/
+var data = require('fs').readFileSync('../config.json','utf8')
+
+//console.log('data: ', data)
+
+var data_obj = JSON.parse(data)
+
+var arr = data_obj.url.split(':')
+
 const http = require('http'); 
 
 var options = {
-    host: 'localhost',
-    port: 9797,
-	path: '/generate_model',
+    host: arr[1].substring(2),
+    port: Number(arr[2])+333,
+	path: '/can_generate_model',
     method: 'POST',
     //headers: {
     //    accept: 'application/json'
     //}
 };
+//console.log('Options: ',options)
+//process.exit()
 
 var request = http.request(options,function(res){
 		res.on('data',function(data_stream){
