@@ -7,49 +7,66 @@
 	process.exit()
   }
 
-  var file_path = process.argv[2]
+  generate()
+
+
+/** Functions **/
 
 /** Get License Information **/
-var data = require('fs').readFileSync('../config.json','utf8')
+function can_generate_mfunction() {
+	var obj = key_server('/can_generate_mfunction')
+	
+	if (obj) return obj.generate
+		else return false	
+}
 
-//console.log('data: ', data)
+function generate_mfunction() {
+	var obj = key_server('/generate_mfunction')
+	
+	return true
+}
 
-var data_obj = JSON.parse(data)
+function key_server(option) {
 
-var arr = data_obj.url.split(':')
+	var data = require('fs').readFileSync('../config.json','utf8')
+	var data_obj = JSON.parse(data)
+	var arr = data_obj.url.split(':')
 
-const http = require('http'); 
+	const http = require('http'); 
 
-var options = {
-    host: arr[1].substring(2),
-    port: Number(arr[2])+333,
-	path: '/can_generate_model',
-    method: 'POST',
-    //headers: {
-    //    accept: 'application/json'
-    //}
-};
-//console.log('Options: ',options)
-//process.exit()
+	var options = {
+		host: arr[1].substring(2),
+		port: Number(arr[2])+333,
+		path: option,
+		method: 'POST'
+		//headers: {
+		//    accept: 'application/json'
+		//}
+	}
+	//console.log('Options: ',options)
+	//process.exit()
 
-var request = http.request(options,function(res){
+	var request = http.request(options,function(res){
 		res.on('data',function(data_stream){
 			var data = data_stream.toString()
 			var obj = JSON.parse(decrypt(data))
 
 			console.log(obj)
+			return obj
 		});
 	});
 	
 	request.on('error', function(err) {
 		console.log('Cannot Get License Information')
+		return false
 	})
 	
 	request.end();
-
-/** Functions **/
+}
 
 function generate () {
+	var file_path = process.argv[2]
+
   switch (process.argv[1])
   {
 	case 'model':
@@ -67,6 +84,12 @@ function generate () {
 		console.log(generate.generate_model(data_parsed.app, data_parsed.model, data_parsed.attributes, data_parsed.app_path))
 	break;
 	case 'mfunction':
+		if (!can_generate_mfunction())
+		{
+			console.log('Cannot Generate Model Function')
+			process.exit()
+		}
+		
 		console.log('Generating Model Function...')
 		var data = read_file(file_path)
 		try { 
@@ -79,6 +102,10 @@ function generate () {
 		var generate = require('./generate.js')
 		
 		console.log(generate.generate_function_list(data_parsed.app, data_parsed.mfunction, data_parsed.attrs))
+		
+		/** if generated Function is true **/
+		generate_mfunction()
+		
 	break;
 	default:
 		command_help()
@@ -121,36 +148,6 @@ function validate_key(key_data) {
 	
 	/** KEY Valid **/
 	return true
-
-	/*var machine = get_machine()
-	if (machine.cores != key.machine.cores || machine.cpu != key.machine.cpu || 
-	    machine.speed != key.machine.speed || machine.net != key.machine.net ||
-		machine.mac != key.machine.mac || machine.scope_id != key.machine.scope_id) 
-	{
-		console.log('Error MATCH on key')
-		console.log('key machine', key.machine)
-		console.log('machine', machine)
-		process.exit()
-	}*/	
-}
-
-/** Not Used **/
-function get_machine() {
-	var os = require('os')
-
-	var cpus = os.cpus()
-	var net = os.networkInterfaces()
-	var keys = Object.keys(net)
-
-	var machine = {
-		cores: cpus.length,
-		cpu: cpus[0].model,
-		speed: cpus[0].speed,
-		net: keys[0],
-		mac: net[keys[0]][0].mac,
-		scope_id: net[keys[0]][0].scopeid	
-	}
-	return machine
 }
 
 function decrypt(text){

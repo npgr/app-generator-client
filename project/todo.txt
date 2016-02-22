@@ -3,6 +3,10 @@
 - error on generate_app (is necesary ?, I think not. Models neither, only mfunction) - 
   ** Freemium: generate unlimited Apps and Models + generate 3 Model Functions (with limited options?)
   - Pay per generation
+  
+- if generated function list, then register de function generated on key server
+
+- Validate Server Machine; move license from one machine to other. Download license key from Web page, with information of server (one license by account). Do not allow: replicate server for one account, freeze configuration file
 
 - Link from App to a Help Video or help Page  
 

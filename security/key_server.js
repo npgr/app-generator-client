@@ -183,3 +183,21 @@ function encrypt(text){
 	crypted += cipher.final('hex');
 	return crypted;
 }
+
+function get_machine() {
+	var os = require('os')
+
+	var cpus = os.cpus()
+	var net = os.networkInterfaces()
+	var keys = Object.keys(net)
+
+	var machine = {
+		cores: cpus.length,
+		cpu: cpus[0].model,
+		speed: cpus[0].speed,
+		net: keys[0],
+		mac: net[keys[0]][0].mac,
+		scope_id: net[keys[0]][0].scopeid	
+	}
+	return machine
+}
