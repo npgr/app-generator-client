@@ -165,7 +165,7 @@ function write_key() {
 	
 	var key_encrypt = encrypt(JSON.stringify(key))
 
-	require('fs').writeFileSync('key',key_encrypt, 'utf8')
+	require('fs').writeFileSync('./security/key',key_encrypt, 'utf8')
 }
 
 function decrypt(text){
