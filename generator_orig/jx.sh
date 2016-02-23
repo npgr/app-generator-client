@@ -1,9 +1,20 @@
-rm generate.exe
+rm ../generator/*
 
-mv data.json ../data.json
+cp -r templates/ ../generator/
+cp -r node_modules/ ../generator/
+
+cp create.js ../generator/
+cp generate.js ../generator/
+
+cd ../generator
 
 ../jx package create.js "generate" -native
 
 rm generate.jxp
+rm *.js
+rm -r templates/
+rm -r node_modules/
 
-mv ../data.json data.json
+
+cp ../generator_orig/data.json data.json
+cp ../generator_orig/key key
