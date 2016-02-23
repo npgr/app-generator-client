@@ -13,22 +13,27 @@
 /** Functions **/
 
 /** Get License Information **/
-function can_generate_mfunction() {
-	var obj = key_server('/can_generate_mfunction')
-	
-	if (obj) return obj.generate
-		else return false	
+function can_generate_mfunction(cb) {
+	key_server('/can_generate_mfunction', function(obj) {
+		if (obj) 
+		{
+			console.log('Model Functions Generated: ',obj.generated_mfunctions)
+			console.log('Generations Remained: ', obj.remains)
+			cb(obj.generate)
+		}
+		else cb(false)	
+	})
 }
 
-function generate_mfunction() {
-	var obj = key_server('/generate_mfunction')
-	
-	return true
+function generated_mfunction(cb) {
+	key_server('/generate_mfunction', function(obj) {
+		return true
+	})
 }
 
-function key_server(option) {
+function key_server(option, cb) {
 
-	var data = require('fs').readFileSync('../config.json','utf8')
+	var data = require('fs').readFileSync('./config.json','utf8')
 	var data_obj = JSON.parse(data)
 	var arr = data_obj.url.split(':')
 
@@ -51,14 +56,14 @@ function key_server(option) {
 			var data = data_stream.toString()
 			var obj = JSON.parse(decrypt(data))
 
-			console.log(obj)
-			return obj
+			//console.log(obj)
+			cb(obj)
 		});
 	});
 	
 	request.on('error', function(err) {
 		console.log('Cannot Get License Information')
-		return false
+		cb(false)
 	})
 	
 	request.end();
@@ -84,32 +89,38 @@ function generate () {
 		console.log(generate.generate_model(data_parsed.app, data_parsed.model, data_parsed.attributes, data_parsed.app_path))
 	break;
 	case 'mfunction':
-		if (!can_generate_mfunction())
-		{
-			console.log('Cannot Generate Model Function')
-			process.exit()
-		}
-		
-		console.log('Generating Model Function...')
-		var data = read_file(file_path)
-		try { 
-			var data_parsed = JSON.parse(data) 
-		}
-		catch(err) { 
-			console.log('Error Parsing Data')
-			process.exit()
-		}
-		var generate = require('./generate.js')
-		
-		console.log(generate.generate_function_list(data_parsed.app, data_parsed.mfunction, data_parsed.attrs))
-		
-		/** if generated Function is true **/
-		generate_mfunction()
-		
+		can_generate_mfunction(function(generate) {
+			if (generate)
+				generate_mfunction(file_path)
+			else
+			{
+				console.log('Cannot Generate Model Function')
+				process.exit()
+			}
+		})
 	break;
 	default:
 		command_help()
  }
+}
+
+function generate_mfunction(file_path) {
+	console.log('Generating Model Function...')
+	var data = read_file(file_path)
+	try { 
+		var data_parsed = JSON.parse(data) 
+	}
+	catch(err) { 
+		console.log('Error Parsing Data')
+		process.exit()
+	}
+	var generate = require('./generate.js')
+	
+	//console.log('data_parsed: ', data_parsed)
+	console.log(generate.generate_function_list(data_parsed.app, data_parsed.mfunction, data_parsed.attrs))
+	
+	/** if generated Function is true **/
+	generated_mfunction()
 }
 
 function validate_key(key_data) {

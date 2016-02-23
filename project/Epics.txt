@@ -55,6 +55,10 @@
 		
 		Archetypes:  (1) Use Nodejs  (2) Not Use Nodejs
 		
+		(Victor - Epa (java¿?, AS/400, ERP Open Source ?), 
+		Adriana - .NET
+		Martin - Marketing )
+		
 	3.3) Channels
 		
 		Direct Contact, email

@@ -26,7 +26,7 @@ function getInputType(type) {
 }
 
 function generate_app_config(app_path) {
-  var APP_CONFIG = fs.readFileSync('./templates/crud5/app-config.template', 'utf8');
+  var APP_CONFIG = fs.readFileSync('./generator/templates/crud5/app-config.template', 'utf8');
   if (!fs.existsSync(app_path + '\\assets\\components\\app-config'))
   {
     fs.mkdirSync(app_path + '\\assets\\components\\app-config');
@@ -38,7 +38,7 @@ function generate_app_config(app_path) {
 }
 
 function generate_app_util(app_path) {
-  var APP_UTIL = fs.readFileSync('./templates/crud5/app-util.template', 'utf8');
+  var APP_UTIL = fs.readFileSync('./generator/templates/crud5/app-util.template', 'utf8');
   if (!fs.existsSync(app_path + '\\assets\\components\\app-util'))
   {
     fs.mkdirSync(app_path + '\\assets\\components\\app-util');
@@ -50,7 +50,7 @@ function generate_app_util(app_path) {
 }
 
 function generate_controller(model, key, crud, app_path) {
-  var CONTROLLER_TEMPLATE = fs.readFileSync('./templates/crud5/controller.template', 'utf8');
+  var CONTROLLER_TEMPLATE = fs.readFileSync('./generator/templates/crud5/controller.template', 'utf8');
   var compiled_Controller = _.template(CONTROLLER_TEMPLATE);
 
   var controller = compiled_Controller({ model: model, key: key, crud: crud });
@@ -62,7 +62,7 @@ function generate_controller(model, key, crud, app_path) {
 }
 
 function generate_language(title, keys, jsondata, app_path) {
-  var LANGUAGE_TEMPLATE = fs.readFileSync('./templates/crud5/language.template', 'utf8');
+  var LANGUAGE_TEMPLATE = fs.readFileSync('./generator/templates/crud5/language.template', 'utf8');
   var compiled_Language = _.template(LANGUAGE_TEMPLATE);
 
   var language = compiled_Language({ title: title, keys: keys, jsondata: jsondata });
@@ -220,7 +220,7 @@ function set_jsondata_lines(crud, keys) {
 }
 
 function generate_new_form(model, keys, key, title, crud) {
-  var NEW_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/new-form.template', 'utf8');
+  var NEW_FORM_TEMPLATE = fs.readFileSync('./generator/templates/crud5/new-form.template', 'utf8');
   var compiled_New_Form = _.template(NEW_FORM_TEMPLATE);
 
   // crud = crud6 : Server Side (views/.ejs)) else client side (assets/components/.html)
@@ -247,7 +247,7 @@ function generate_new_form(model, keys, key, title, crud) {
 }
 
 function generate_display_form(model, keys, key, title, crud) {
-  var DISPLAY_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/display-form.template', 'utf8');
+  var DISPLAY_FORM_TEMPLATE = fs.readFileSync('./generator/templates/crud5/display-form.template', 'utf8');
   var compiled_Display_Form = _.template(DISPLAY_FORM_TEMPLATE);
 
   var display_form = compiled_Display_Form({ title:title, model:model, key:key, keys:keys, jsondata:jsondata, crud: crud });
@@ -274,7 +274,7 @@ function generate_display_form(model, keys, key, title, crud) {
 }
 
 function generate_delete_form(model, keys, key, title, crud) {
-  var DELETE_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/delete-form.template', 'utf8');
+  var DELETE_FORM_TEMPLATE = fs.readFileSync('./generator/templates/crud5/delete-form.template', 'utf8');
   var compiled_Delete_Form = _.template(DELETE_FORM_TEMPLATE);
 
   var delete_form = compiled_Delete_Form({ title:title, model:model, key:key, keys:keys, jsondata:jsondata, crud: crud });
@@ -300,7 +300,7 @@ function generate_delete_form(model, keys, key, title, crud) {
 }
 
 function generate_edit_form(model, keys, key, title, crud) {
-  var EDIT_FORM_TEMPLATE = fs.readFileSync('./templates/crud5/edit-form.template', 'utf8');
+  var EDIT_FORM_TEMPLATE = fs.readFileSync('./generator/templates/crud5/edit-form.template', 'utf8');
   var compiled_Edit_Form = _.template(EDIT_FORM_TEMPLATE);
 
   var edit_form = compiled_Edit_Form({ title:title, model:model, key:key, keys:keys, jsondata:jsondata, crud: crud });
@@ -328,7 +328,7 @@ function generate_edit_form(model, keys, key, title, crud) {
 
 function generate_list_columns(model, keys, title, crud) 
 {
-  var LIST_COLUMNS_TEMPLATE = fs.readFileSync('./templates/crud5/columns-form.template', 'utf8');
+  var LIST_COLUMNS_TEMPLATE = fs.readFileSync('./generator/templates/crud5/columns-form.template', 'utf8');
   var compiled_List_Columns = _.template(LIST_COLUMNS_TEMPLATE);
 
   var list_columns = compiled_List_Columns({ model:model, title:title, keys:keys, crud: crud });
@@ -358,7 +358,7 @@ function generate_list_columns(model, keys, title, crud)
 function generate_model_select(model, display, key, description, crud) {
   //if (!fs.existsSync('assets/components/'+model+'-select/'+model+'-select.html'))
   //{
-  var SELECT_MODEL_TEMPLATE = fs.readFileSync('./templates/crud5/select-model.template', 'utf8');
+  var SELECT_MODEL_TEMPLATE = fs.readFileSync('./generator/templates/crud5/select-model.template', 'utf8');
   var compiled_Select_Model = _.template(SELECT_MODEL_TEMPLATE);
 
   var select_model = compiled_Select_Model({ model:model, display:display, key:key, description:description, crud: crud });
@@ -441,7 +441,7 @@ function get_user_points(model, app_path) {
 }
 
 function generate_list_page(model, keys, key, title, crud, card_width, dialog_width, btn_left, columns, download, print, new_reg, edit, delete_reg, display, ga, app_path) {
-  var LIST_TEMPLATE = fs.readFileSync('./templates/crud5/list.template', 'utf8');
+  var LIST_TEMPLATE = fs.readFileSync('./generator/templates/crud5/list.template', 'utf8');
   var compiled_List = _.template(LIST_TEMPLATE);
 
   var first = true;
@@ -489,9 +489,9 @@ function generate_list_page(model, keys, key, title, crud, card_width, dialog_wi
     }
   }
 
-  var IMPORT_FORM = fs.readFileSync('./templates/crud5/import-form.template', 'utf8');
+  var IMPORT_FORM = fs.readFileSync('./generator/templates/crud5/import-form.template', 'utf8');
 
-  var TOPBAR = fs.readFileSync('./templates/crud5/topBar.template', 'utf8');
+  var TOPBAR = fs.readFileSync('./generator/templates/crud5/topBar.template', 'utf8');
 
   var list_template = compiled_List({ title: title, attrs: attrs, model: model, import_form: IMPORT_FORM, topBar: TOPBAR, columns_form: COLUMNS_FORM, new_form: NEW_FORM, display_form: DISPLAY_FORM, edit_form: EDIT_FORM, delete_form: DELETE_FORM, select_forms: SELECT_FORMS, key: key, keys: keys, jsondata: jsondata, crud: crud, card_width: card_width, dialog_width: dialog_width, btn_left: btn_left, columns: columns, download: download, print: print, new_reg: new_reg, edit: edit, delete_reg: delete_reg, display: display, ga: ga, user_point: user_point });
 

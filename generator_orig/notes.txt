@@ -1,0 +1,8 @@
+// Generate client/generator/generate.exe
+
+client/generator_orig>> jx.sh
+
+
+// Test generate.exe
+
+client>> ./generator/generate.exe mfunction ./generator/data.json

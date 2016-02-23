@@ -73,7 +73,7 @@ app.on('ready', function() {
 	});
 	ipcMain.on('create-mfunction', function(event, arg) {
 		var createMFunc = new BrowserWindow({
-		width: 360,
+		width: 650,
 		height: 240,
 		y: 50,
 		show: false
