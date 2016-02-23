@@ -138,6 +138,8 @@ function can_generate_model(res) {
 function can_generate_mfunction(res) {
 	var response_obj = {	
 		generate: true,
+		endDate: key.endDate,
+		today: get_today(),
 		generated_mfunctions: key.generated_mfunctions,
 		remains: key.mfunctions - key.generated_mfunctions,
 		ga: key.ga,
@@ -148,10 +150,21 @@ function can_generate_mfunction(res) {
 	
 	/** Missing Check Date **/
 	
-	if (key.mfunctions <= key.generated_mfunctions) response_obj.can = false
+	if (key.mfunctions <= key.generated_mfunctions) response_obj.generate = false
+	
+	if (key.endDate < key.today) response_obj.generate = false
 	
 	var response = JSON.stringify(response_obj)
 	res.end(encrypt(response))
+}
+
+function get_today() {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	return yyyy + '/' + mm + '/' + dd
 }
 
 function read_key() {

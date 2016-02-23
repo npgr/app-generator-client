@@ -17,4 +17,3 @@ rm -r node_modules/
 
 
 cp ../generator_orig/data.json data.json
-cp ../generator_orig/key key

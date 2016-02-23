@@ -1,8 +1,10 @@
 13) obfuscate & encrypt files, asar & jx
 
 - error on generate_app (is necesary ?, I think not. Models neither, only mfunction) - 
-  ** Freemium: generate unlimited Apps and Models + generate 3 Model Functions (with limited options?)
+  ** Freemium: generate unlimited Apps and Models (track number of generations) + generate n (3, 5?)) Model Functions (with limited options?)
   - Pay per generation
+  
+- log generated functions by user
   
 - Register generated apps & generated models
 
@@ -12,7 +14,7 @@
 
 - remove all console.log or //console.log
   
-- if generated function list, then register de function generated on key server
+- if generated function list, then register de function generated on key server (return true or false)
 
 - Validate Server Machine; move license from one machine to other. Download license key from Web page, with information of server (one license by account). Do not allow: replicate server for one account, freeze configuration file
 
