@@ -12,7 +12,7 @@ exports.generate_model = function (app, model, attributes, app_path)
 
   var fileName = app_path + '/' + app + '/api/models/' + model + '.js';
 
-  var MODEL_TEMPLATE = fs.readFileSync('./templates/crud5/model.template', 'utf8');
+  var MODEL_TEMPLATE = fs.readFileSync('./generator/templates/crud5/model.template', 'utf8');
   var compiled_Model = _.template(MODEL_TEMPLATE);
 
   var model_file = {};
@@ -76,7 +76,7 @@ exports.generate_model = function (app, model, attributes, app_path)
 
   // CONTROLLER
 
-  var CONTROLLER_TEMPLATE = fs.readFileSync('./templates/crud5/controller.template', 'utf8');
+  var CONTROLLER_TEMPLATE = fs.readFileSync('./generator/templates/crud5/controller.template', 'utf8');
   var compiled_Controller = _.template(CONTROLLER_TEMPLATE);
 
   var controller_template = compiled_Controller({ model: model });
