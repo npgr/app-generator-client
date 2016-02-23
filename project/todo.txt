@@ -6,6 +6,8 @@
   
 - Register generated apps & generated models
 
+- Compare list function generated on server & generated on client. after this remove generate & template folder on server
+
 - Rename "User Point" for "Point of Code"  
 
 - remove all console.log or //console.log
