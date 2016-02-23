@@ -1,0 +1,7 @@
+// Generate deploy/ folder
+
+jx.sh
+
+
+/deploy/key_server.exe & key files must be copied to server/security folder
+
