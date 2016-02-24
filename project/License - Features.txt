@@ -1,0 +1,49 @@
+        Licence  Community   Trial  	Professional   Entrprise
+							 (14 days)
+Price Month		   Free		 Free  		¿ 20 ?		¿ ?
+
+Price Year
+		
+features
+--------
+Apps              Unlimited
+
+Models            Unlimited
+
+Model Function	      ?
+(Pages)
+
+Developers		  	1			1			¡?
+
+¿ Servers ?   		¿ ?
+
+Crud Features
+-------------
+List Records    	yes
+
+Filter List    		yes
+
+Select Columns		yes
+
+Order Columns
+
+Create Record
+
+Update Record
+
+Show Record
+
+Delete Record
+
+Print Record
+
+Download Record
+
+
+--------
+Desktop 
+
+Mobil
+
+Responsive
+

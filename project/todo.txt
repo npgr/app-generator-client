@@ -3,6 +3,14 @@
 -** Freemium: generate unlimited Apps and Models (track number of generations) + generate n (3, 5?)) Model Functions (with limited options?)
   - Pay per generation
   
+- Get Date from Web. Sntp server (Do not limit generations ?, only time & features ?)
+
+- upgrage node v0.12.3 to v4.3.0 (LTS)  (listo)
+
+- Limit the number of Users !!!
+
+- upgrade sails.js & upgrade electron (package, asar, etc)
+  
 - Do not allow delete: apps, models & ModelFunctions (only inactivate)
 
 - log generated functions by user
@@ -46,7 +54,7 @@ use https instead of http on key server and key on header, csfr, csr
 
 - Replace localDisk by MongoDB (If it is possible)
 
-- upgrage node v0.12.3 to v4.3.0 (LTS) & upgrade sails.js & upgrade electron (package, asar, etc)
+
 
 32) ##### No manejar los recursos en session data sino Model (BD). -> Se dejo comentado el uso por DB,
         No se hizo el cambio porque todos los menus requieren de los recursos (list function)
