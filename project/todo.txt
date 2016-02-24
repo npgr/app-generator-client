@@ -1,12 +1,13 @@
 13) obfuscate & encrypt files, asar & jx
 
-- error on generate_app (is necesary ?, I think not. Models neither, only mfunction) - 
-  ** Freemium: generate unlimited Apps and Models (track number of generations) + generate n (3, 5?)) Model Functions (with limited options?)
+-** Freemium: generate unlimited Apps and Models (track number of generations) + generate n (3, 5?)) Model Functions (with limited options?)
   - Pay per generation
   
 - log generated functions by user
   
-- Register generated apps & generated models
+- Register (and log) generated apps & generated models. Set end License even for Freemium
+
+- Obfuscate all files from generator. Obfuscate all files from security. ¿ Obfuscate client & server ?
 
 - Compare list function generated on server & generated on client. after this remove generate & template folder on server
 
