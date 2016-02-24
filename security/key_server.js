@@ -136,6 +136,23 @@ function can_generate_model(res) {
 }
 
 function can_generate_mfunction(res) {
+	var machine = get_machine()
+	
+	if ((machine.cores != key.machine.cores) || (machine.cpu != key.machine.cpu) ||
+	    (machine.speed != key.machine.speed) || (machine.net != key.machine.net) ||
+		(machine.mac != key.machine.mac) 	 || (machine.scope_id != key.machine.scope_id)) 
+	{
+		var response_obj =
+			{
+				generate: false,
+				key_machine: key.machine,
+				machine: machine
+			}
+		
+		var response = JSON.stringify(response_obj)
+		res.end(encrypt(response))
+	} 
+	
 	var response_obj = {	
 		generate: true,
 		endDate: key.endDate,

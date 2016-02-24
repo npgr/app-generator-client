@@ -1,6 +1,12 @@
 1) Protect App - Asar, JX, JS scramber, js obfuscator, encrypted license (by models, generations)
 		- Compile version of generate: languaje C, java or Phyton
 		
+architectures:  
+
+	- on premise with local key (developed) - weak security
+	- on premise with web validation key - Recomended
+	- Server on cloud & client - (to heavy)
+		
 2)	On Server change disk DB for levelDB
 
 2) Divide on 4 repositories: server, client, generator & security(license)
@@ -12,12 +18,11 @@
 	- Web: electronic payment, Hosting (Companies with Node js). email, twitter
 	- Direct: Registro Mercantil (Victor), generate invoice
 	
-5) Landing Page
+5) Landing Page, publish app (for download), validate/update key, receive payments
 
 ----- Product Ready for Sale -----------
 
-
-2) Get First Customers (Venezuela or outside, Victor ?): Victor, Adriana, Martin, Startups, Madrid
+2) Get First Customers (Venezuela or outside, Victor ?): Victor, Adriana, Martin, Startups, Madrid, npm users
 
 2) Pick an Accelerator
 
@@ -68,6 +73,8 @@
 		Direct Contact, email
 		Channels (develop companies)
 		Web (only for contact)
+		
+		npm
 		
 		charge:
             Web: electronic payment

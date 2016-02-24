@@ -3,7 +3,15 @@
 -** Freemium: generate unlimited Apps and Models (track number of generations) + generate n (3, 5?)) Model Functions (with limited options?)
   - Pay per generation
   
+- Do not allow delete: apps, models & ModelFunctions (only inactivate)
+
 - log generated functions by user
+  
+- Check machine (move key to another machine) and date
+  
+- Update key by web (with payment). Web for validate/upgrade key. Option for upgrate key on system
+
+- test case: save key (manipuled key)
   
 - Register (and log) generated apps & generated models. Set end License even for Freemium
 
