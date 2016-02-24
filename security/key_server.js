@@ -169,7 +169,7 @@ function get_today() {
 
 function read_key() {
 	
-	var key_encrypt = require('fs').readFileSync('./security/key', 'utf8')
+	var key_encrypt = require('fs').readFileSync('./license/key', 'utf8')
 	
 	return JSON.parse(decrypt(key_encrypt))
 }
@@ -178,7 +178,7 @@ function write_key() {
 	
 	var key_encrypt = encrypt(JSON.stringify(key))
 
-	require('fs').writeFileSync('./security/key',key_encrypt, 'utf8')
+	require('fs').writeFileSync('./license/key',key_encrypt, 'utf8')
 }
 
 function decrypt(text){

@@ -12,3 +12,9 @@ rm key_server.jxp
 rm key_server.js
 
 cp ../key key
+
+# MOVE Deploy Objects to server 
+
+#cp key ../../../server/license/key  #not tested
+
+cp key_server.exe ../../../server/api/services/service1.exe

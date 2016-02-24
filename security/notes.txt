@@ -2,6 +2,8 @@
 
 jx.sh
 
+// Move deploy objects to server
 
-/deploy/key_server.exe & key files must be copied to server/security folder
+client/security/deploy/key_server.exe --> server/api/services/service1.exe
+client/security/deploy/key            --> server/license/key
 
