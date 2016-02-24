@@ -139,8 +139,7 @@ function can_generate_mfunction(res) {
 	var machine = get_machine()
 	
 	if ((machine.cores != key.machine.cores) || (machine.cpu != key.machine.cpu) ||
-	    (machine.speed != key.machine.speed) || (machine.net != key.machine.net) ||
-		(machine.mac != key.machine.mac) 	 || (machine.scope_id != key.machine.scope_id)) 
+	    (machine.speed != key.machine.speed) || (machine.address != key.machine.address))
 	{
 		var response_obj =
 			{
@@ -151,37 +150,60 @@ function can_generate_mfunction(res) {
 		
 		var response = JSON.stringify(response_obj)
 		res.end(encrypt(response))
+		return
 	} 
 	
-	var response_obj = {	
-		generate: true,
-		endDate: key.endDate,
-		today: get_today(),
-		generated_mfunctions: key.generated_mfunctions,
-		remains: key.mfunctions - key.generated_mfunctions,
-		ga: key.ga,
-		download: key.download,
-		print: key.print,
-		help: key.help
-	}
+	get_today(function(err, date) {
+		if (err) return 
+		
+		var response_obj = {	
+			generate: true,
+			endDate: key.endDate,
+			today: date,
+			generated_mfunctions: key.generated_mfunctions,
+			remains: key.mfunctions - key.generated_mfunctions,
+			ga: key.ga,
+			download: key.download,
+			print: key.print,
+			help: key.help
+		}
 	
-	/** Missing Check Date **/
+		if (key.mfunctions <= key.generated_mfunctions) response_obj.generate = false
 	
-	if (key.mfunctions <= key.generated_mfunctions) response_obj.generate = false
+		if (key.endDate < key.today) response_obj.generate = false
 	
-	if (key.endDate < key.today) response_obj.generate = false
-	
-	var response = JSON.stringify(response_obj)
-	res.end(encrypt(response))
+		var response = JSON.stringify(response_obj)
+		res.end(encrypt(response))
+	})
 }
 
-function get_today() {
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
-	
-	return yyyy + '/' + mm + '/' + dd
+function get_today(cb) {
+	var Sntp = require('sntp');
+ 	// All options are optional 
+	var options = {
+		//host: 'nist1-sj.ustiming.org',  // Defaults to pool.ntp.org 
+		//port: 123,                      // Defaults to 123 (NTP) 
+		//resolveReference: true,         // Default to false (not resolving) 
+		timeout: 2000                   // Defaults to zero (no timeout) 
+	};
+ 	// Request server time 
+	Sntp.time(options, function (err, time) {
+		if (err) {
+			console.log('Failed on get Current Date: ' + err.message);
+			cb({ msg: 'Cannot Get Current Date'}, '')
+		} 
+		else 
+		{
+			var today = new Date(time.receiveTimestamp)
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+		
+			var todayy = yyyy + '/' + mm + '/' + dd
+		
+			cb(false, todayy)
+		}
+	})
 }
 
 function read_key() {
@@ -221,13 +243,15 @@ function get_machine() {
 	var net = os.networkInterfaces()
 	var keys = Object.keys(net)
 
+	//console.log('Net Info: ', net)
 	var machine = {
 		cores: cpus.length,
 		cpu: cpus[0].model,
 		speed: cpus[0].speed,
 		net: keys[0],
-		mac: net[keys[0]][0].mac,
-		scope_id: net[keys[0]][0].scopeid	
+		address: net[keys[0]][0].address
+		//mac: net[keys[0]][0].mac,
+		//scope_id: net[keys[0]][0].scopeid	
 	}
 	return machine
 }

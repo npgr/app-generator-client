@@ -124,8 +124,9 @@ prompt.start();
 		cpu: cpus[0].model,
 		speed: cpus[0].speed,
 		net: keys[0],
-		mac: net[keys[0]][0].mac,
-		scope_id: net[keys[0]][0].scopeid	
+		address: net[keys[0]][0].address
+		//mac: net[keys[0]][0].mac,
+		//scope_id: net[keys[0]][0].scopeid	
 	}
 	return machine
   }
