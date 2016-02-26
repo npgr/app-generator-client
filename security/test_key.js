@@ -50,6 +50,7 @@ var options = {
 	
 	request.on('error', function(err) {
 		console.log('Cannot Get License Information')
+		console.log('Error: ', err)
 	})
 	
 	request.end();

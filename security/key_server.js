@@ -137,7 +137,7 @@ function can_generate_model(res) {
 
 function can_generate_mfunction(res) {
 	var machine = get_machine()
-	
+
 	if ((machine.cores != key.machine.cores) || (machine.cpu != key.machine.cpu) ||
 	    (machine.speed != key.machine.speed) || (machine.address != key.machine.address))
 	{
@@ -152,10 +152,17 @@ function can_generate_mfunction(res) {
 		res.end(encrypt(response))
 		return
 	} 
-	
+
 	get_today(function(err, date) {
-		if (err) return 
-		
+		if (err) {
+			console.log('Error Getting Date')
+			
+			var response_err = { msg: 'error'}
+			var resp_err = JSON.stringify(response_err)
+			res.end(encrypt(resp_err))
+			return
+		}
+
 		var response_obj = {	
 			generate: true,
 			endDate: key.endDate,
@@ -186,11 +193,12 @@ function get_today(cb) {
 		//resolveReference: true,         // Default to false (not resolving) 
 		timeout: 2000                   // Defaults to zero (no timeout) 
 	};
- 	// Request server time 
+ 	// Request server time
+	
 	Sntp.time(options, function (err, time) {
 		if (err) {
 			console.log('Failed on get Current Date: ' + err.message);
-			cb({ msg: 'Cannot Get Current Date'}, '')
+			cb(true, { msg: 'Cannot Get Current Date'}, '')
 		} 
 		else 
 		{

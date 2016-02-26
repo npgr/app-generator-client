@@ -1,8 +1,10 @@
 #!/bin/sh
 
-rm deploy/*
+rm -r deploy/*
 
 cp key_server.js deploy/
+mkdir deploy/node_modules/
+cp -r node_modules/sntp deploy/node_modules/sntp
 
 cd deploy/
 
@@ -10,8 +12,10 @@ cd deploy/
 
 rm key_server.jxp
 rm key_server.js
+rm -r node_modules
 
-cp ../key key
+mkdir license
+cp ../license/key license/key
 
 # MOVE Deploy Objects to server 
 
