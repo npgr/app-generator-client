@@ -68,6 +68,8 @@ architectures:
 		Adriana - .NET
 		Martin - Marketing )
 		
+		Multi-sided markets (user <> payer), selling to payer not the user
+		
 	3.3) Channels
 		
 		Direct Contact, email
