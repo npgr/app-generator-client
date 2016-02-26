@@ -23,6 +23,16 @@ prompt.start();
       required: true,
 	  message: 'Value Required',
     }, {
+	description: 'Users',
+      name: 'users',
+	  type: 'integer',
+	  required: true,
+      conform: function (value) {
+        if (value <= 0) return false
+	   return true;
+      },
+	  message: 'Value must be Greater Than cero'
+    }, {
 	description: 'Apps',
       name: 'apps',
 	  type: 'integer',

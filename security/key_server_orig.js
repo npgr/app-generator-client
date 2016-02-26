@@ -4,7 +4,7 @@ key = read_key()
 //Lets require/import the HTTP module
 var http = require('http');
 
-var PORT = 0
+PORT = 0
 process.argv.forEach(function(el, i) {
   var pos = el.indexOf('--port=') 
   if ( pos > -1) PORT = el.substring(pos+7)
@@ -162,9 +162,9 @@ function can_generate_mfunction(res) {
 			res.end(encrypt(resp_err))
 			return
 		}
-
 		var response_obj = {	
 			generate: true,
+			licensed_users: key.users,
 			endDate: key.endDate,
 			today: date,
 			generated_mfunctions: key.generated_mfunctions,
@@ -175,13 +175,73 @@ function can_generate_mfunction(res) {
 			help: key.help
 		}
 	
-		if (key.mfunctions <= key.generated_mfunctions) response_obj.generate = false
+		if (key.mfunctions <= key.generated_mfunctions) {
+			response_obj.generate = false
+			response_obj.msg = 'Exceded Number of Generated Model Functions Licensed'
+		}
 	
-		if (key.endDate < key.today) response_obj.generate = false
-	
-		var response = JSON.stringify(response_obj)
-		res.end(encrypt(response))
+		if (key.endDate < key.today) {
+			response_obj.generate = false
+			response_obj.msg = 'License Date Expired'
+		}
+		
+		if (!response_obj.generate)
+		{
+			var response = JSON.stringify(response_obj)
+			res.end(encrypt(response))
+			return
+		}
+
+		/** Validate Number of Users Licensed **/ 
+		get_users(function(err, users) {
+			response_obj.created_users = users
+			
+			if (users > key.users) {
+				response_obj.generate = false
+				response_obj.msg = 'Exceded Number of Users Licensed'
+			}
+			
+			var response = JSON.stringify(response_obj)
+			res.end(encrypt(response))
+		})
 	})
+}
+
+function get_users(cb) {
+	const http = require('http'); 
+	var options = {
+		host: 'localhost',
+		port: PORT - 333,
+		path: '/User',
+		method: 'GET',
+		headers: {
+		//    accept: 'application/json'
+			my_key: 'abc'
+		}
+	};
+	
+	var request = http.request(options,function(res){
+		data = ''
+		res.on('data',function(data_stream){
+			data += data_stream.toString()
+			//console.log('data: ', data)
+		});
+		res.on('end', function() {
+			var data_obj = JSON.parse(data)
+			//console.log('data final: ', data)
+			//cb(false, data_obj.length)
+			cb(false, data_obj.length)
+		})
+	});
+	
+	request.on('error', function(err) {
+		console.log('Cannot Get License Information')
+		console.log('Error: ', err)
+	})
+	
+	request.end();
+	
+	//cb(false, 3)
 }
 
 function get_today(cb) {
@@ -207,6 +267,9 @@ function get_today(cb) {
 			var mm = today.getMonth()+1; //January is 0!
 			var yyyy = today.getFullYear();
 		
+			if (dd < 10) dd = '0' + dd
+			if (mm < 10) mm = '0' + mm
+			
 			var todayy = yyyy + '/' + mm + '/' + dd
 		
 			cb(false, todayy)

@@ -1,13 +1,19 @@
 1) Protect App - Asar, JX, JS scramber, js obfuscator, encrypted license (by models, generations)
 		- Compile version of generate: languaje C, java or Phyton
 		
+2) Improve generator 
+		
 architectures:  
 
 	- on premise with local key (developed) - weak security
 	- on premise with web validation key - Recomended 
 	- Server on cloud & client - (to heavy)
-		
+
+
+	
 2)	On Server change disk DB for levelDB
+
+
 
 2) Divide on 4 repositories: server, client, generator & security(license)
 

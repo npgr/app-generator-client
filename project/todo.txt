@@ -7,9 +7,11 @@
 
 - upgrage node v0.12.3 to v4.3.0 (LTS)  (listo)
 
-- Limit the number of Users !!!
+- Limit the number of Users !!! 
 
 - validate digits of date  2016/02/01 vs 2016/2/1 (allways include 0 for d/m < 10), on encrypt and get_date from server
+
+- create an installer
 
 - upgrade sails.js & upgrade electron (package, asar, etc)
   
@@ -25,7 +27,7 @@
   
 - Register (and log) generated apps & generated models. Set end License even for Freemium
 
-- Obfuscate all files from generator. Obfuscate all files from security. ¿ Obfuscate client & server ?
+- Obfuscate all files from generator & security. Obfuscate all files from security. ¿ Obfuscate client & server ?
 
 - Compare list function generated on server & generated on client. after this remove generate & template folder on server
 
