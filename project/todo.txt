@@ -7,11 +7,19 @@
 
 - upgrage node v0.12.3 to v4.3.0 (LTS)  (listo)
 
-- Limit the number of Users !!! 
+- Limit the number of Users !!! (Listo)
+
+- move database to nedb. Program to migrate Db from disk to Nedb
+
+- review generated functions on cliente vs server generated with command line, after this delete crud5, string template, jsonic, winston on server
+
+- create an installer (prereqisite Nodejs), Install Server & Client (limit instalations), Move Client from machine
+
+- Create a Tutorial Video / and Documentation
+
+- Create Landing Page
 
 - validate digits of date  2016/02/01 vs 2016/2/1 (allways include 0 for d/m < 10), on encrypt and get_date from server
-
-- create an installer
 
 - upgrade sails.js & upgrade electron (package, asar, etc)
   
