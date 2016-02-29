@@ -45,6 +45,8 @@ architectures:
 	2.1) Tasks (incidents, etc)
 	2.2) Agile Methodology (User Stories -> Epics -> features -> Sprints -> versions)
 
+) Plan de Cuentas; costos
+	
 3)  Bussiness Model Canvas
 
 	(Create FODA and )
@@ -52,6 +54,8 @@ architectures:
 	3.1) Value Proposition
 		
 		¿Support ?, ¿ Training ?, ¿ Consulting ?, ¿ Updates ?, ¿ Project Consulting / developing ?
+		
+		App Market (like Box)
 	
 	3.2) Customer Segments
 	

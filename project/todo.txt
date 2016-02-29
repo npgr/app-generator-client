@@ -12,6 +12,13 @@
 - validate digits of date  2016/02/01 vs 2016/2/1 (allways include 0 for d/m < 10), on encrypt and get_date from server
 
 - create an installer
+    - create DB - Postgres (link server with DB)
+	- set admin pwd
+	- limits the number of clients according to license
+	- Set the machine info for client & server
+	- populate DB (user, profiles, resources.)
+	
+- Option for export / Import DB on Generator (For use & for generate, option in model)
 
 - upgrade sails.js & upgrade electron (package, asar, etc)
   
