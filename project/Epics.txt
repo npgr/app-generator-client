@@ -129,6 +129,11 @@ architectures:
 	
 	3.6) Key Activities  (¿Angelist ?, etc)
 	
+		* Landing Page (subcontract)
+		* Marketing Plan (Subcontract ?)
+		
+		* Both above Need Graphical Design
+	
 		Market Fit - Customer development
 		
 		Product Management (VP Product Manager) (Sw Engineer - Me)
@@ -137,6 +142,7 @@ architectures:
 			- UX / Graphic Design
 			- Ops (cloud, Continue integration)
 			- Documentation (training & Support)
+			
 		Marketing & Sales (Product Marketing Manager) ¿Separate Marketing & Sales ?  (Martin ?) - by comisions
 			Marketing (Definig Strategy)
 				Social Marketing, etc

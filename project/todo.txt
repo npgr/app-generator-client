@@ -9,26 +9,43 @@
 
 - Limit the number of Users !!! (Listo)
 
-- move database to nedb. Program to migrate Db from disk to Nedb
+- move database to postgresql. (Listo)
+
+- Option for export / Import DB on Generator (For use & for generate, option in model) (70% ready)
+
+- create client Deploy version ( Restrict number of clients, resgister clients on server )
+
+- Option for moving server or client from machine (check clients machines on server)
+
+- create server Deploy version 
+
+- DOCUMENTATION of : license Management (security)
+  
+- create an installer
+	- Install Nodejs
+	- Install Postgresql
+    - create DB & Populate (link server with DB)
+	- set admin pwd
+	- Install Server
+	- Install Client
+	- limits the number of clients according to license
+	- Set the machine info for client & server
+	- Set config file on client
+
+- resources still on session memory, for generated apps it must be on DB (¿in-memory?); it because is used on all page menues.
+
+- var _ = { template: require('lodash.template'), map: require('lodash.map') } 
 
 - review generated functions on cliente vs server generated with command line, after this delete crud5, string template, jsonic, winston on server
-
-- create an installer (prereqisite Nodejs), Install Server & Client (limit instalations), Move Client from machine
-
+	
 - Create a Tutorial Video / and Documentation
 
-- Create Landing Page
+- Create Landing Page & Logo (subcontract)
 
 - validate digits of date  2016/02/01 vs 2016/2/1 (allways include 0 for d/m < 10), on encrypt and get_date from server
 
-- create an installer
-    - create DB - Postgres (link server with DB)
-	- set admin pwd
-	- limits the number of clients according to license
-	- Set the machine info for client & server
-	- populate DB (user, profiles, resources.)
+- Improve security of resources, with 2 levels: 1 resource with n paths 
 	
-- Option for export / Import DB on Generator (For use & for generate, option in model)
   Remains: Catch exceptions when file does not exit  +  Order of deleting files <> order of importing records
 
 - upgrade sails.js & upgrade electron (package, asar, etc)
