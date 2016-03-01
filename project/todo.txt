@@ -29,6 +29,7 @@
 	- populate DB (user, profiles, resources.)
 	
 - Option for export / Import DB on Generator (For use & for generate, option in model)
+  Remains: Catch exceptions when file does not exit  +  Order of deleting files <> order of importing records
 
 - upgrade sails.js & upgrade electron (package, asar, etc)
   
