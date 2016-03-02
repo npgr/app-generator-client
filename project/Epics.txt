@@ -1,7 +1,7 @@
 1) Protect App - Asar, JX, JS scramber, js obfuscator, encrypted license (by models, generations)
 		- Compile version of generate: languaje C, java or Phyton
 		
-2) Improve generator 
+2) Improve generator (generate graphs, drag options like trello)
 		
 architectures:  
 
@@ -9,10 +9,7 @@ architectures:
 	- on premise with web validation key - Recomended 
 	- Server on cloud & client - (to heavy)
 
-
-	
 2)	On Server change disk DB for levelDB
-
 
 
 2) Divide on 4 repositories: server, client, generator & security(license)
@@ -155,7 +152,18 @@ architectures:
 		
 	3.7) Key Resources
 	
+		*) Financial Resources:
+			Look for sources of finance
+			
+		*) Intellectual Resources
+			Protect intelectual Property: Copyright, etc
+			List of clients
+			
+		*) Material Resources
+		
 		1. Hardware (minimice Data Center with hosting/cloud)
+			PCs
+			Red
 		2. Software (Development & Productive)
 			- Development
 			- CRM

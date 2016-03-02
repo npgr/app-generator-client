@@ -13,30 +13,34 @@
 
 - Option for export / Import DB on Generator (For use & for generate, option in model) (70% ready)
 
+- create server Deploy version (ready) - Review Security
+
+- avoid using app from browser (header, replace GETs by POST)
+
 - create client Deploy version ( Restrict number of clients, resgister clients on server )
 
-- Option for moving server or client from machine (check clients machines on server)
-
-- create server Deploy version 
-
-- DOCUMENTATION of : license Management (security)
+- Option for moving server or client from machine (check clients machines on server).
   
-- create an installer
+- create an installer (¿http://wixtoolset.org/?)
+	
 	- Install Nodejs
 	- Install Postgresql
     - create DB & Populate (link server with DB)
 	- set admin pwd
-	- Install Server
-	- Install Client
-	- limits the number of clients according to license
+	- Install Server (limit)
+	- Install Client (limits the number of clients according to license)
 	- Set the machine info for client & server
 	- Set config file on client
+	
+- Use ngrok for demo
+	
+- review generated functions on cliente vs server generated with command line, after this delete crud5, string template, jsonic, winston on server. After this DELETE GENERATION OPTIONS ON MODEL FUNCTION CONTROLLER !!!
+
+- DOCUMENTATION of : license Management (security)
 
 - resources still on session memory, for generated apps it must be on DB (¿in-memory?); it because is used on all page menues.
 
-- var _ = { template: require('lodash.template'), map: require('lodash.map') } 
-
-- review generated functions on cliente vs server generated with command line, after this delete crud5, string template, jsonic, winston on server
+- var _ = { template: require('lodash.template'), map: require('lodash.map') }
 	
 - Create a Tutorial Video / and Documentation
 
