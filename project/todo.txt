@@ -19,7 +19,9 @@
 
 - update electron (problems)
 
-- minify html (html-minifier) & js in views (separate first)
+- using pm2 for running app
+
+- minify html (html-minifier) & js in views (separate first, using polymer tool)
 
 - Use Shelljs for cli (Can be used on Linux, Windows & Mac, require git). for deploy apps (Continuous deployment)
 - Revisar uso de grunt for continuous integration / deployment
