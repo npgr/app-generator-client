@@ -28,7 +28,8 @@ find deploy/node_modules -iname '*.js' -exec uglifyjs --compress --mangle -o {} 
 
 # delete from Controllers the generate options
 
-
 # Vulcanize
 
-# vulcanize --inline-css --inline-scripts reporte.html > reporte2.html
+# vulcanize --inline-css --inline-scripts reporte.html > reporte2.html 
+# vulcanize index.html --inline-script | crisper --html build.html --js build.js
+# crisper --source index.html --html build.html --js build.js

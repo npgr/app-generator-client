@@ -2,6 +2,11 @@
 		- Compile version of generate: languaje C, java or Phyton
 		
 2) Improve generator (generate graphs, drag options like trello)
+	- Migrate DB (Partial)
+	- Graphs
+	- Generate tests
+	- Deploy Option
+	- Option to Publish on Cloud (Bluemix, Openshift, AWS, Google, Heroku)  (PARTNERS PaaS)
 		
 architectures:  
 
@@ -12,6 +17,8 @@ architectures:
 2)	On Server change disk DB for Postgresql (ready) + migrate option (70%)
 
 2) Divide on 4 repositories: server, client, generator & security(license)
+
+- Define Commercial Licence (MIT, ISC, BSD, etc...)
 
 ---------------------------------------------
 Deploy
@@ -79,6 +86,14 @@ Deploy
 		
 		Multi-sided markets (user <> payer), selling to payer not the user
 		
+		----------------------------------
+		DIY (or DIFS - Do It for Sales)
+			- Developers (Companies, Startups)
+				- 
+				- Startups
+					- Saas
+			- Companies
+		
 	3.3) Channels
 		
 		Direct Contact, email
@@ -118,8 +133,17 @@ Deploy
 	
 	3.5) Key Partners
 	
+		Nodejs
 		Sails.js **
 		Polymer
+		Paas
+		    - Blue Mix
+			- Open Shift
+			- AWS
+			- Google
+		
+		¿ Git Hub ?, ¿ Npm ?, ¿ Box ?, Cloud App Markets, others App Markets
+		
 		¿ Software Vendors ?
 		¿ Trainning ?
 		¿ Support ?
@@ -162,6 +186,11 @@ Deploy
 			List of clients
 			
 		*) Material Resources
+		
+			- People
+			- Tools
+			- Process
+			- Providers ( or Partnes ?)
 		
 		1. Hardware (minimice Data Center with hosting/cloud)
 			PCs
