@@ -1,6 +1,6 @@
-#rm -r deploy/node_modules
+rm -r deploy/node_modules
 
-#cp node_modules deploy/node_modules
+cp node_modules deploy/node_modules
 
 #Remove unnecesary files & folders 
 
@@ -22,8 +22,10 @@ find deploy/node_modules -iname 'readme*' -exec rm {} \;
 # node_modules -> it takes about 1 hour
 find deploy/node_modules -iname '*.js' -exec uglifyjs --compress --mangle -o {} -- {} \;
 
-# separar html, css y js en paginas web-> uglifyjs .js y html-minifier .html ¿ cssmin ?
+# ¿? separar html, css y js en paginas web-> uglifyjs .js y html-minifier .html ¿ cssmin ?
 
+### obfuscate app.js, zip_util.js, app_util.js 
+ 
 # remove assets/components/ not used
 
 # delete from Controllers the generate options
