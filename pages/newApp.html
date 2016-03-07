@@ -1,140 +1,16 @@
 <html>
 <head>
  <title>New App</title>
- <style>
-		html, div {
-			background-color: rgb(30, 30, 30);
-			color: rgb(240,240,240);
-			font-family: sans-serif;
-			font-size: 15px;
-		}
-		[red] {
-			color: red;
-		}
-		[orange] {
-			color: orange;
-		}
-		[green] {
-			color: green;
-		}
-		[yellow] {
-			color: yellow;
-		}
-	</style>
+ <style>div,html{background-color:#1e1e1e;color:#f0f0f0;font-family:sans-serif;font-size:15px}[red]{color:red}[orange]{color:orange}[green]{color:green}[yellow]{color:#ff0}</style>
 </head>
-<body> <!-- onload="newContent();"-->
+<body> 
 	
 	<div yellow>> Creating Application 
 		<strong id="app"></strong>
 	</div>
 	
 	<div id="list"></div>
-	<!--<script>
-		function newContent()
-		{
-			alert("load new content");
-			document.open();
-			document.write("<h1>Out with the old - in with the new!</h1>");
-			document.close();
-		}
-	</script>-->
-	<script>
-		cont = 0
-		function append_html(txt)
-		{
-			var node = document.createElement("DIV");               
-			var textnode = document.createTextNode(txt);       
-			node.appendChild(textnode); 
-			document.getElementById("list").appendChild(node);
-			node.scrollIntoView()
-		}
-		function append_text(txt)
-		{
-			var textnode = document.createTextNode(txt);      
-			document.getElementById("list").appendChild(textnode);
-			//node.scrollIntoView()
-		}
-		function create_app(app, port, path)
-		{	
-			var spawn = require('child_process').spawn;
-			//var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
-			var child = spawn('node', ['zip_util', app, path]);
-
-			child.stdout.on('data', function(data) {
-				append_html(data.toString())
-				/*cont ++
-				if (cont % 200 == 0)
-				  append_text('* ')	*/
-			})
-
-			child.stderr.on('data', function (data) {
-				append_html('Message: '+ data.toString())
-			});
 	
-			child.on('close', function (code, signal) {
-				//console.log('child process terminated due to receipt of signal ' + signal);	
-				if (code == 0)
-				{
-					//copy_node_modules()
-					//append_html("Process End with code: "+code)
-					append_html('Setting Application Port...')
-					const remote = require('electron').remote
-					var app_util = remote.require('./app_util.js')
-					app_util.set_port(app, port, path)
-					
-					append_html('Application Created Succefully on Path '+path+'\\'+app)
-					append_html('For start Server, run node app in above Path')
-					append_html('===')
-					append_html('Enjoy your New Application. Find Help on path ...')
-					append_html('Close this Window to Continue')	
-				}
-				else 
-					append_html("Process End with code: "+code)
-			});
-		}
-		//Not Used
-		function copy_node_modules() {
-			cont = 0
-			append_html('Intalling Node Modules')
-			var spawn = require('child_process').spawn;
-			var child2 = spawn('cp',['-R', '-v', '../server/node_modules/*', 'apps/app01/node_modules/']);
-			//var execFile = require('child_process').execFile;
-			//var child2 = execFile('npm',['install'], {cwd: 'apps/app01'} );
-	
-			child2.stdout.on('data', function(data) {
-				//append_html(data.toString())
-				cont ++
-				if (cont % 30 == 0)
-				  append_text('* ')	
-			})
-	
-			child2.stderr.on('data', function (data) {
-				append_html('stderr: '+ data.toString())
-			});
-	
-			child2.on('close', function (code, signal) {
-				if (code == 0 || code == 1) 
-				{
-					append_html('Application Created Sunccefully on Path '+path+'\\'+app)
-					append_html('For start Server, run node app')
-				}
-				else 
-					append_html('Process End with code: '+ code)
-			})
-		}
-		//Main Logic
-		//console.log('URL: ', window.location.href )
-		var par = window.location.search.substring(1)
-		var regex = /[=&]/
-		var vars = par.split(regex);
-		
-		var app = vars[1]
-		var port = vars[3]
-		var path = vars[5]
-
-		document.getElementById("app").innerHTML = app
-		//document.getElementById("path").innerHTML = 'Path: '+path
-		create_app(app, port, path)
-	</script>
+	<script>function append_html(e){var t=document.createElement("DIV"),n=document.createTextNode(e);t.appendChild(n),document.getElementById("list").appendChild(t),t.scrollIntoView()}function append_text(e){var t=document.createTextNode(e);document.getElementById("list").appendChild(t)}function create_app(e,t,n){var p=require("child_process").spawn,o=p("node",["zip_util",e,n]);o.stdout.on("data",function(e){append_html(e.toString())}),o.stderr.on("data",function(e){append_html("Message: "+e.toString())}),o.on("close",function(p,o){if(0==p){append_html("Setting Application Port...");const a=require("electron").remote;var d=a.require("./app_util.js");d.set_port(e,t,n),append_html("Application Created Succefully on Path "+n+"\\"+e),append_html("For start Server, run node app in above Path"),append_html("==="),append_html("Enjoy your New Application. Find Help on path ..."),append_html("Close this Window to Continue")}else append_html("Process End with code: "+p)})}function copy_node_modules(){cont=0,append_html("Intalling Node Modules");var e=require("child_process").spawn,t=e("cp",["-R","-v","../server/node_modules/*","apps/app01/node_modules/"]);t.stdout.on("data",function(e){cont++,cont%30==0&&append_text("* ")}),t.stderr.on("data",function(e){append_html("stderr: "+e.toString())}),t.on("close",function(e,t){0==e||1==e?(append_html("Application Created Sunccefully on Path "+path+"\\"+app),append_html("For start Server, run node app")):append_html("Process End with code: "+e)})}cont=0;var par=window.location.search.substring(1),regex=/[=&]/,vars=par.split(regex),app=vars[1],port=vars[3],path=vars[5];document.getElementById("app").innerHTML=app,create_app(app,port,path)</script>
 </body>
 </html>
