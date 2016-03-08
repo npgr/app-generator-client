@@ -1,16 +1,1 @@
-<html>
-<head>
- <title id="title">Create Model</title>
- <style>div,html{background-color:#1e1e1e;color:#f0f0f0;font-family:sans-serif;font-size:15px}[red]{color:red}[orange]{color:orange}[green]{color:green}[yellow]{color:#ff0}</style>
-</head>
-<body onload="createModel()">
-	
-	<div yellow>> Creating Model 
-		<strong id="model"></strong>
-	</div>
-	
-	<div id="list"></div>
-
-	<script>function append_html(e){var t=document.createElement("DIV"),n=document.createTextNode(e);t.appendChild(n),document.getElementById("list").appendChild(t),t.scrollIntoView()}function createModel(){var e=window.location.search.substring(1),t=/[=&]/,n=e.split(t),o=(n[1],n[3]),d=require("child_process").spawn;child=d("./generator/generate.exe",["model",o]),child.stdout.on("data",function(e){append_html(e.toString())}),child.stderr.on("data",function(e){append_html("Message: "+e.toString())}),child.on("close",function(e,t){append_html(0==e?"Close this Window to Continue":"Process End with code: "+e)})}</script>
-</body>
-</html>
+<html><head><title id="title">Create Model</title><style>div,html{background-color:#1e1e1e;color:#f0f0f0;font-family:sans-serif;font-size:15px}[red]{color:red}[orange]{color:orange}[green]{color:green}[yellow]{color:#ff0}</style></head><body onload="createModel()"><div yellow>>Creating Model<strong id="model"></strong></div><div id="list"></div><script>var _0xe5c5=["\x44\x49\x56","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x63\x72\x65\x61\x74\x65\x54\x65\x78\x74\x4E\x6F\x64\x65","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x6C\x69\x73\x74","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x73\x63\x72\x6F\x6C\x6C\x49\x6E\x74\x6F\x56\x69\x65\x77","\x73\x75\x62\x73\x74\x72\x69\x6E\x67","\x73\x65\x61\x72\x63\x68","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x73\x70\x6C\x69\x74","\x73\x70\x61\x77\x6E","\x63\x68\x69\x6C\x64\x5F\x70\x72\x6F\x63\x65\x73\x73","\x2E\x2F\x67\x65\x6E\x65\x72\x61\x74\x6F\x72\x2F\x67\x65\x6E\x65\x72\x61\x74\x65\x2E\x65\x78\x65","\x6D\x6F\x64\x65\x6C","\x64\x61\x74\x61","\x6F\x6E","\x73\x74\x64\x6F\x75\x74","\x4D\x65\x73\x73\x61\x67\x65\x3A\x20","\x73\x74\x64\x65\x72\x72","\x63\x6C\x6F\x73\x65","\x43\x6C\x6F\x73\x65\x20\x74\x68\x69\x73\x20\x57\x69\x6E\x64\x6F\x77\x20\x74\x6F\x20\x43\x6F\x6E\x74\x69\x6E\x75\x65","\x50\x72\x6F\x63\x65\x73\x73\x20\x45\x6E\x64\x20\x77\x69\x74\x68\x20\x63\x6F\x64\x65\x3A\x20"];function append_html(_0x69d0x2){var _0x69d0x3=document[_0xe5c5[1]](_0xe5c5[0]),_0x69d0x4=document[_0xe5c5[2]](_0x69d0x2);_0x69d0x3[_0xe5c5[3]](_0x69d0x4),document[_0xe5c5[5]](_0xe5c5[4])[_0xe5c5[3]](_0x69d0x3),_0x69d0x3[_0xe5c5[6]]()}function createModel(){var _0x69d0x2=window[_0xe5c5[9]][_0xe5c5[8]][_0xe5c5[7]](1),_0x69d0x3=/[=&]/,_0x69d0x4=_0x69d0x2[_0xe5c5[10]](_0x69d0x3),_0x69d0x6=(_0x69d0x4[1],_0x69d0x4[3]),_0x69d0x7=require(_0xe5c5[12])[_0xe5c5[11]];child=_0x69d0x7(_0xe5c5[13],[_0xe5c5[14],_0x69d0x6]),child[_0xe5c5[17]][_0xe5c5[16]](_0xe5c5[15],function(_0x69d0x2){append_html(_0x69d0x2.toString())}),child[_0xe5c5[19]][_0xe5c5[16]](_0xe5c5[15],function(_0x69d0x2){append_html(_0xe5c5[18]+_0x69d0x2.toString())}),child[_0xe5c5[16]](_0xe5c5[20],function(_0x69d0x2,_0x69d0x3){append_html(0==_0x69d0x2?_0xe5c5[21]:_0xe5c5[22]+_0x69d0x2)})}</script></body></html>
