@@ -43,6 +43,8 @@
 	- Set the machine info for client & server
 	- Set config file on client
 	
+- ¿ Use i18n for electron pages ?
+	
 - Use ngrok for demo
 
 - replace color module for chalk

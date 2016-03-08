@@ -1,0 +1,1 @@
+function baseFindIndex(e,n,r){for(var d=e.length,t=r?d:-1;r?t--:++t<d;)if(n(e[t],t,e))return t;return-1}module.exports=baseFindIndex;

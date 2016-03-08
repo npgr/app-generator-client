@@ -1,0 +1,37 @@
+{
+  "List %s": "Listar",
+  "List": "Listar",
+  "Create": "Crear",
+  "Display": "Consultar",
+  "Delete": "Borrar",
+  "Edit": "Editar",
+  "Equal to": "Igual a",
+  "Different to": "Diferente a",
+  "Greater or Equal to": "Mayor o igual a",
+  "Less or Equal to": "Menor o igual a",
+  "Contains": "Contiene",
+  "Find": "Buscar",
+  "Columns": "Columnas",
+  "Change %s": "Cambiar %s",
+  "Change ": "Cambiar",
+  "Exit": "Salir",
+  "Repeat": "Repetir",
+  "Record already Exist": "Registro ya Existe",
+  "Error Processing Request: ": "Error Procesando Solicitud: ",
+  "Record Deleted": "Registro Borrado",
+  "Record Updated": "Registro Actualizado",
+  "Columns": "Columnas",
+  "Show": "Visible",
+  "Hide": "Oculto",
+  "Username": "Usuario",
+  "Password": "Contraseña",
+  "Username or Password incorrect": "Usuario o Contraseña incorrectos",
+  "<%= title%>": ""<%
+  for (i=0; i < keys.length; i++ ) {
+    if (jsondata[keys[i]].description) {%>
+  ,"<%= jsondata[keys[i]].description%>": ""<% } 
+    if (jsondata[keys[i]].enumdes) {
+	 for (j=0; j< jsondata[keys[i]].enumdes.length; j++) {%>
+  ,"<%= jsondata[keys[i]].enumdes[j]%>": ""<% 
+	 } } }%>
+}

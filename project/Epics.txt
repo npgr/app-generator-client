@@ -2,6 +2,7 @@
 		- Compile version of generate: languaje C, java or Phyton
 		
 2) Improve generator (generate graphs, drag options like trello)
+	- ¿ Open source crud template for improves ?
 	- Migrate DB (Partial)
 	- Graphs
 	- Generate tests
@@ -70,9 +71,22 @@ Deploy
 		
 		Competitive analysis Framework  (Comparar con competencia)
 		
+		Think Big, Start small.  Focus on one customer Segment.
+		
 		¿Support ?, ¿ Training ?, ¿ Consulting ?, ¿ Updates ?, ¿ Project Consulting / developing ?
 		
 		App Market (like Box)
+		
+		Types of competition:
+
+		Respect to my Competition: my strengs, my weaks  (FODA)
+		
+		- Product Competitor
+		- Brand Competitor
+		- Generic Competitor
+		- Brand Competitor
+		
+		Follow the Competitors:	Microsoft (Visual Studio)
 	
 	3.2) Customer Segments
 	

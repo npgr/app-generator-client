@@ -1,0 +1,1 @@
+function arrayFilter(r,a){for(var e=-1,t=r.length,l=-1,n=[];++e<t;){var o=r[e];a(o,e,r)&&(n[++l]=o)}return n}module.exports=arrayFilter;

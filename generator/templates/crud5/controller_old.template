@@ -1,0 +1,53 @@
+<%function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}%>
+/************  Routes:  config/routes.js ************/
+
+"/<%= model%>/exist/:<%= key.name%>": "<%= model%>Controller.exist",
+"/<%= model%>/list": "<%= model%>Controller.list"
+
+/********** Controller: api/controllers/<<model_name>>Controller.js *******/
+
+	exist: function(req, res, next) {
+		var <%= key.name%> = req.param("<%= key.name%>")
+		<% if (key.name === "id") { %> <%= model%>.findOne(id)<%
+		    } else { %> <%= model%>.findOneBy<%= capitalizeFirstLetter(key.name)%>(<%= key.name%>) <% } %>
+			.exec(function(err, data) {
+				if(err) res.json({ "exist": "error"})
+				  else if (!data) res.json({ "exist": false})
+					else res.json({ "exist": true})
+			})
+	}
+	<% if (crud == 'crud6') {
+	%>/*, display: function(req, res) {
+		res.view("<%= model%>/display")
+	},
+	new: function (req, res) {
+		res.view("<%= model%>/new")
+	},
+	edit: function (req, res) {
+		res.view("<%= model%>/edit")
+	},
+	delete: function (req, res) {
+		res.view("<%= model%>/delete")
+	},
+	columns: function (req, res) {
+		res.view("<%= model%>/columns")
+	},*/
+	list : function (req, res) {
+		//<%= model%>.find()
+		//	.exec(function(err, data){
+				res.locals.resources = req.session.resources
+				res.locals.user = {user: req.session.user, name: req.session.username}
+		//		res.locals.data = JSON.stringify(data)
+				res.locals.data = []
+				res.view("<%= model%>/list")
+		//	})
+	}<% } %>
+	/*,byfield: function(req, res) {
+		<%= model%>.query('SELECT field, count(*) FROM <%= model%> group by field order by count desc', function(err, data) {
+			if (err) return res.serverError(err);
+			//return res.ok(results);
+			return res.json(data.rows)
+		});
+	}*/

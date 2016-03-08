@@ -1,0 +1,1 @@
+function unescapeHtmlChar(e){return htmlUnescapes[e]}var htmlUnescapes={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'","&#96;":"`"};module.exports=unescapeHtmlChar;

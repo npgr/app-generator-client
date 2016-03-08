@@ -1,0 +1,49 @@
+<!-- display-form: version 5.10 -->
+<% function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+<dom-module id="<%= model%>-display">
+<template>
+	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation"><%
+	  if (crud == "crud6") { %>
+		<h2 class="card_title">>%= lng("%s %s",lng("Display"),lng("<%= title%>"))%<</h2><% 
+	  } else { %>	
+		<h2 class="card_title">Display <%= title%></h2><% 
+	  } %>
+		  <paper-dialog-scrollable>
+			<table class="table_dialog" style="width:100%"><%
+			for (i=0; i < keys.length; i++) { 
+				if (jsondata[keys[i]].line_r) {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>"><%= srv(crud, jsondata[keys[i]].description)%></label></td>
+				<td><%= jsondata[keys[i]].line_r %></td>
+			</tr><% } }%>
+			</table>
+		  </paper-dialog-scrollable>
+		<div class="buttons">
+			<div class="card_line">
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= srv(crud, "Exit")%></paper-button>
+			</div>
+		</div>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-display",
+		open_display_dialog: function(item) {
+			this.item = item
+			this.set_select_fields(item)
+			this.$.dialog.open()
+		},
+		set_select_fields(item) {
+			<%for (i=0; i < keys.length; i++) {
+				if (jsondata[keys[i]].enum) {
+			%>this.$.<%= keys[i]%>.value = item.<%= keys[i]%>
+			<%} }
+		%>}
+	})
+</script>
+</dom-module>

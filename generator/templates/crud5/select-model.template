@@ -1,0 +1,78 @@
+<!-- select-model: version 5.10 -->
+<% if (crud == "crud6") { 
+%> >% 
+ function lng(word) {
+	return __("word")
+ }
+ function lng(word1, word2, word3) {
+	return __(word1, word2, word3)
+ }
+%<  <% } 
+ function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+
+<dom-module id="<%= model%>-select">
+<template>
+	<iron-ajax id="ajax" method='GET' handle-as="json" on-response="get_data" on-error="ajax_error"></iron-ajax>
+	<paper-dialog id="dialog" vertical layout>
+		<iron-icon icon="close" on-click="close" mini></iron-icon>  
+		<div><input id="filtro" type="{{tipo}}" on-input="filter" placeholder="<%= srv(crud, description)%>..."></div>
+		<paper-dialog-scrollable>
+		<template id="template_items" is="dom-repeat" items="{{filtered_data}}">
+			<div id="{{item.id}}" on-click="select">{{item.<%= display%>}}</div>
+		</template>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-select",
+		open_select_dialog: function() {
+			this.$.filtro.value = ""
+			this.$.ajax.url= config_server() +"<%= model%>"
+			var db = new loki()
+			this.data = db.addCollection("data_<%= model%>")
+			this.filtered_data = []
+			this.load_data()
+			this.tipo="string" //filter type
+			this.$.dialog.open()
+		},
+		close: function() {
+			this.$.dialog.close()
+		},
+		load_data: function() {
+			this.$.ajax.generateRequest()
+		},
+		get_data: function() {
+			while(this.data.data[0]) {
+				this.data.remove(this.data.data[0])
+			}
+			for (i=0; i< this.$.ajax.lastResponse.length; i++)
+				this.data.insert(this.$.ajax.lastResponse[i])
+			this.filter()
+		},
+		filter: function() {
+			this.filtered_data = []
+			this.cur_filter = { <%= display %>: { $contains: this.$.filtro.value} }
+			this.result_set = this.data.chain().find(this.cur_filter).simplesort("<%= display %>", false)
+			this.filtered_data = this.result_set.data()
+		},
+		select: function(e) {
+			this.item = {}
+			this.item.key = e.toElement.<%= key%>
+			this.item.name = e.toElement.innerHTML
+			this.$.dialog.close()
+			//this.close()
+			this.fire('item_selected')
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
+		}
+	})
+</script>
+</dom-module>

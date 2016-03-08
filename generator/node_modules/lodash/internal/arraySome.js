@@ -1,0 +1,1 @@
+function arraySome(r,e){for(var o=-1,a=r.length;++o<a;)if(e(r[o],o,r))return!0;return!1}module.exports=arraySome;

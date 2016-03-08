@@ -1,0 +1,1 @@
+function isNaN(r){return isNumber(r)&&r!=+r}var isNumber=require("./isNumber");module.exports=isNaN;

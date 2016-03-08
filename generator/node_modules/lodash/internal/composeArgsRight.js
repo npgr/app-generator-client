@@ -1,0 +1,1 @@
+function composeArgsRight(r,t,a){for(var e=-1,o=a.length,n=-1,g=nativeMax(r.length-o,0),h=-1,i=t.length,s=Array(g+i);++n<g;)s[n]=r[n];for(var v=n;++h<i;)s[v+h]=t[h];for(;++e<o;)s[v+a[e]]=r[n++];return s}var nativeMax=Math.max;module.exports=composeArgsRight;

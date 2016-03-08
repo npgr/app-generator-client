@@ -1,0 +1,101 @@
+<!-- list-columns: version 5.10 -->
+<% function srv(crud, word) {
+	if (crud == "crud6")
+		return ">%= lng('" + word + "')%<"
+	 else
+	    return word
+} %>
+<dom-module id="<%= model%>-list-columns">
+<template>
+<style>
+	/*#dialog {
+		width: 24em;
+	}*/
+	.green {
+		background-color: green;
+		color: white;
+		height: 30px;
+	}
+	.orange {
+		color: white;
+		background-color: orange;
+		height: 30px;
+	}
+</style>
+	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
+	  if (crud == "crud6") { %>
+		<h2 class="card_title">>%= lng("%s %s",lng("Columns"),lng("<%= title%>"))%<</h2><% 
+	  } else { %>	
+		<h2 class="card_title">Columns <%= title%></h2><% 
+	  } %>
+			<paper-dialog-scrollable>
+			<table class="table_dialog" style="width:100%"><%
+			for (i=0; i < keys.length; i++) { 
+			  if (keys[i].substring(0,1) != "_")  {
+			    if (!jsondata[keys[i]].model) {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>"><%= srv(crud, jsondata[keys[i]].description)%></label></td>
+				<td><div id="<%= keys[i]%>" on-click="change_field"></div></td>
+			</tr><%
+				} else {%>
+			<tr>
+				<td><label class="left_label" for="<%= keys[i]%>_<%=jsondata[keys[i]].display%>"><%= srv(crud, jsondata[keys[i]].description)%></label></td>
+				<td><div id="<%= keys[i]%>_<%=jsondata[keys[i]].display%>" on-click="change_field"></div></td>
+			</tr><%	
+			} } }%>
+			</table>
+			</paper-dialog-scrollable>
+		<div class="buttons">
+			<div class="card_line">
+				<paper-button id="update_btn" class="btn" on-click="submit_form" raised><%= srv(crud, "Change ")%></paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= srv(crud, "Exit")%></paper-button>
+			</div>
+		</div>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "<%= model%>-list-columns",
+		properties: {
+			//updated: false,
+			//column: {}
+		},
+		open_list_columns: function(column) {
+			this.updated= false,
+			this.column= column<%
+			for (i=0; i < keys.length; i++) { 
+			  if (keys[i].substring(0,1) != "_")  {
+			    if (!jsondata[keys[i]].model) {%>
+			this.show_field("<%= keys[i]%>")<%
+				} else {%>
+			this.show_field("<%= keys[i]%>_<%=jsondata[keys[i]].display%>")<%	
+			} } }%>
+			this.$.dialog.open()
+		},
+		change_field: function(e) {
+			var field = e.toElement.id
+			this.column[field] = !this.column[field]
+			this.show_field(field)
+		},
+		show_field: function(field) {
+			if (this.column[field])
+			{  
+				this.$[field].innerHTML = "<%= srv(crud, "Show")%>"
+				this.$[field].classList.remove("orange")
+				this.$[field].classList.add("green")
+			}
+			else
+			{
+				this.$[field].innerHTML = "<%= srv(crud, "Hide")%>"
+				this.$[field].classList.remove("green")
+				this.$[field].classList.add("orange")
+			}
+		},
+		submit_form: function() {
+			this.updated = true
+			this.$.dialog.close()
+			this.fire('close')
+		}
+	})
+</script>
+</dom-module>

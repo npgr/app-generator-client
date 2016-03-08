@@ -1,0 +1,1 @@
+function replaceHolders(e,r){for(var l=-1,o=e.length,a=-1,d=[];++l<o;)e[l]===r&&(e[l]=PLACEHOLDER,d[++a]=l);return d}var PLACEHOLDER="__lodash_placeholder__";module.exports=replaceHolders;

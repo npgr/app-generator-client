@@ -1,7 +1,7 @@
 var app = require('app')
 var BrowserWindow = require('browser-window')
 var fs = require('fs')
-const ipcMain = require('electron').ipcMain;
+var ipcMain = require('electron').ipcMain;
 
 app.on('ready', function() {
 
@@ -46,7 +46,7 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		newAppWindow.loadURL('file://'+__dirname+'/pages.asar/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
 		newAppWindow.show();
 	});
 	ipcMain.on('start-app', function(event, arg) {
@@ -57,7 +57,7 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		startAppWindow.loadURL('file://'+__dirname+'/pages.asar/startApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
 		startAppWindow.show();
 	});
 	ipcMain.on('create-model', function(event, arg) {
@@ -68,7 +68,7 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		createModel.loadURL('file://'+__dirname+'/pages.asar/createModel.html?model='+arg.model+'&path='+arg.path)
+		createModel.loadURL('file://'+__dirname+'/pages/createModel.html?model='+arg.model+'&path='+arg.path)
 		createModel.show();
 	});
 	ipcMain.on('create-mfunction', function(event, arg) {
@@ -79,12 +79,12 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		createMFunc.loadURL('file://'+__dirname+'/pages.asar/createMFunction.html?mfunc='+arg.mfunc+'&path='+arg.path)
+		createMFunc.loadURL('file://'+__dirname+'/pages/createMFunction.html?mfunc='+arg.mfunc+'&path='+arg.path)
 		createMFunc.show();
 	});
 })
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', function() {
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}

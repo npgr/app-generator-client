@@ -3,6 +3,10 @@ rm ../generator/*
 cp -r templates/ ../generator/
 cp -r node_modules/ ../generator/
 
+# minify node_modules
+
+#obfuscate create.js & generate.js & templates/*.js
+
 cp create.js ../generator/
 cp generate.js ../generator/
 

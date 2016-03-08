@@ -22,16 +22,36 @@ find deploy/node_modules -iname 'readme*' -exec rm {} \;
 # node_modules -> it takes about 1 hour
 find deploy/node_modules -iname '*.js' -exec uglifyjs --compress --mangle -o {} -- {} \;
 
-# ¿? separar html, css y js en paginas web-> uglifyjs .js y html-minifier .html ¿ cssmin ?
+# Obfuscate *.html in pages/ folder from pagen_orig
 
-### obfuscate app.js, zip_util.js, app_util.js 
- 
-# remove assets/components/ not used
+# Move files to deploy folder
 
-# delete from Controllers the generate options
+cp app.js deploy/       
+cp app_util.js deploy/  
+cp zip_util.js deploy/  
+cp package.json deploy/
+cp -r pages deploy/
 
-# Vulcanize
+# Obfuscate app.js, app_util.js & zip_util.js in deploy folder
 
-# vulcanize --inline-css --inline-scripts reporte.html > reporte2.html 
-# vulcanize index.html --inline-script | crisper --html build.html --js build.js
-# crisper --source index.html --html build.html --js build.js
+# test npm run on deploy folder  / (OPTIONAL)  needs copy config.json
+
+cd deploy
+
+# build exec
+
+npm run build
+
+npm run asar
+
+cd App-win32-x64
+
+rm -r resources/app
+
+cp ../../config.json config.json
+mkdir apps
+cp -r ../../generator deploy/generator
+mkdir templates
+cp ../../tempates/*zip templates/
+
+App.exe  # test: navigate + create app + start app + generate model + generate function 
