@@ -19,16 +19,31 @@
 
 - update electron (ready)
 
-- minify html (html-minifier) & js in views (separate first, using polymer tool)
+- deploy server: minify html (html-minifier) & js in views (separate first, using polymer tool)
+
+- create client Deploy version ( Restrict number of clients, resgister clients on server )
+
+- avoid using app from browser (header, replace GETs by POST)
+
+Fix:
+    - App Crud fix Lengths of fields 
+	- Default path of App (create app)
+	- Login title (actually "prueba")
+	- i18n
+	- Presentation of App (SetTimeOut..)
+	- Change favico of electron
+	- replace zip_util.j by zip_util.exe (jx) and use chalk (colors)
+	- on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0
+	- improve crud attributes (option more.. attributes). Labels optional
 
 - using pm2 for running app
 
 - Use Shelljs for cli (Can be used on Linux, Windows & Mac, require git). for deploy apps (Continuous deployment)
 - Revisar uso de grunt for continuous integration / deployment
 
-- avoid using app from browser (header, replace GETs by POST)
 
-- create client Deploy version ( Restrict number of clients, resgister clients on server )
+
+
 
 - Option for moving server or client from machine (check clients machines on server).
   
