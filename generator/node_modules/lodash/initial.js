@@ -1,1 +1,0 @@
-function initial(i){return dropRight(i,1)}var dropRight=require("./dropRight");module.exports=initial;

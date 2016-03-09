@@ -1,1 +1,0 @@
-function escapeStringChar(r){return"\\"+stringEscapes[r]}var stringEscapes={"\\":"\\","'":"'","\n":"n","\r":"r","\u2028":"u2028","\u2029":"u2029"};module.exports=escapeStringChar;

@@ -1,1 +1,0 @@
-var baseProperty=require("./baseProperty"),getLength=baseProperty("length");module.exports=getLength;

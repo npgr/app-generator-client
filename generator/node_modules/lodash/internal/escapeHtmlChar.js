@@ -1,1 +1,0 @@
-function escapeHtmlChar(t){return htmlEscapes[t]}var htmlEscapes={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","`":"&#96;"};module.exports=escapeHtmlChar;

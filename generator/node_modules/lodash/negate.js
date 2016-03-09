@@ -1,1 +1,0 @@
-function negate(e){if("function"!=typeof e)throw new TypeError(FUNC_ERROR_TEXT);return function(){return!e.apply(this,arguments)}}var FUNC_ERROR_TEXT="Expected a function";module.exports=negate;

@@ -1,1 +1,0 @@
-function isObjectLike(e){return!!e&&"object"==typeof e}module.exports=isObjectLike;
