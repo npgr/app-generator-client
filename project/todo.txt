@@ -28,19 +28,26 @@
 Fix:
     - App Crud fix Lengths of fields 
 	- Default path of App (create app)
-	- Login title (actually "prueba")
+	- Login title (actually "prueba") -- Needs Logo
 	- i18n
-	- Presentation of App (SetTimeOut..)
-	- Change favico of electron
-	- replace zip_util.j by zip_util.exe (jx) and use chalk (colors)
+	- Presentation of App (SetTimeOut..)  -- Needs Logo
+	- Change favico of electron  -- Needs Logo
+	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
 	- on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0
 	- improve crud attributes (option more.. attributes). Labels optional
+	- on starting app: change message and using colors
+	- change deploy folder on new app (app template)
+	- Do not validate license finish date
+	- Add colors (chalk) on creating Function
+	- Set db on generated app (default = disk)
 
 - using pm2 for running app
 
 - Use Shelljs for cli (Can be used on Linux, Windows & Mac, require git). for deploy apps (Continuous deployment)
+
 - Revisar uso de grunt for continuous integration / deployment
 
+- Differentiate colors from generator an generated app
 
 
 

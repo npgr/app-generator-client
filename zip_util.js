@@ -36,7 +36,7 @@ var entries = [
 
 var i=1
 entries.forEach(function(entry) {
-	console.log('Extracting ('+i+'/40): '+entry)
+	console.log('Extracting ('+i+'/15): '+entry)
 	zip.extractEntryTo(entry, path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 	i++
 })
@@ -47,7 +47,8 @@ delete zip
 
 var zip2 = new AdmZip("./templates/node_modules.zip");
 
-entries = [
+entries = [ 'node_modules/' ]
+/*entries = [
 	'node_modules/.bin/',
 	'node_modules/bcrypt/',
 	'node_modules/data2xml/',
@@ -74,10 +75,10 @@ entries = [
 	'node_modules/sails-postgresql/',
 	'node_modules/string-template/',
 	'node_modules/winston/'
-] 
+] */
 
 entries.forEach(function(entry) {
-	console.log('Extracting ('+i+'/40): '+entry)
+	console.log('Extracting ('+i+'/15): '+entry + '  .It can take about 3 minutes...')
 	zip2.extractEntryTo(entry, path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 	i++
 })
@@ -86,12 +87,12 @@ delete zip2
 
 // Extracting sails/
 
-var zip3 = new AdmZip("./templates/sails.zip");
+/*var zip3 = new AdmZip("./templates/sails.zip");
 
 console.log('Extracting ('+i+'/40): node_modules/sails')
-zip3.extractEntryTo('node_modules/sails/', path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
+zip3.extractEntryTo('node_modules/sails/', path+'\\'+app, true, false);
 
-delete zip3 
+delete zip3 */
 
 console.log('')
 console.log('Finished')
