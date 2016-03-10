@@ -26,20 +26,22 @@
 - avoid using app from browser (header, replace GETs by POST)
 
 Fix:
-    - App Crud fix Lengths of fields 
+    - on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0  (ready)
+	- App Crud fix Lengths of fields 
 	- Default path of App (create app)
 	- Login title (actually "prueba") -- Needs Logo
 	- i18n
 	- Presentation of App (SetTimeOut..)  -- Needs Logo
 	- Change favico of electron  -- Needs Logo
 	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
-	- on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0
 	- improve crud attributes (option more.. attributes). Labels optional
 	- on starting app: change message and using colors
 	- change deploy folder on new app (app template)
 	- Do not validate license finish date
 	- Add colors (chalk) on creating Function
 	- Set db on generated app (default = disk)
+	
+- Easy way to change style of page: length of fields and colors
 
 - using pm2 for running app
 
