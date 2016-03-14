@@ -41,6 +41,12 @@ Fix:
 	- Add colors (chalk) on creating Function
 	- Set db on generated app (default = disk)
 	
+- Add user Points (Change name)
+
+- Implement "point of Code" for adding code on every place the developer want ¿?
+
+- Add Attribute "css style" to "Attribute", put it on "user point: General style", add id to all attributes on html	.  Add event for html, for example "on-keyup='valid_file_chars'"
+
 - Easy way to change style of page: length of fields and colors
 
 - using pm2 for running app
@@ -50,8 +56,6 @@ Fix:
 - Revisar uso de grunt for continuous integration / deployment
 
 - Differentiate colors from generator an generated app
-
-
 
 
 - Option for moving server or client from machine (check clients machines on server).

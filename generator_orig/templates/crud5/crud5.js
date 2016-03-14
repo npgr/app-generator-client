@@ -390,6 +390,30 @@ function generate_model_select(model, display, key, description, crud) {
 
 function get_user_points(model, app_path) {
   user_point = {
+	general_style: '/** USER POINT - General Style **/\n'+
+	'/** END USER POINT - General Style **/',				 
+	open_new_dialog: '/** USER POINT - Open New Dialog **/\n'+
+	'/** END USER POINT - Open New Dialog **/',
+	open_edit_dialog: '/** USER POINT - Open Edit Dialog **/\n'+
+	'/** END USER POINT - Open Edit Dialog **/',
+	open_display_dialog: '/** USER POINT - Open Display Dialog **/\n'+
+	'/** END USER POINT - Open Display Dialog **/',
+	open_delete_dialog: '/** USER POINT - Open Delete Dialog **/\n'+
+	'/** END USER POINT - Open Delete Dialog **/',
+	record_created: '/** USER POINT - Record Created **/\n'+
+	'/** END USER POINT - Record Created **/',
+	record_updated: '/** USER POINT - Record Updated **/\n'+
+	'/** END USER POINT - Record Updated **/',
+	record_deleted: '/** USER POINT - Record Deleted **/\n'+
+	'/** END USER POINT - Record Deleted **/',
+	new_functions: '/** USER POINT - New Functions **/\n'+
+	'/** END USER POINT - New Functions **/',
+	edit_functions: '/** USER POINT - Edit Functions **/\n'+
+	'/** END USER POINT - Edit Functions **/',
+	display_functions: '/** USER POINT - Display Functions **/\n'+
+	'/** END USER POINT - Display Functions **/',
+	delete_functions: '/** USER POINT - Delete Functions **/\n'+
+	'/** END USER POINT - Delete Functions **/',
     list_style: '<!--USER POINT - List Style-->\n' +
     '<!--END USER POINT - List Style-->',
     list_header: '<!--USER POINT - List Header-->\n' +
@@ -405,9 +429,69 @@ function get_user_points(model, app_path) {
   };
 
   if (fs.existsSync(app_path + '\\views\\' + model + '\\list.ejs'))
-    {
+  {
     var list_file = fs.readFileSync(app_path + '\\views\\' + model + '\\list.ejs', 'utf8');
 
+	var start = list_file.indexOf("/** USER POINT - General Style **/")
+	var end = list_file.indexOf("/** END USER POINT - General Style **/")		
+	if (end != -1)
+		user_point.general_style = list_file.substring(start, end+38)
+		
+	var start = list_file.indexOf("/** USER POINT - Open New Dialog **/")
+	var end = list_file.indexOf("/** END USER POINT - Open New Dialog **/")		
+	if (end != -1)
+		user_point.open_new_dialog = list_file.substring(start, end+40)
+
+	var start = list_file.indexOf("/** USER POINT - Open Edit Dialog **/")
+	var end = list_file.indexOf("/** END USER POINT - Open Edit Dialog **/")		
+	if (end != -1)
+		user_point.open_edit_dialog = list_file.substring(start, end+41)
+
+	var start = list_file.indexOf("/** USER POINT - Open Display Dialog **/")
+	var end = list_file.indexOf("/** END USER POINT - Open Display Dialog **/")		
+	if (end != -1)
+		user_point.open_display_dialog = list_file.substring(start, end+44)
+		
+	var start = list_file.indexOf("/** USER POINT - Open Delete Dialog **/")
+	var end = list_file.indexOf("/** END USER POINT - Open Delete Dialog **/")		
+	if (end != -1)
+		user_point.open_delete_dialog = list_file.substring(start, end+43)
+		
+	var start = list_file.indexOf("/** USER POINT - Record Created **/")
+	var end = list_file.indexOf("/** END USER POINT - Record Created **/")		
+	if (end != -1)
+		user_point.record_created = list_file.substring(start, end+39)
+		
+	var start = list_file.indexOf("/** USER POINT - Record Updated **/")
+	var end = list_file.indexOf("/** END USER POINT - Record Updated **/")		
+	if (end != -1)
+		user_point.record_updated = list_file.substring(start, end+39)
+		
+	var start = list_file.indexOf("/** USER POINT - Record Deleted **/")
+	var end = list_file.indexOf("/** END USER POINT - Record Deleted **/")		
+	if (end != -1)
+		user_point.record_deleted = list_file.substring(start, end+39)
+		
+	var start = list_file.indexOf("/** USER POINT - New Functions **/")
+	var end = list_file.indexOf("/** END USER POINT - New Functions **/")		
+	if (end != -1)
+		user_point.new_functions = list_file.substring(start, end+38)
+	
+	var start = list_file.indexOf("/** USER POINT - Edit Functions **/")
+	var end = list_file.indexOf("/** END USER POINT - Edit Functions **/")		
+	if (end != -1)
+		user_point.edit_functions = list_file.substring(start, end+39)
+		
+	var start = list_file.indexOf("/** USER POINT - Delete Functions **/")
+	var end = list_file.indexOf("/** END USER POINT - Delete Functions **/")		
+	if (end != -1)
+		user_point.delete_functions = list_file.substring(start, end+41)
+			
+	var start = list_file.indexOf("/** USER POINT - Display Functions **/")
+	var end = list_file.indexOf("/** END USER POINT - Display Functions **/")		
+	if (end != -1)
+		user_point.display_functions = list_file.substring(start, end+42)
+	
     var start = list_file.indexOf('<!--USER POINT - List Style-->');
     var end = list_file.indexOf('<!--END USER POINT - List Style-->');
     if (end != -1)

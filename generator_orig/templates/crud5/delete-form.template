@@ -1,4 +1,4 @@
-<!-- delete-form: version 5.10 -->
+<!-- delete-form: version 5.20 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -41,6 +41,7 @@
 		open_delete_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+<%= user_point.open_delete_dialog %>
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
@@ -57,6 +58,7 @@
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+<%= user_point.record_deleted %>
 			alert("<%= srv(crud, "Record Deleted")%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -65,6 +67,7 @@
 			console.log(this.$.ajax.lastError)
 			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
 		}
+<%= user_point.delete_functions %>
 	})
 </script>
 </dom-module>

@@ -1,4 +1,4 @@
-<!-- display-form: version 5.10 -->
+<!-- display-form: version 5.20 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -36,6 +36,7 @@
 		open_display_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+<%= user_point.open_display_dialog %>
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
@@ -44,6 +45,7 @@
 			%>this.$.<%= keys[i]%>.value = item.<%= keys[i]%>
 			<%} }
 		%>}
+<%= user_point.display_functions %>
 	})
 </script>
 </dom-module>

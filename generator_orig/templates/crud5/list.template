@@ -1,4 +1,4 @@
-<!-- list template: version 6.35 -->
+<!-- list template: version 6.40 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {
@@ -15650,6 +15650,7 @@ paper-menu {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+<%= user_point.general_style %>
 </style>
 
 <%= topBar %>
@@ -16298,7 +16299,7 @@ Polymer({
 <top-bar>>%= lng("%s %s",lng("List"),lng("<%= title%>"))%<</top-bar><%
 	} %>
 <paper-material class="card" elevation="2">
-	<<%= model%>-list></<%= model%>-list>
+	<<%= model%>-list id="<%= model%>_list"></<%= model%>-list>
 </paper-material>
 </body>
 </html>

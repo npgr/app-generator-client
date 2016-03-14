@@ -1,4 +1,4 @@
-<!-- edit-form: version 5.10 -->
+<!-- edit-form: version 5.20 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -48,6 +48,7 @@
 		open_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+<%= user_point.open_edit_dialog %>
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
@@ -100,6 +101,7 @@
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+<%= user_point.record_updated %>
 			alert("<%= srv(crud, "Record Updated")%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -108,6 +110,7 @@
 			console.log(this.$.ajax.lastError)
 			alert("<%= srv(crud, "Error Processing Request: ")%>", this.$.ajax.lastError)
 		}
+<%= user_point.edit_functions %>
 	})
 </script>
 </dom-module>
