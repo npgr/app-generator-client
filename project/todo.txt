@@ -27,20 +27,20 @@
 
 Fix:
     - on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0  (ready)
-	- App Crud fix Lengths of fields 
-	- Default path of App (create app)
-	- Login title (actually "prueba") -- Needs Logo
-	- i18n
-	- Presentation of App (SetTimeOut..)  -- Needs Logo
-	- Change favico of electron  -- Needs Logo
-	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
+	- App Crud fix Lengths of fields  (ready)
 	- improve crud attributes (option more.. attributes). Labels optional
+	- Default path of App (create app)
 	- on starting app: change message and using colors
 	- change deploy folder on new app (app template)
 	- Do not validate license finish date
 	- Add colors (chalk) on creating Function
 	- Set db on generated app (default = disk)
-	
+	- Login title (actually "prueba") -- Needs Logo
+	- i18n
+	- Presentation of App (SetTimeOut..)  -- Needs Logo
+	- Change favico of electron  -- Needs Logo
+	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
+
 - Add user Points (Change name)
 
 - Implement "point of Code" for adding code on every place the developer want ¿?
