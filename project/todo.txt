@@ -31,12 +31,15 @@ Fix:
 	- improve crud attributes (option more.. attributes). Labels optional (ready)
 	- Do not validate license finish date
 	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
+	- Deny client Access from browser 
 	
+	- Import Models from Sails
+	
+	- Set db on generated app (default = disk) - option for export/import DB
 	- Default path of App (create app)
 	- on starting app: change message and using colors
 	- change deploy folder on new app (app template)
 	- Add colors (chalk) on creating Function
-	- Set db on generated app (default = disk)
 	- Login title (actually "prueba") -- Needs Logo
 	- i18n
 	- Presentation of App (SetTimeOut..)  -- Needs Logo
@@ -62,7 +65,6 @@ Fix:
 - Revisar uso de grunt for continuous integration / deployment
 
 - Differentiate colors from generator an generated app
-
 
 - Option for moving server or client from machine (check clients machines on server).
   

@@ -32,8 +32,12 @@ Deploy
 	- Direct: Registro Mercantil (Victor), generate invoice
 	
 5) Landing Page, publish app (for download), validate/update key, receive payments
-	Use Webly, Wix, etc (templates for landing pages)
-    Market Fit - Google Analytics (landing page & generator ?) - Get email address - little survey  (company size, type) - Get stadistics directly from generator
+    - Demo with ngrok
+	- Use Webly, Wix, etc (templates for landing pages)
+    - Market Fit - Google Analytics (landing page & generator ?) - Get email address - little survey  (company size, type) - Get stadistics directly from generator
+	- social media pages
+	- get coverage of specialized press (Inforworld, etc)
+	
 
 ----- Product Ready for Sale -----------
 
