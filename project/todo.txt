@@ -80,6 +80,8 @@ Fix:
 	- Set config file on client
 	
 - ¿ Use i18n for electron pages ?
+
+- error: repeat model-select on generated list.ejs
 	
 - Use ngrok for demo
 
