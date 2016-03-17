@@ -29,7 +29,9 @@ Fix:
     - on app template: upgrade all node_modules (sails, etc). Now is using sails 0.11.0  (ready)
 	- App Crud fix Lengths of fields  (ready)
 	- improve crud attributes (option more.. attributes). Labels optional (ready)
-	- Do not validate license finish date
+	- Do not validate license finish date (ready)
+	- Do not show appropiate message on creating mfunction on expiring license, machine or users
+	- Error validating Machine (image attached)
 	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
 	- Deny client Access from browser 
 	
