@@ -33,6 +33,9 @@ Fix:
 	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
 	- Deny client Access from browser 
 	
+	- ¿ The same app path for all clients ?
+	- Set Title of app (views/layout )
+	
 	- Import Models from Sails
 	
 	- Set db on generated app (default = disk) - option for export/import DB
