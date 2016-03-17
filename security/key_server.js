@@ -179,8 +179,8 @@ function can_generate_mfunction(res) {
 			response_obj.generate = false
 			response_obj.msg = 'Exceded Number of Generated Model Functions Licensed'
 		}
-	
-		if (key.endDate < key.today) {
+		
+		if (response_obj.endDate < response_obj.today) {
 			response_obj.generate = false
 			response_obj.msg = 'License Date Expired'
 		}
