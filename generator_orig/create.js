@@ -17,9 +17,10 @@ function can_generate_mfunction(cb) {
 	key_server('/can_generate_mfunction', function(obj) {
 		if (obj) 
 		{
-			console.log('Licensed until: ', obj.endDate)
-			console.log('Model Functions Generated: ',obj.generated_mfunctions)
-			console.log('Generations Remained: ', obj.remains)
+			console.log(' ', obj.msg)
+			//console.log('Licensed until: ', obj.endDate)
+			//console.log('Model Functions Generated: ',obj.generated_mfunctions)
+			//console.log('Generations Remained: ', obj.remains)
 			cb(obj.generate)
 		}
 		else cb(false)	

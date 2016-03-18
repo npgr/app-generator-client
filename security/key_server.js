@@ -145,7 +145,8 @@ function can_generate_mfunction(res) {
 			{
 				generate: false,
 				key_machine: key.machine,
-				machine: machine
+				machine: machine,
+				msg: 'Server Does not correspond with License'
 			}
 		
 		var response = JSON.stringify(response_obj)
@@ -172,7 +173,8 @@ function can_generate_mfunction(res) {
 			ga: key.ga,
 			download: key.download,
 			print: key.print,
-			help: key.help
+			help: key.help,
+			msg: 'Licensed Until '+ key.endDate
 		}
 	
 		if (key.mfunctions <= key.generated_mfunctions) {
