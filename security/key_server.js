@@ -136,23 +136,39 @@ function can_generate_model(res) {
 }
 
 function can_generate_mfunction(res) {
-	var machine = get_machine()
-
-	if ((machine.cores != key.machine.cores) || (machine.cpu != key.machine.cpu) ||
-	    (machine.speed != key.machine.speed) || (machine.address != key.machine.address))
-	{
-		var response_obj =
-			{
-				generate: false,
-				key_machine: key.machine,
-				machine: machine,
-				msg: 'Server Does not correspond with License'
+	get_machine_id(function(err, _uuid) {
+		uuid = _uuid
+		if (err) {
+			console.log('Error', uuid)
+			return
+		}
+		get_disk_id(function(err, disk_id) {
+			if (err) {
+				console.log('Error', disk_id)
+				return
 			}
-		
-		var response = JSON.stringify(response_obj)
-		res.end(encrypt(response))
-		return
-	} 
+			
+			if ((uuid != key.uuid) || (disk_id != key.disk_id))
+			{
+				var response_obj =
+				{
+					generate: false,
+					//License_uuid: key.uuid,
+					//Server_uuid: uuid,
+					//License_disk: key.disk_id,
+					//Server_disk: disk_id,
+					msg: 'Server Does not correspond with License'
+				}
+				var response = JSON.stringify(response_obj)
+				res.end(encrypt(response))
+				return
+			}
+			can_generate_mfunction2(res)
+		})
+	})
+}
+
+function can_generate_mfunction2(res) {
 
 	get_today(function(err, date) {
 		if (err) {
@@ -307,6 +323,38 @@ function encrypt(text){
 	var crypted = cipher.update(text,'utf8','hex')
 	crypted += cipher.final('hex');
 	return crypted;
+}
+
+function get_machine_id(cb) {
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['csproduct', 'get', 'UUID'])
+	
+	child.stdout.on('data', function(data) {
+		var dat = data.toString().split('\n')[1].toString()
+		pos= dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+}
+
+function get_disk_id(cb) {
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['DISKDRIVE', 'get', 'SerialNumber'])
+	
+	child.stdout.on('data', function(data) {
+		var dat = data.toString().split('\n')[1].toString()
+		pos= dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
 }
 
 function get_machine() {

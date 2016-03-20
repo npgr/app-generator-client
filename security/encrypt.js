@@ -1,5 +1,4 @@
-var machine = get_machine()
-
+//var machine = get_machine()
 var prompt = require('prompt');
 prompt.start();
  
@@ -107,22 +106,72 @@ prompt.start();
     // Log the results. 
     // 
 	console.log('Command-line input received:');
-	result.machine = machine
+	//result.machine = machine
 	result.generated_apps = 0
 	result.generated_models = 0
 	result.generated_mfunctions = 0
-	console.log('result: ', result)
 	
-	var encryptedPassword = encrypt(JSON.stringify(result))
+	get_machine_id(function(err, uuid) {
+		if (err) {
+			console.log('Error', uuid)
+			return
+		}
+		get_disk_id(function(err, disk_id) {
+			if (err) {
+				console.log('Error', disk_id)
+				return
+			}
+			result.uuid = uuid
+			result.disk_id = disk_id
+			
+			console.log('result: ', result)
 	
-	console.log('encrypted :', encryptedPassword);
+			var encryptedPassword = encrypt(JSON.stringify(result))
 	
-	fs = require('fs')
-	fs.writeFile('key',encryptedPassword,'utf8')
+			console.log('encrypted :', encryptedPassword);
+	
+			fs = require('fs')
+			fs.writeFile('key',encryptedPassword,'utf8')
+		})
+	})
+	
+	
   });
   
-  
-  function get_machine() {
+function get_machine_id(cb) {
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['csproduct', 'get', 'UUID'])
+	
+	child.stdout.on('data', function(data) {
+		var dat = data.toString().split('\n')[1].toString()
+		pos= dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+}
+
+function get_disk_id(cb) {
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['DISKDRIVE', 'get', 'SerialNumber'])
+	
+	child.stdout.on('data', function(data) {
+		var dat = data.toString().split('\n')[1].toString()
+		pos= dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+}
+
+/** Deprecated **/
+function get_machine() {
 	var os = require('os')
 
 	var cpus = os.cpus()
