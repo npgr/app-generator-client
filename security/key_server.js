@@ -153,10 +153,10 @@ function can_generate_mfunction(res) {
 				var response_obj =
 				{
 					generate: false,
-					//License_uuid: key.uuid,
-					//Server_uuid: uuid,
-					//License_disk: key.disk_id,
-					//Server_disk: disk_id,
+					License_uuid: key.uuid,
+					Server_uuid: uuid,
+					License_disk: key.disk_id,
+					Server_disk: disk_id,
 					msg: 'Server Does not correspond with License'
 				}
 				var response = JSON.stringify(response_obj)
@@ -326,34 +326,46 @@ function encrypt(text){
 }
 
 function get_machine_id(cb) {
+	dat1 = ''
 	var spawn = require('child_process').spawn;
 
 	child = spawn('wmic',['csproduct', 'get', 'UUID'])
 	
 	child.stdout.on('data', function(data) {
-		var dat = data.toString().split('\n')[1].toString()
-		pos= dat.indexOf(' ')
-		cb(false, dat.substr(0,pos))
+		dat1 += data.toString()
 	});
 	
 	child.stderr.on('data', function (data) {
 		cb(true, 'Message: '+ data.toString())
 	});
+	
+	child.on('close', function(code) {
+		//console.log('uuid: ',dat1)
+		var dat = dat1.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
 }
 
 function get_disk_id(cb) {
+	dat2 = ''
 	var spawn = require('child_process').spawn;
 
 	child = spawn('wmic',['DISKDRIVE', 'get', 'SerialNumber'])
 	
 	child.stdout.on('data', function(data) {
-		var dat = data.toString().split('\n')[1].toString()
-		pos= dat.indexOf(' ')
-		cb(false, dat.substr(0,pos))
+		dat2 += data.toString()
 	});
 	
 	child.stderr.on('data', function (data) {
 		cb(true, 'Message: '+ data.toString())
+	});
+	
+	child.on('close', function(code) {
+		//console.log('disk_id: ',dat2)
+		var dat = dat2.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
 	});
 }
 
