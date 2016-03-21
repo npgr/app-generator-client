@@ -14,24 +14,45 @@ option = '/'+process.argv[4]
 
 console.log('\n Result:\n')
 
-const http = require('http'); 
-var options = {
-    host: host,
-    port: port,
-	path: option,
-    method: 'POST',
-    //headers: {
-    //    accept: 'application/json'
-    //}
-};
+get_machine_id(function(err, machine) {
+	if (err) 
+	{
+		console.log('Error getting ioma')
+		return
+	}
+	machine_crypt = encrypt2(machine)
+	
+	get_disk_id(function(err, disk_id) {
+		if (err) 
+		{
+			console.log('Error getting doma')
+			return
+		}
+		var disk_crypt = encrypt2(disk_id)
+		
+		send_request(machine_crypt, disk_crypt)
+	
+	})
+}) 
 
+/** Functions **/
 
-/*switch (option)
+function send_request(machine_crypt, disk_crypt)
 {
-	case 'key': 
-		options.path = '/key'
-	break;
-}*/
+	
+	const http = require('http'); 
+	var options = {
+		host: host,
+		port: port,
+		path: option,
+		method: 'POST',
+		headers: {
+			//  accept: 'application/json'
+			ioma_data: machine_crypt,
+			doma_data: disk_crypt
+		}
+	};
+
 
 	var request = http.request(options,function(res){
 		res.on('data',function(data_stream){
@@ -54,7 +75,7 @@ var options = {
 	})
 	
 	request.end();
-
+}
 
 function decrypt(text){
   var crypto = require('crypto')
@@ -64,6 +85,57 @@ function decrypt(text){
   return dec;
 }
 
+function encrypt2(text){
+	var crypto = require('crypto')
+	var cipher = crypto.createCipher('aes-256-cbc','ujhdhuegd(/&GS)(/GSK))??jiuiiuh&6568CD795')
+	var crypted = cipher.update(text,'utf8','hex')
+	crypted += cipher.final('hex');
+	return crypted;
+}
+
+function get_machine_id(cb) {
+	dat1 = ''
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['csproduct', 'get', 'UUID'])
+	
+	child.stdout.on('data', function(data) {
+		dat1 += data.toString()
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+	
+	child.on('close', function(code) {
+		//console.log('uuid: ',dat1)
+		var dat = dat1.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+}
+
+function get_disk_id(cb) {
+	dat2 = ''
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['DISKDRIVE', 'get', 'SerialNumber'])
+	
+	child.stdout.on('data', function(data) {
+		dat2 += data.toString()
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+	
+	child.on('close', function(code) {
+		//console.log('disk_id: ',dat2)
+		var dat = dat2.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+}
 
 /* **** prueba2 
 

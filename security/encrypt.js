@@ -32,6 +32,16 @@ prompt.start();
       },
 	  message: 'Value must be Greater Than cero'
     }, {
+	description: 'Machines',
+      name: 'machines',
+	  type: 'integer',
+	  required: true,
+      conform: function (value) {
+        if (value <= 0) return false
+	   return true;
+      },
+	  message: 'Value must be Greater Than cero'
+    }, {
 	description: 'Apps',
       name: 'apps',
 	  type: 'integer',
@@ -121,11 +131,14 @@ prompt.start();
 				console.log('Error', disk_id)
 				return
 			}
-			result.uuid = uuid
-			result.disk_id = disk_id
+			
+			result.machine = [{
+				uuid: uuid,
+				disk_id: disk_id
+			}]
 			
 			console.log('result: ', result)
-	
+			
 			var encryptedPassword = encrypt(JSON.stringify(result))
 	
 			console.log('encrypted :', encryptedPassword);

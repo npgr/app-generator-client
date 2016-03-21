@@ -1,3 +1,4 @@
+log('Starting License Service')
 //key = read_key()
 key = read_key()
 
@@ -39,7 +40,7 @@ function handleRequest(req, res){
 				can_generate_model(res)
 			break;
 			case '/can_generate_mfunction':
-				can_generate_mfunction(res)
+				can_generate_mfunction(req, res)
 			break;
 			case '/generate_app':
 				generate_app(res)
@@ -91,7 +92,8 @@ function generate_model(res) {
 	res.end(encrypt(response))
 }
 
-function generate_mfunction(res) {
+function generate_mfunction(req, res) {
+	
 	//key.generated_mfunctions = 1
 	key.generated_mfunctions++
 	
@@ -135,41 +137,65 @@ function can_generate_model(res) {
 	res.end(encrypt(response))
 }
 
-function can_generate_mfunction(res) {
+function can_generate_mfunction(req, res) {
+	client_uuid = decrypt2(req.headers.ioma_data)
+	client_disk_id = decrypt2(req.headers.doma_data)
+	
 	get_machine_id(function(err, _uuid) {
-		uuid = _uuid
+		server_uuid = _uuid
 		if (err) {
 			console.log('Error', uuid)
 			return
 		}
-		get_disk_id(function(err, disk_id) {
+		get_disk_id(function(err, server_disk_id) {
 			if (err) {
-				console.log('Error', disk_id)
+				console.log('Error', server_disk_id)
 				return
 			}
 			
-			if ((uuid != key.uuid) || (disk_id != key.disk_id))
+			if ((server_uuid != key.machine[0].uuid) || (server_disk_id != key.machine[0].disk_id))
 			{
 				var response_obj =
 				{
 					generate: false,
-					License_uuid: key.uuid,
-					Server_uuid: uuid,
-					License_disk: key.disk_id,
-					Server_disk: disk_id,
+					License_uuid: key.machine[0].uuid,
+					Server_uuid: server_uuid,
+					Client_uuid: client_uuid,
+					License_disk: key.machine[0].disk_id,
+					Server_disk: server_disk_id,
+					Client_disk: client_disk_id,
 					msg: 'Server Does not correspond with License'
 				}
 				var response = JSON.stringify(response_obj)
 				res.end(encrypt(response))
 				return
 			}
+			for (var i=0; i< key.machine.length; i++)
+				if ((client_uuid != key.machine[i].uuid) || (client_disk_id != key.machine[i].disk_id))
+				{
+					var response_obj =
+					{
+						generate: false,
+						License_uuid: key.machine[0].uuid,
+						Server_uuid: server_uuid,
+						Client_uuid: client_uuid,
+						License_disk: key.machine[0].disk_id,
+						Server_disk: server_disk_id,
+						Client_disk: client_disk_id,
+						msg: 'Client Computer Does not correspond with License'
+					}
+					var response = JSON.stringify(response_obj)
+					res.end(encrypt(response))
+					return
+				}
 			can_generate_mfunction2(res)
 		})
 	})
 }
 
 function can_generate_mfunction2(res) {
-
+	log('Can Generate mFunction')
+	
 	get_today(function(err, date) {
 		if (err) {
 			console.log('Error Getting Date')
@@ -317,6 +343,14 @@ function decrypt(text){
   return dec;
 }
 
+function decrypt2(text){
+  var crypto = require('crypto')
+  var decipher = crypto.createDecipher('aes-256-cbc','ujhdhuegd(/&GS)(/GSK))??jiuiiuh&6568CD795')
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
 function encrypt(text){
 	var crypto = require('crypto')
 	var cipher = crypto.createCipher('aes-256-cbc','iydc9i376cdp06dcop862dxo%/#OIGC23864LUCD795')
@@ -387,4 +421,10 @@ function get_machine() {
 		//scope_id: net[keys[0]][0].scopeid	
 	}
 	return machine
+}
+
+function log(txt) {
+	fs = require('fs')
+	
+	fs.appendFileSync(__dirname+'/log.txt', txt+'\n', 'utf8')
 }
