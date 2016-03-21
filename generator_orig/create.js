@@ -14,23 +14,84 @@
 
 /** Get License Information **/
 function can_generate_mfunction(cb) {
-	key_server('/can_generate_mfunction', function(obj) {
-		if (obj) 
+	log('Can Generate mfunction')
+	
+	get_machine_id(function(err, machine) {
+		if (err) 
 		{
-			console.log(' ', obj.msg)
-			//console.log('Licensed until: ', obj.endDate)
-			//console.log('Model Functions Generated: ',obj.generated_mfunctions)
-			//console.log('Generations Remained: ', obj.remains)
-			cb(obj.generate)
+			console.log('Error getting ioma')
+			return
 		}
-		else cb(false)	
-	})
+		machine_crypt = encrypt2(machine)
+	
+		get_disk_id(function(err, disk_id) {
+			if (err) 
+			{
+				console.log('Error getting doma')
+				return
+			}
+			var disk_crypt = encrypt2(disk_id)
+		
+			key_server2('/can_generate_mfunction', machine_crypt, disk_crypt, function(obj) {
+				if (obj) 
+				{
+					console.log(' ', obj.msg)
+					//console.log('Licensed until: ', obj.endDate)
+					//console.log('Model Functions Generated: ',obj.generated_mfunctions)
+					//console.log('Generations Remained: ', obj.remains)
+					cb(obj.generate)
+				}
+				else cb(false)	
+			})
+		})
+	}) 
 }
 
 function generated_mfunction(cb) {
 	key_server('/generate_mfunction', function(obj) {
 		return true
 	})
+}
+
+function key_server2(option, machine_crypt, disk_crypt, cb) {
+
+	var data = require('fs').readFileSync('./config.json','utf8')
+	var data_obj = JSON.parse(data)
+	var arr = data_obj.url.split(':')
+
+	const http = require('http'); 
+
+	var options = {
+		host: arr[1].substring(2),
+		port: Number(arr[2])+333,
+		path: option,
+		method: 'POST',
+		headers: {
+		//    accept: 'application/json'
+			ioma_data: machine_crypt,
+			doma_data: disk_crypt
+		}
+	}
+	//console.log('Options: ',options)
+	//process.exit()
+
+	var request = http.request(options,function(res){
+		res.on('data',function(data_stream){
+			var data = data_stream.toString()
+			var obj = JSON.parse(decrypt(data))
+
+			//console.log(obj)
+			cb(obj)
+		});
+	});
+	
+	request.on('error', function(err) {
+		log('key_server2 - request error')
+		console.log('Cannot Get License Information')
+		cb(false)
+	})
+	
+	request.end();
 }
 
 function key_server(option, cb) {
@@ -64,6 +125,7 @@ function key_server(option, cb) {
 	});
 	
 	request.on('error', function(err) {
+		log('key_server - request error')
 		console.log('Cannot Get License Information')
 		cb(false)
 	})
@@ -182,4 +244,62 @@ function read_file(file_path) {
 		return 'file does not exist'
 		
 	return fs.readFileSync(file_path, 'utf8')
+}
+
+function encrypt2(text){
+	var crypto = require('crypto')
+	var cipher = crypto.createCipher('aes-256-cbc','ujhdhuegd(/&GS)(/GSK))??jiuiiuh&6568CD795')
+	var crypted = cipher.update(text,'utf8','hex')
+	crypted += cipher.final('hex');
+	return crypted;
+}
+
+function get_machine_id(cb) {
+	dat1 = ''
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['csproduct', 'get', 'UUID'])
+	
+	child.stdout.on('data', function(data) {
+		dat1 += data.toString()
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+	
+	child.on('close', function(code) {
+		//console.log('uuid: ',dat1)
+		var dat = dat1.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+}
+
+function get_disk_id(cb) {
+	dat2 = ''
+	var spawn = require('child_process').spawn;
+
+	child = spawn('wmic',['DISKDRIVE', 'get', 'SerialNumber'])
+	
+	child.stdout.on('data', function(data) {
+		dat2 += data.toString()
+	});
+	
+	child.stderr.on('data', function (data) {
+		cb(true, 'Message: '+ data.toString())
+	});
+	
+	child.on('close', function(code) {
+		//console.log('disk_id: ',dat2)
+		var dat = dat2.split('\n')[1].toString()
+		var pos = dat.indexOf(' ')
+		cb(false, dat.substr(0,pos))
+	});
+}
+
+function log(txt) {
+	fs = require('fs')
+	
+	fs.appendFileSync(__dirname+'/log.txt', txt+'\n', 'utf8')
 }
