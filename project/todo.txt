@@ -35,11 +35,13 @@ Fix:
 	- server red msg when key_server get / user
 	- i18n on server (configure language on DB User) (ready)
 	- i18n on client (electron)
+	- Menu options with underscore
 	- hide message of key server & change name
 	- update app template with Language settings
 	- Validate nro clients (uuid of client machine)
 	- installer
 	
+	- replace data.json for generator with ipc
 	- replace zip_util.js by zip_util.exe (jx) and use chalk (colors)
 	- Deny client Access from browser 
 	
