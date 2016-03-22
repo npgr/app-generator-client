@@ -32,8 +32,11 @@ Fix:
 	- Do not validate license finish date (ready)
 	- Do not show appropiate message on creating mfunction on expiring license, machine or users (ready)
 	- Error validating Machine (image attached) (ready)
-	- server red msg when key_server get /user
-	- i18n (configure language)
+	- server red msg when key_server get / user
+	- i18n on server (configure language on DB User) (ready)
+	- i18n on client (electron)
+	- hide message of key server & change name
+	- update app template with Language settings
 	- Validate nro clients (uuid of client machine)
 	- installer
 	
@@ -105,7 +108,7 @@ Fix:
 	
 - Create a Tutorial Video / and Documentation
 
-- Create Landing Page & Logo (subcontract)
+- Create Landing Page & Logo (subcontract) - Weebly, wix, etc
 
 - validate digits of date  2016/02/01 vs 2016/2/1 (allways include 0 for d/m < 10), on encrypt and get_date from server
 
