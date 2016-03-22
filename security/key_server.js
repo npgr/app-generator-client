@@ -92,7 +92,7 @@ function generate_model(res) {
 	res.end(encrypt(response))
 }
 
-function generate_mfunction(req, res) {
+function generate_mfunction(res) {
 	
 	//key.generated_mfunctions = 1
 	key.generated_mfunctions++
@@ -424,7 +424,8 @@ function get_machine() {
 }
 
 function log(txt) {
+	return
 	fs = require('fs')
 	
-	fs.appendFileSync(__dirname+'/log.txt', txt+'\n', 'utf8')
+	fs.appendFileSync(__dirname+'/log.txt', txt+'/n', 'utf8')
 }
