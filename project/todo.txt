@@ -35,8 +35,8 @@ Fix:
 	- server red msg when key_server get / user
 	- i18n on server (configure language on DB User) (ready)
 	- Menu options with underscore (ready)
-	- update app template with Language settings. Compare node modules in zip and folder
-	- Load App Template disk DB with updated tables & data
+	- update app template with Language settings. Compare node modules in zip and folder (ready)
+	- Load App Template disk DB with updated tables & data (ready)
 	- Change User Menu (profile & Logout) - all ejs - Template
 	- UserResource is not in template (OJO profile resource "data" attribute)
 	- using pm2 for running app
