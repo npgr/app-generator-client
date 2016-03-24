@@ -1,0 +1,179 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/d3/d3.min.js"></script>
+
+<dom-module id="app-chart-vbar" >
+  <template>
+    <style>    
+		/*rect {
+		    // Css tiene prioridad sobre script
+			fill: gray;
+		}*/
+		#my_svg {
+			background-color: white;
+			//background-color: #F8F8F8; /*Gainsboro;*/
+			/*border-style: solid;
+			border-width: 1px;
+			margin-top: 20px;
+			margin-left: 20px;*/
+			padding: 10px;
+		}
+		.vertical-text {
+			transform: rotate(90deg);
+			transform-origin: left top 0;
+		}
+    </style>
+		<div id="hiden" style="position:absolute;visibility:hidden"></div>
+		<div id="my_svg"></div>
+  </template>
+  <script>
+    Polymer({
+		is: "app-chart-vbar",
+		properties: {
+			data: {
+				type: String,
+				value: ""
+			},
+			width: {
+				type: Number,
+				value: 250,
+			},
+			height: {
+				type: Number,
+				value: 250
+			},
+			ancho_barra: {
+				type: Number,
+				value: 60
+			},
+			Y_axis_text: {
+				type: String,
+				value: ''
+			}
+		},
+		paint: function() {
+			//this.data = [ {data:91, color:"orange", label:"Regulados"}, 
+			//			  {data:277, color:"purple", label:"No Regulados"},
+			//			  {data:180, color:"blue", label:"CDT"},
+			//			  {data:320, color:"rgb(200, 100, 80)", label:"CCS"} ] 		  
+			this.$.my_svg.innerHTML = ''
+			var width = this.width
+			var top_margin = 15
+			var bottom_margin= 60  //depends on labels length - X-axis
+			var bottom_chart = this.height - bottom_margin
+			var left_margin= 30  // depends on values - Y-axis
+			var rigth_margin= 15
+			//this.height= this.data.length*45 + 30//300; //función de la cantidad de datos
+			var max = 0
+			// Max element on Array
+			for (i=0; i < this.data.length; i++){
+				if (this.data[i].data > max) max = this.data[i].data
+			}
+			widthScale = d3.scale.linear()
+					.domain( [0, max])
+					.range( [ 0, this.height - top_margin - bottom_margin])
+			widthScale2 = d3.scale.linear()
+					.domain( [0, max])
+					.range( [ this.height - top_margin - bottom_margin, 0])
+			// length of bar and position of label
+			for (i=0; i < this.data.length; i++){
+				this.data[i].length = widthScale(this.data[i].data)
+				//this.$.hiden.innerHTML= this.data[i].label+" ("+this.data[i].data+")"
+				//this.data[i].pos = this.data[i].length - 7 - this.$.hiden.clientWidth
+			}
+			
+			axis = d3.svg.axis()
+					.ticks(5)
+					.orient("left")
+					.scale(widthScale2)
+					//.tickSubdivide(true)  ???
+			
+			svg = d3.select(this.$.my_svg)
+				.style({"width": this.width})
+				.append("svg")
+				.attr("width", this.width)
+				.attr("height", this.height)
+			
+			yAxis = svg.append("g")
+				.attr("transform", "translate("+left_margin+", "+ top_margin + ")")
+				.call(axis)
+			
+			yAxis.selectAll(".domain")
+				.style({ 'stroke': 'Black', 'fill': 'none', 'stroke-width': '2px'})
+				
+			yAxis.selectAll(".tick text")
+				.style({ 'font-size': 11})
+				
+			svg.append("line")
+				.attr("x1", left_margin-6)
+				.attr("y1", bottom_chart+1)
+				.attr("x2", this.width - rigth_margin)
+				.attr("y2", bottom_chart+1)
+				.style( { 'stroke': 'black', 'stroke-width': 3 })
+			
+			// Y-axis Text
+			if (this.Y_axis_text != '')
+			  svg.append("text")
+				.attr("fill", "black")
+				//.style({ "text-anchor": "middle"})
+				.attr("y", 12)
+				.attr("x", 0)
+				.text("SKU\'s")
+				.style({ 'font-size': 12})
+			
+			// Get Ticks for drawing lines from
+			svg.selectAll(".tick")
+				.each(function(tick) { 
+				  if (tick != 0) 
+				  {
+					svg.append("line")
+					.attr("x1", left_margin+2)
+					.attr("y1", bottom_chart - widthScale(tick))
+					.attr("x2", width - rigth_margin)
+					.attr("y2", bottom_chart - widthScale(tick))
+					.style( { 'stroke': 'lightblue', 'stroke-width': 1})// "stroke-dasharray": "2,3" })
+					
+					svg.append("line")
+					.attr("x1", left_margin - 5)
+					.attr("y1", bottom_chart - widthScale(tick))
+					.attr("x2", left_margin)
+					.attr("y2", bottom_chart - widthScale(tick))
+					.style( { 'stroke': 'black', 'stroke-width': 2})// "stroke-dasharray": "2,3" })
+				  }
+				})
+				
+			var ancho_barra = this.ancho_barra
+
+			this.data.forEach(function(d, i) {
+				// Bar
+				svg.append("rect")
+				.attr("width", ancho_barra)
+				.attr("height", d.length )
+				.attr("fill", d.color )
+				.attr("y", bottom_chart - d.length )
+				.attr("x",  i*(ancho_barra+15) + 60)
+				// text in bar
+				svg.append("text")
+				.attr("fill", "white")
+				.style({ "text-anchor": "middle"})
+				.attr("y",  bottom_chart - d.length + 20 )
+				.attr("x", i*(ancho_barra+15) + 88)
+				.text(d.data)
+				.style({ 'font-size': 13})
+				// text on x Axis
+				svg.append("text")
+				.attr("fill", "black")
+				//.style( { 'writing-mode': 'tb', 'glyph-orientation-vertical': 0, 'letter-spacing': -2 })
+				.style("text-anchor", "end")
+				//.style({ "text-anchor": "middle"})
+				.attr("y", bottom_chart + 15)//bottom_chart - d.length/2 )
+				.attr("x", i*(ancho_barra+15) + 95)
+				.attr("transform", "rotate(-25 "+(i*(ancho_barra+15)+95)+","+(bottom_chart+15)+")")
+				.text(d.label)
+				.style({ 'font-size': 14})
+			})
+
+			//svg.attr("viewBox", '0 0 200 200')
+		}
+	})
+  </script>
+</dom-module>

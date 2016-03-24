@@ -1,0 +1,542 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="app-cotizar">
+<template>
+<style>
+	td {
+		margin-left: 40px;
+		//padding: 15px;
+	}
+	.age {
+		width: 3em;
+	}
+	.name {
+		width: 15em;
+	}
+	.alnright { 
+		text-align: right; 
+	}
+	paper-fab {
+		display: inline-block;
+		margin-left: 50px;
+	}
+	[disabled] {
+		background: #eaeaea;
+	}
+	html {
+		background-color: honeyDew;
+	}
+	.print-area {
+		display: none;
+	}
+	.table_list {
+		margin: 20px;
+	}
+	@media print
+	{    
+	  html, body 
+	  {
+		background-color: white;
+	  }
+	  .no-print, .no-print *
+	  {
+        display: none;
+	  }
+	  .print-area
+	  {
+		display: block;
+	  }
+	  .table_list {
+		margin: 20px 0;
+	  }
+	}
+	[inline] {
+		display: inline;
+	}
+	[bluecorp] {
+		color: #4A148C;
+	}
+</style>
+	<iron-ajax id="ajax" url="/prima" handle-as="json" on-response="load_data" on-error="ajax_error" auto></iron-ajax>
+	<section class="print-area">
+		<h2 bluecorp>Allianz</h2>
+		<div bluecorp>Allianz World Wide Care</div>
+		<div inline bluecorp>www.allianzworldwidecare.com</div>
+		  <span style="margin-left: 250px;">Estimado(a): </span>
+		  <span style="margin-left:10px;"><strong>{{cotizacion.1.asegurado}}</strong></span>
+		<br>
+		<div>[[getDate()]]</div>
+		<br>
+		<div inline="">Ref: Propuesta de Global Pass</div><span>{{selected_plan.name}}</span>
+			<span style="margin-left: 200px;">Suma Asegurada: </span>
+			<span><strong>{{selected_plan.coverage}}</strong></span>
+		<br>
+		<br>
+		<p style="width: 95%; text-align: justify;">
+		Por medio de la presente tenemos el agrado de cotizarle un Global Pass, que es un Plan de Gastos Médicos
+Internacionales de nuestra representada, la compañía Allianz Worldwide Care, el cual fue diseñado para proteger el
+futuro de su familia. Su plan, aparte de tener cobertura Worldwide, goza de beneficios extraordinarios y renovación
+garantizada por la vida de la póliza bajo los mismos términos iníc iales siempre y cuando dicho plan se mantenga vigente y
+al día.</p>
+	<p style="width: 95%;text-align: justify;">
+	Adjunto encontrará un archivo en Adobe (PDF) con el folleto que describe las condiciones y términos de este plan para su
+información, estudio y análisis. De acuerdo a las edades que nos indicó, el costo de su plan de gasto méd ico internacional
+Global Pass se desglosa de la siguiente forma : 
+	</p>
+	</section>
+	<br><br>
+	<label class="left_label" for="residence" style="margin:0 7px 0 20px;">Residencia</label>
+	<select id="residence" on-change="change_residence">
+		<option value="B">Brasil</option>
+		<option value="M">Mexico</option>
+		<option value="L">Resto Latinoamérica</option>
+	</select>
+	<label class="left_label" for="region" style="margin:0 7px 0 20px;">Cobertura</label>
+	<select id="region" on-change="change_region">
+		<option value="L">Latinoamérica</option>
+		<option value="W">Worldwide</option>
+	</select>
+	<label class="left_label" for="coverage" style="margin:0 7px 0 20px;">Cobertura</label>
+	<select id="coverage" on-change="change_coverage">
+		<option value="1">$ 9.000.000</option>
+		<option value="2">$ 7.000.000</option>
+	</select>
+	<label class="left_label" for="type" style="margin:0 7px 0 20px;">Tipo</label>
+	<select id="type" on-change="change_type">
+		<option value="I">Individual (hasta 2 asegurados)</option>
+		<option value="F">Familiar (3 o más asegurados)</option>
+	</select>
+	
+	<paper-fab id="btn_print" class="no-print" mini on-tap="print" icon="print" style="top:15px;"></paper-fab>
+	
+	<table class="table_list">
+		<thead>
+		  <tr>
+			<th style="padding: 5px; text-align: center;">#</th>
+			<th>Asegurado</th>
+			<th>Parentesco</th>
+			<th>Edad</th>
+			<th>{{selected_plan.deducible1}}</th>
+			<th>{{selected_plan.deducible2}}</th>
+			<th>{{selected_plan.deducible3}}</th>
+			<th>{{selected_plan.deducible4}}</th>
+			<th>{{selected_plan.deducible5}}</th>
+			<th>{{selected_plan.deducible6}}</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+			<td>1</td>
+			<td><input id="name1" class="name" type="string" value="{{cotizacion.1.asegurado::input}}"></td>
+			<td>Titular</td>
+			<td><input id="age1" class="age" type="number" max=80 value="{{cotizacion.1.edad::input}}" on-change="calcular_prima1"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.1.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>2</td>
+			<td><input id="name2" class="name" type="string"  value="{{cotizacion.2.asegurado::input}}"></td>
+			<td><select id="parentesco2">
+				<option value="">---</option>
+				<option value="Conyuge">Conyuge</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age2" class="age" type="number" value="{{cotizacion.2.edad::input}}" on-change="calcular_prima2"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.2.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>3</td>
+			<td><input id="name3" class="name" type="string" value="{{cotizacion.3.asegurado::input}}"></td>
+			<td><select id="parentesco3">
+				<option value="">---</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age3" class="age" type="number" value="{{cotizacion.3.edad::input}}" on-change="calcular_prima3"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.3.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>4</td>
+			<td><input id="name4" class="name" type="string"  value="{{cotizacion.4.asegurado::input}}"></td>
+			<td><select id="parentesco4">
+				<option value="">---</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age4" class="age" type="number" value="{{cotizacion.4.edad::input}}" on-change="calcular_prima4"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.4.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>5</td>
+			<td><input id="name5" class="name" type="string" value="{{cotizacion.5.asegurado::input}}"></td>
+			<td><select id="parentesco5">
+				<option value="">---</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age5" class="age" type="number" value="{{cotizacion.5.edad::input}}" on-change="calcular_prima5"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.5.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>6</td>
+			<td><input id="name6" class="name" type="string" value="{{cotizacion.6.asegurado::input}}"></td>
+			<td><select id="parentesco6">
+				<option value="">---</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age6" class="age" type="number" value="{{cotizacion.6.edad::input}}" on-change="calcular_prima6"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.6.prima.6)]]</td>
+		  </tr>
+		  <tr>
+			<td>7</td>
+			<td><input id="name7" class="name" type="string" value="{{cotizacion.7.asegurado::input}}"></td>
+			<td><select id="parentesco7">
+				<option value="">---</option>
+				<option value="Hijo">Hijo</option>
+				<option value="Padre">Padre</option>
+			</select></td>
+			<td><input id="age7" class="age" type="number" value="{{cotizacion.7.edad::input}}" on-change="calcular_prima7"></td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.1)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.2)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.3)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.4)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.5)]]</td>
+			<td class="alnright">[[numberWithCommas(cotizacion.7.prima.6)]]</td>
+		  </tr>
+		</tbody>
+		<tfoot>
+		  <tr>
+			<td></td>
+			<td class="alnright" style="padding: 5px 0;"><strong>Primas Anuales Totales</strong></td>
+			<td></td>
+			<td></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.1)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.2)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.3)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.4)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.5)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total1.6)]]</strong></td>
+		  </tr>
+		  <tr>
+			<td></td>
+			<td class="alnright" style="padding: 5px 0;"><strong>Financiamiento Semestral (+4%)</strong></td>
+			<td></td>
+			<td></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.1)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.2)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.3)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.4)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.5)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total2.6)]]</strong></td>
+		  </tr>
+		  <tr>
+			<td></td>
+			<td class="alnright" style="padding: 5px 0;"><strong>Financiamiento Trimestral (+6%)</strong></td>
+			<td></td>
+			<td></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.1)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.2)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.3)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.4)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.5)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.6)]]</strong></td>
+		  </tr>
+		  <tr>
+			<td></td>
+			<td class="alnright" style="padding: 5px 0;"><strong>Financiamiento Mensual (+8%)</strong></td>
+			<td></td>
+			<td></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total4.1)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total4.2)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total4.3)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total4.4)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total4.5)]]</strong></td>
+			<td class="alnright"><strong>[[numberWithCommas(cotizacion.total3.6)]]</strong></td>
+		  </tr>
+		</tfoot>
+	</table>
+	
+	
+	<section class="print-area">
+	<br>
+	<p style="width: 95%; text-align: justify;">
+	Esperamos que esta oferta se ajuste a vuestro presupuesto . Si tuviese alguna pregunta sobre su plan de gasto médico, le pedimos contactar al
+suscrito, quien gustosamente le brindará el servicio y asesoramiento que Usted se merece . 
+al día.
+	</p>
+	<br>
+	<div>Cordialmente,</div>
+	<br>
+<div>Depto. de Ventas</div>
+<div>Allianz Worldwide Care</div>
+<div>Dublin, Ireland</div> 
+	</section>
+</template>
+<script>
+Polymer({
+		is: "app-cotizar",
+		ready: function() {
+			//this.getData()	
+			this.selected_plan = {
+				coverage: '',
+				deducible1: '$500,00',
+				deducible2: '$1.000,00',
+				deducible3: '$2.000,00',
+				deducible4: '$5.000,00',
+				deducible5: '$10.000,00',
+				deducible6: '$20.000,00'
+			}
+			var plans = {
+				1: {
+					name: 'Choice #1',
+					coverage: '$9.000.000',
+					deducible1: '$500',
+					deducible2: '$1.000',
+					deducible3: '$2.000',
+					deducible4: '$5.000',
+					deducible5: '$10.000',
+					deducible6: '$20.000'
+				},
+				2: {
+					name: 'Choice #2',
+					coverage: '$7.000.000',
+					deducible1: '$750',
+					deducible2: '$1.000',
+					deducible3: '$2.000',
+					deducible4: '$5.000',
+					deducible5: '$10.000',
+					deducible6: '$20.000'
+				}
+			}
+			
+			if (this.$.coverage.value == "1")
+				this.set('selected_plan.coverage', '$ 9.000.000')
+			  else	
+				this.set('selected_plan.coverage', '$ 7.000.000')
+			 	 
+			this.cotizacion = {
+				plan: plans['1'],
+				1: { 	
+					asegurado: '', parentesco: 'Titular', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				2: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				3: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				4: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				5: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				6: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				7: { 	
+					asegurado: '', parentesco: '', edad: null,
+					prima: {1: null, 2: null, 3: null, 4: null, 5: null, 6: null}
+				},
+				total1: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
+				total2: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
+				total3: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
+				total4: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+			}
+			
+			this.cotizacion2 = this.cotizacion
+			this.cotizacion2.plan = plans['2']
+			
+			//this.set('cotizacion.1.prima.4', 1250);
+			//console.log('cotizacion', this.cotizacion['1'])
+		},
+		load_data: function() {
+			//console.log('data: ', this.$.ajax.lastResponse)
+			this.primas = this.$.ajax.lastResponse
+		},
+		calculate_primas: function(n) {
+			var prima = {}
+			
+			if (this.$.age1.value != "" && (n == null || n == 1))
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['1'].edad)})
+				
+				this.set('cotizacion.1.prima.1', prima.p1)
+				this.set('cotizacion.1.prima.2', prima.p2)
+				this.set('cotizacion.1.prima.3', prima.p3)
+				this.set('cotizacion.1.prima.4', prima.p4)
+				this.set('cotizacion.1.prima.5', prima.p5)
+				this.set('cotizacion.1.prima.6', prima.p6)
+			}
+			if (this.$.age2.value != "" && (n == null || n == 2))
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['2'].edad)})
+				
+				this.set('cotizacion.2.prima.1', prima.p1)
+				this.set('cotizacion.2.prima.2', prima.p2)
+				this.set('cotizacion.2.prima.3', prima.p3)
+				this.set('cotizacion.2.prima.4', prima.p4)
+				this.set('cotizacion.2.prima.5', prima.p5)
+				this.set('cotizacion.2.prima.6', prima.p6)
+			}
+			if (this.$.age3.value != "" && (n == null || n == 3))
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['3'].edad)})
+				
+				this.set('cotizacion.3.prima.1', prima.p1)
+				this.set('cotizacion.3.prima.2', prima.p2)
+				this.set('cotizacion.3.prima.3', prima.p3)
+				this.set('cotizacion.3.prima.4', prima.p4)
+				this.set('cotizacion.3.prima.5', prima.p5)
+				this.set('cotizacion.3.prima.6', prima.p6)
+			}
+			if (this.$.age4.value != "" && (n == null || n == 4))
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['4'].edad)})
+				
+				this.set('cotizacion.4.prima.1', prima.p1)
+				this.set('cotizacion.4.prima.2', prima.p2)
+				this.set('cotizacion.4.prima.3', prima.p3)
+				this.set('cotizacion.4.prima.4', prima.p4)
+				this.set('cotizacion.4.prima.5', prima.p5)
+				this.set('cotizacion.4.prima.6', prima.p6)
+			}
+			if (this.$.age5.value != "" && (n == null || n == 5))
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['5'].edad)})
+				
+				this.set('cotizacion.5.prima.1', prima.p1)
+				this.set('cotizacion.5.prima.2', prima.p2)
+				this.set('cotizacion.5.prima.3', prima.p3)
+				this.set('cotizacion.5.prima.4', prima.p4)
+				this.set('cotizacion.5.prima.5', prima.p5)
+				this.set('cotizacion.5.prima.6', prima.p6)
+			}
+			if (this.$.age6.value != "" && (n == null || n == 6)) 
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['6'].edad)})
+				
+				this.set('cotizacion.6.prima.1', prima.p1)
+				this.set('cotizacion.6.prima.2', prima.p2)
+				this.set('cotizacion.6.prima.3', prima.p3)
+				this.set('cotizacion.6.prima.4', prima.p4)
+				this.set('cotizacion.6.prima.5', prima.p5)
+				this.set('cotizacion.6.prima.6', prima.p6)
+			}
+			if (this.$.age7.value != "" && (n == null || n == 7)) 
+			{
+				prima = _.find(this.primas, {region: this.$.region.value, coverage: this.$.coverage.value, type: this.$.type.value, age: parseInt(this.cotizacion['7'].edad)})
+				
+				this.set('cotizacion.7.prima.1', prima.p1)
+				this.set('cotizacion.7.prima.2', prima.p2)
+				this.set('cotizacion.7.prima.3', prima.p3)
+				this.set('cotizacion.7.prima.4', prima.p4)
+				this.set('cotizacion.7.prima.5', prima.p5)
+				this.set('cotizacion.7.prima.6', prima.p6)
+			}
+			this.totales()
+		},
+		change_region: function() 
+		{
+			this.calculate_primas()
+		},
+		change_coverage: function() 
+		{
+			if (this.$.coverage.value == "1")
+				this.set('selected_plan.coverage', '$ 9.000.000')
+			  else	
+				this.set('selected_plan.coverage', '$ 7.000.000')
+				
+			this.calculate_primas()
+		},
+		change_type: function() 
+		{
+			this.calculate_primas()
+		},
+		numberWithCommas: function(n) {
+			if (n != null)
+				return n.toFixed(2).toString().replace(/\./g,",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+			 else return null
+		},
+		calcular_prima1: function() { this.calculate_primas(1) },
+		calcular_prima2: function() { this.calculate_primas(2) },
+		calcular_prima3: function() { this.calculate_primas(3) },
+		calcular_prima4: function() { this.calculate_primas(4) },
+		calcular_prima5: function() { this.calculate_primas(5) },
+		calcular_prima6: function() { this.calculate_primas(6) },
+		calcular_prima7: function() { this.calculate_primas(7)		
+		},
+		totales: function() {
+			var total1 = {'1':0, '2':0, '3':0, '4':0, '5':0, '6':0 }
+			for (var i=1; i<=6; i++)  // columnas
+			  for (var j=1; j<= 7; j++) // filas
+				if (this.cotizacion[j.toString()].prima[i.toString()] != null)
+					total1[i] += this.cotizacion[j.toString()].prima[i.toString()]
+			for (i=1; i<=6; i++)
+			{
+				this.set('cotizacion.total1.'+i, total1[i])
+				this.set('cotizacion.total2.'+i, total1[i]*1.04/2) //financiemiento Semestral
+				this.set('cotizacion.total3.'+i, total1[i]*1.06/4) //financiamiento Trimestral
+				this.set('cotizacion.total4.'+i, total1[i]*1.08/12) //financiamiento Trimestral
+			}
+		},
+		getDate: function() {
+			var weekday = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+			var month = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"]
+			var today=new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth();
+			var yyyy = today.getFullYear();
+			
+			return weekday[today.getDay()]+', '+dd+' de '+month[mm]+' de '+yyyy
+		},
+		print: function() {
+			window.print()
+			//open window
+		},
+		getData: function() {
+			//this.primas = <%- data %>
+		}
+	})
+</script>
+</dom-module>

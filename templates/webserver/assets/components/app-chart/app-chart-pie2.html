@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/d3/d3.min.js"></script>
+
+<dom-module id="app-chart-pie2">
+
+  <template>
+    <style>    
+		/*rect {
+			fill: gray;
+		}*/
+		svg {
+			background-color: #F8F8F8;
+			border-style: solid;
+			border-width: 1px;
+			margin-top: 20px;
+			margin-left: 20px;
+			padding: 10px;
+		}
+    </style>
+	<svg id="my_svg"></div>
+  </template>
+  <script>
+    Polymer({
+		is: "app-chart-pie2",
+		properties: {
+			data: {
+				type: String,
+				value: ""
+			},
+			width: {
+				type: Number,
+				value: 400,
+			},
+			height: {
+				type: Number,
+				value: 300
+			}
+		},
+		ready: function() {
+			
+			//this.width= 400;
+			//this.height= 300;
+	
+			svg = d3.select(this.$.my_svg)
+				.attr("width", this.width)
+				.attr("height", this.height)
+
+			pie = svg.append("circle")
+				.attr("cx", -130)
+				.attr("cy", 150)
+				.attr("r", 60)
+				.attr("fill", "green")
+				
+			pie.transition()
+				.delay(500)
+				.duration(1500)
+				.attr("cx", 200)
+				.transition()
+				.attr("r",130)
+				.transition()
+				.attr("fill", "blue")
+				.transition()
+				.attr("r",60)
+				.transition()
+				.attr("cx", 470)
+				.transition()
+				.attr("cx", 200)
+				.transition()
+				.attr("cx", 300)
+				.attr("cy", 195)
+				.transition()
+				.attr("r",0)
+		}
+	})
+  </script>
+</dom-module>

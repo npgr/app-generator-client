@@ -1,0 +1,59 @@
+{
+  "List %s": "Listar",
+  "List": "Listar",
+  "Create": "Crear",
+  "Display": "Consultar",
+  "Delete": "Borrar",
+  "Edit": "Editar",
+  "Equal to": "Igual a",
+  "Different to": "Diferente a",
+  "Greater or Equal to": "Mayor o igual a",
+  "Less or Equal to": "Menor o igual a",
+  "Contains": "Contiene",
+  "Find": "Buscar",
+  "Columns": "Columnas",
+  "Change %s": "Cambiar %s",
+  "Change ": "Cambiar",
+  "Exit": "Salir",
+  "Repeat": "Repetir",
+  "Record already Exist": "Registro ya Existe",
+  "Error Processing Request: ": "Error Procesando Solicitud: ",
+  "Record Deleted": "Registro Borrado",
+  "Record Updated": "Registro Actualizado",
+  "Columns": "Columnas",
+  "Show": "Visible",
+  "Hide": "Oculto",
+  "Username": "Usuario",
+  "Password": "Contraseña",
+  "Username or Password incorrect": "Usuario o Contraseña incorrectos"
+  ,"User": "Usuario"
+  ,"Users": "Usuarios"
+  ,"Account": "Cuenta"
+  ,"Profile": "Perfil"
+  ,"Resource": "Recurso"
+  ,"Method": "Metodo"
+  ,"ProfileResource": "Recurso Perfil"
+  ,"Require Aut": "Requiere Aut"
+  ,"Name": "Nombre"
+  ,"email": "Correo"
+  ,"Photo": "Foto"
+  ,"Id": "Id"
+  ,"Type": "Tipo"
+  ,"Change": "Cambio"
+  ,"Status": "Status"
+  ,"January": "Enero"
+  ,"February": "Febrero"
+  ,"March": "Marzo"
+  ,"April": "Abril"
+  ,"May": "Mayo"
+  ,"June": "Junio"
+  ,"July": "Julio"
+  ,"August": "Agosto"
+  ,"September": "Septiembre"
+  ,"October": "Octubre"
+  ,"November": "Noviembre"
+  ,"December": "Diciembre"
+  ,"Exit": "Salir"
+  ,"Next": "Próximo"
+  ,"Previous": "Anterior"
+}

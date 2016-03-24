@@ -1,0 +1,371 @@
+{
+  "data": {
+    "account": [
+      {
+        "name": "Cuenta Personal",
+        "users": 6,
+        "createdAt": "2015-09-03T16:56:47.079Z",
+        "updatedAt": "2015-09-03T16:56:47.079Z",
+        "id": 1
+      },
+      {
+        "name": "Cuenta Actividades",
+        "users": 3,
+        "createdAt": "2015-09-03T16:57:05.021Z",
+        "updatedAt": "2015-09-03T16:57:05.021Z",
+        "id": 2
+      },
+      {
+        "name": "Cuenta Tickets",
+        "users": 2,
+        "createdAt": "2015-09-03T16:57:31.014Z",
+        "updatedAt": "2015-09-03T16:57:31.014Z",
+        "id": 3
+      }
+    ],
+    "language": [],
+    "profile": [
+      {
+        "name": "Admin",
+        "createdAt": "2015-09-03T17:01:07.678Z",
+        "updatedAt": "2015-12-30T17:26:41.304Z",
+        "id": 1,
+        "firstpage": 1
+      }
+    ],
+    "profileresource": [
+      {
+        "profile": 1,
+        "resource": 1,
+        "order": 900,
+        "Group": "Security",
+        "createdAt": "2015-12-30T17:34:04.943Z",
+        "updatedAt": "2015-12-30T17:34:04.943Z",
+        "id": 1
+      },
+      {
+        "profile": 1,
+        "resource": 2,
+        "order": 910,
+        "Group": "Security",
+        "createdAt": "2015-12-30T17:37:20.919Z",
+        "updatedAt": "2015-12-30T17:37:20.919Z",
+        "id": 2
+      },
+      {
+        "profile": 1,
+        "resource": 3,
+        "order": 920,
+        "Group": "Security",
+        "createdAt": "2015-12-30T17:37:50.720Z",
+        "updatedAt": "2015-12-30T17:37:50.720Z",
+        "id": 3
+      },
+      {
+        "profile": 1,
+        "resource": 4,
+        "order": 930,
+        "Group": "Security",
+        "createdAt": "2015-12-30T17:38:18.253Z",
+        "updatedAt": "2015-12-30T17:40:13.563Z",
+        "id": 4
+      }
+    ],
+    "resource": [
+      {
+        "name": "Users",
+        "method": "get",
+        "path": "/User/list",
+        "type": "page",
+        "requireaut": "Yes",
+        "createdAt": "2015-12-30T17:24:01.616Z",
+        "updatedAt": "2015-12-30T17:33:19.579Z",
+        "id": 1
+      },
+      {
+        "name": "Profiles",
+        "method": "get",
+        "path": "/Profile/list",
+        "type": "page",
+        "requireaut": "Yes",
+        "createdAt": "2015-12-30T17:35:56.613Z",
+        "updatedAt": "2015-12-30T17:35:56.613Z",
+        "id": 2
+      },
+      {
+        "name": "Resources",
+        "method": "get",
+        "path": "/Resource/list",
+        "type": "page",
+        "requireaut": "Yes",
+        "createdAt": "2015-12-30T17:36:09.468Z",
+        "updatedAt": "2015-12-30T17:36:09.468Z",
+        "id": 3
+      },
+      {
+        "name": "ProfileResource",
+        "method": "get",
+        "path": "/ProfileResource/list",
+        "type": "page",
+        "requireaut": "Yes",
+        "createdAt": "2015-12-30T17:36:29.730Z",
+        "updatedAt": "2015-12-30T17:36:29.730Z",
+        "id": 4
+      }
+    ],
+    "user": [
+      {
+        "account": 0,
+        "usr": "Admin",
+        "name": "Admin",
+        "pwd": "admin",
+        "profile": 1,
+        "email": "",
+        "photo": "",
+        "status": "A",
+        "createdAt": "2015-12-30T17:21:37.191Z",
+        "updatedAt": "2015-12-30T17:21:37.191Z",
+        "id": 2
+      }
+    ]
+  },
+  "schema": {
+    "account": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "users": {
+        "type": "integer"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "language": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "language": {
+        "type": "string",
+        "enum": [
+          "en",
+          "es",
+          "pt",
+          "fr",
+          "de"
+        ]
+      },
+      "word": {
+        "type": "string"
+      },
+      "translate": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "profile": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "firstpage": {
+        "type": "integer",
+        "model": "resource",
+        "foreignKey": true,
+        "alias": "firstpage"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "profileresource": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "profile": {
+        "type": "integer",
+        "model": "profile",
+        "foreignKey": true,
+        "alias": "profile"
+      },
+      "resource": {
+        "type": "integer",
+        "model": "resource",
+        "foreignKey": true,
+        "alias": "resource"
+      },
+      "order": {
+        "type": "integer"
+      },
+      "Group": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "resource": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "method": {
+        "type": "string",
+        "enum": [
+          "get",
+          "post",
+          "put",
+          "delete",
+          "all"
+        ]
+      },
+      "path": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "page",
+          "api",
+          "option",
+          "component"
+        ]
+      },
+      "requireaut": {
+        "type": "string",
+        "enum": [
+          "Yes",
+          "No"
+        ]
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "user": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "account": {
+        "type": "integer",
+        "model": "account",
+        "foreignKey": true,
+        "alias": "account"
+      },
+      "usr": {
+        "type": "string",
+        "unique": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "pwd": {
+        "type": "string"
+      },
+      "profile": {
+        "type": "integer",
+        "model": "profile",
+        "foreignKey": true,
+        "alias": "profile"
+      },
+      "email": {
+        "type": "string"
+      },
+      "photo": {
+        "type": "string",
+        "defaultsTo": ""
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "A",
+          "I"
+        ]
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "model": {
+      "id": 2
+    },
+    "attribute": {
+      "id": 1
+    },
+    "modelfunction": {
+      "id": 2
+    },
+    "functionattribute": {
+      "id": 1
+    },
+    "language": {},
+    "user": {
+      "id": 2
+    },
+    "profile": {
+      "id": 1
+    },
+    "profileresource": {
+      "id": 4
+    },
+    "resource": {
+      "id": 4
+    },
+    "account": {
+      "id": 3
+    },
+    "functionlist": {
+      "id": 2
+    },
+    "app": {
+      "id": 3
+    }
+  }
+}

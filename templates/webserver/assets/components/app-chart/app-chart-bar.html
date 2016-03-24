@@ -1,0 +1,141 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/d3/d3.min.js"></script>
+
+<dom-module id="app-chart-bar" >
+
+  <template>
+    <style>    
+		/*rect {
+		    // Css tiene prioridad sobre script
+			fill: gray;
+		}*/
+		#my_svg {
+			background-color: #F8F8F8;
+			/*border-style: solid;
+			border-width: 1px;
+			margin-top: 20px;
+			margin-left: 20px;*/
+			padding: 10px;
+		}
+    </style>
+		<div id="hiden" style="position:absolute;visibility:hidden"></div>
+		<div id="my_svg"></div>
+  </template>
+  <script>
+    Polymer({
+		is: "app-chart-bar",
+		properties: {
+			data: {
+				type: String,
+				value: ""
+			},
+			width: {
+				type: Number,
+				value: 250,
+			},
+			height: {
+				type: Number,
+				value: 250
+			}
+		},
+		ready: function() {
+			this.data = [ {data:285, color:"blue", label:"CDA"}, 
+						  {data:411, color:"purple", label:"CDG"}]
+						  //{data:180, color:"purple", label:"CDT"}]
+						  //{data:320, color:"purple", label:"CCS"} ] 
+						  
+			this.width= 300;
+			this.height= this.data.length*45 + 30//300; //función de la cantidad de datos
+			max=0
+			// Max element on Array
+			for (i=0; i < this.data.length; i++){
+				if (this.data[i].data > max) max = this.data[i].data
+			}
+			widthScale = d3.scale.linear()
+					.domain( [0, max])
+					.range( [0, this.width*.98])
+			// length of bar and position of label
+			for (i=0; i < this.data.length; i++){
+				this.data[i].length = widthScale(this.data[i].data)
+				this.$.hiden.innerHTML= this.data[i].label+" ("+this.data[i].data+")"
+				this.data[i].pos = this.data[i].length - 7 - this.$.hiden.clientWidth
+			}
+			
+			axis = d3.svg.axis()
+					.ticks(4)
+					//.orient("left")
+					.scale(widthScale)
+					//.tickSubdivide(true)  ???
+			
+			svg = d3.select(this.$.my_svg)
+				.style({"width": this.width})
+				.append("svg")
+				.attr("width", this.width)
+				.attr("height", this.height)
+			
+			xAxis = svg.append("g")
+				.attr("transform", "translate(0, "+ (this.data.length*40 + 10) + ")")
+				//.style({ 'stroke': 'Black', 'fill': 'none', 'stroke-width': '1px'})
+				.call(axis)
+			
+			xAxis.selectAll(".domain")
+				.style({ 'stroke': 'Black', 'fill': 'none', 'stroke-width': '3px'})
+			
+			// Get Ticks for drawing lines from
+			bottom = this.data.length*40 + 16
+			svg.selectAll(".tick")
+				.each(function(tick) { 
+				  if (tick != 0) 
+				  {
+					svg.append("line")
+					.attr("x1", widthScale(tick))
+					.attr("y1", 0)
+					.attr("x2", widthScale(tick))
+					.attr("y2", bottom)
+					.style( { 'stroke': 'black', 'stroke-width': 1, "stroke-dasharray": "2,3" })
+				  }
+				})
+
+			svg.append("line")
+				.attr("x1", 0)
+				.attr("y1", 0)
+				.attr("x2", 0)
+				.attr("y2", bottom)
+				.style( { 'stroke': 'black', 'stroke-width': 3 })
+				
+			bars = svg.selectAll("rect")
+				.data(this.data)
+				.enter()
+					.append("rect")
+					.attr("width", function(d, i) {return d.length} )
+					.attr("height", 30)
+					.attr("fill", function (d) { return d.color} )
+					.attr("y", function (d, i) { return (i * 40) + 10} )
+					
+			/*svg.selectAll(".legend")
+				.data(this.data)
+				.enter()
+					.append("text")
+					.attr("fill", "white")
+					.attr("y", function (d, i) { return (i * 45) + 23} )
+					.attr("x", function (d) { return d.length - 80} )
+					.text(function(d) { return d.label + " ("+d.data+")"})
+			*/
+			
+			this.data.forEach(function(d, i) {
+				svg.append("text")
+				.attr("fill", "white")
+				.attr("y",  (i * 40) + 28 )
+				//.attr("x", d.length - 60 )
+				.attr("x", d.pos)
+				.text( d.label+" ("+d.data+")" )
+				
+				/*svg.append("text") 
+				.attr("y", (i * 45) + 23 )
+				.attr("x", d.length + 3 )
+				.text( "("+d.data+")" )*/
+			})	
+		}
+	})
+  </script>
+</dom-module>

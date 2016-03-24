@@ -1,0 +1,139 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/d3/d3.min.js"></script>
+
+<dom-module id="app-chart-pie">
+
+  <template>
+    <style>    
+		/*rect {
+			fill: gray;
+		}*/
+		path {
+			position: absolute;
+			top:50px;
+			left:50px;
+		}
+		div {
+			top:0px;
+			left:0px;
+		}
+		#my_svg {
+			background-color: white;
+			//background-color: #F8F8F8;
+			margin-top: 0px;
+			margin-left: 0px;
+			padding: 0px;
+		}
+    </style>
+	<!--<svg id="my_svg"></div>-->
+	<div id="my_svg"></div>
+  </template>
+  <script>
+    Polymer({
+		is: "app-chart-pie",
+		properties: {
+			data: {
+				type: String,
+				value: ""
+			},
+			width: {
+				type: Number,
+				value: 250,
+			},
+			leyend: {
+				type: Boolean,
+				value: false
+			}
+		},
+		paint: function() {
+			/*this.data = [ {data:277, color:"blue", label:"CDA"},
+						  {data:360, color:"red", label:"CDG"}]*/
+			
+			/*this.data = [{data:20, color:"orange", label:"septiembre"}, 
+						{data:25, color:"blue", label:"octubre"}, 
+						  {data:40, color:"green", label:"novimbre"}, 
+						  {data: 18, color:"red", label: "diciembre"},
+						  {data: 6, color:"purple", label: "agosto"} ]
+			*/
+			// alto con leyenda
+			this.$.my_svg.innerHTML = ''
+			if (this.leyend)
+				this.height= parseInt(this.width) + 25 + (parseInt((this.data.length-1)/2)*30);
+			 else
+				this.height = this.width
+			
+			r = this.width * .45  /*radius of Circle*/ 
+			max=0
+			tot=0
+			color = []
+			for (i=0; i < this.data.length; i++) 
+			{
+				if (this.data[i].data > max) max = this.data[i].data
+				color[i] = this.data[i].color
+				tot += this.data[i].data
+			}
+			porc= []
+			for (i=0; i < this.data.length; i++) 
+			{
+				porc[i] = Math.round(this.data[i].data/tot*100)
+			}
+			
+			svg = d3.select(this.$.my_svg)
+				.append("svg")
+				.attr("width", this.width)
+				.attr("height", this.height)
+
+			group = svg.append("g")
+				.attr("transform", "translate("+this.width*.5+", "+ (r + 10)+")")
+			
+			arc = d3.svg.arc()
+				.innerRadius(r*.45)
+				.outerRadius(r)
+				
+			pie = d3.layout.pie()
+				.value( function(d) {return d.data} )
+				
+			arcs = group.selectAll(".arc")
+				.data(pie(this.data))
+				.enter()
+					.append("g")
+					.attr("class", "arc")
+						
+			arcs.append("path")
+				.attr("d", arc)
+				.attr("fill", function(d, i) { return color[i] })
+				
+			arcs.append("text")
+				.attr("transform", function(d) { return "translate("+ arc.centroid(d) + ")"})
+				.attr("text-anchor", "middle")
+				.attr("fill", "white")
+				.text(function(d, i) { return porc[i]+"%" })
+				.style({ 'font-size': 15})
+				
+			if (this.leyend)	
+			{
+			  svg.selectAll(".legend")
+				.data(this.data)
+				.enter()
+					.append("text")
+					.attr("fill", "#616161")//#424242")
+					.attr("y", function (d, i) { return (parseInt(i/2) * 30)+315} )
+					.attr("x", function (d, i) { return ((i % 2) * 140)+25} )
+					.text(function(d) { return d.label+" ("+d.data+")" })
+					.style({ 'font-size': 14})
+					
+			  svg.selectAll(".legend1")
+				.data(this.data)
+				.enter()
+					.append("rect")
+					.attr("width", 15 )
+					.attr("height", 15)
+					.attr("fill", function (d, i) { return color[i]} )
+					.attr("y", function (d, i) { return (parseInt(i/2) * 30)+302} )
+					.attr("x", function (d, i) { return ((i % 2) * 140)+7} )
+			}
+			//console.log(pie(this.data))
+		}
+	})
+  </script>
+</dom-module>
