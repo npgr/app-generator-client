@@ -57,13 +57,13 @@
 <title>Login App</title>
 <script>
    // Google Analytics
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', Google_Analytics_id(), {'sampleRate': 100});
-  ga('send', 'pageview');
+  ga('send', 'pageview');*/
   // Redirect to https
   if (window.location.protocol != "https:" && window.location.href.indexOf('localhost') == -1)
 	window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
@@ -76,7 +76,6 @@
 	</platinum-sw-register>-->
 	 <div id="loginCard">
 	  <form action="/validateLogin" method="post">
-		<%= lng('prueba2') %>
 		<input id="usr" type="string" name="username" placeholder="<%= lng('Username') %>">
 		<input id="pwd" type="password" name="password" placeholder="<%= lng('Password') %>">
 		<input id="btn" type="submit" value="<%= lng('Login') %>">

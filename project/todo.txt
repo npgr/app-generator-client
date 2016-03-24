@@ -34,9 +34,11 @@ Fix:
 	- Error validating Machine (image attached) (ready)
 	- server red msg when key_server get / user
 	- i18n on server (configure language on DB User) (ready)
+	- Menu options with underscore (ready)
 	- update app template with Language settings. Compare node modules in zip and folder
-	- Load disk DB with updated tables & data
-	- Menu options with underscore
+	- Load App Template disk DB with updated tables & data
+	- Change User Menu (profile & Logout) - all ejs - Template
+	- UserResource is not in template (OJO profile resource "data" attribute)
 	- using pm2 for running app
 	- hide message of key server & change name
 	- Deny client Access from browser

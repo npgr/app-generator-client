@@ -15724,7 +15724,7 @@ paper-menu {
 	}
 </style>
 	<div id="menubar" class="hide">
-	  <div on-click="back">Back</div><%
+	  <div on-click="back"><%= lng('Back') %></div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>

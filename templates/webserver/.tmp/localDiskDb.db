@@ -103,13 +103,13 @@
         "id": 3
       },
       {
-        "name": "ProfileResource",
+        "name": "Profile Resource",
         "method": "get",
         "path": "/ProfileResource/list",
         "type": "page",
         "requireaut": "Yes",
         "createdAt": "2015-12-30T17:36:29.730Z",
-        "updatedAt": "2015-12-30T17:36:29.730Z",
+        "updatedAt": "2016-03-24T17:06:21.107Z",
         "id": 4
       }
     ],
@@ -124,8 +124,9 @@
         "photo": "",
         "status": "A",
         "createdAt": "2015-12-30T17:21:37.191Z",
-        "updatedAt": "2015-12-30T17:21:37.191Z",
-        "id": 2
+        "updatedAt": "2016-03-24T18:08:55.015Z",
+        "id": 2,
+        "language": "en"
       }
     ]
   },
@@ -222,6 +223,15 @@
         "foreignKey": true,
         "alias": "resource"
       },
+      "data": {
+        "type": "string",
+        "enum": [
+          "all",
+          "selected",
+          "except",
+          "na"
+        ]
+      },
       "order": {
         "type": "integer"
       },
@@ -262,6 +272,7 @@
         "type": "string",
         "enum": [
           "page",
+          "data",
           "api",
           "option",
           "component"
@@ -316,6 +327,14 @@
       "photo": {
         "type": "string",
         "defaultsTo": ""
+      },
+      "language": {
+        "type": "string",
+        "enum": [
+          "en",
+          "es",
+          "pt"
+        ]
       },
       "status": {
         "type": "string",

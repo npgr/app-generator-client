@@ -1,4 +1,4 @@
-<!-- topBar template: version 1.22 -->
+<!-- topBar template: version 1.23 -->
 
 <dom-module id="top-bar">
 <template>
@@ -87,7 +87,7 @@
 	}
 </style>
 	<div id="menubar" class="hide">
-	  <div on-click="back">Back</div><%
+	  <div on-click="back"><%= lng('Back') %></div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>
