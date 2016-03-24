@@ -1,4 +1,4 @@
-<!-- list template: version 6.34 -->
+<!-- list template: version 6.41 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -15631,9 +15631,11 @@ paper-menu {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+/** USER POINT - General Style **/
+/** END USER POINT - General Style **/
 </style>
 
-<!-- topBar template: version 1.20 -->
+<!-- topBar template: version 1.22 -->
 
 <dom-module id="top-bar">
 <template>
@@ -15721,7 +15723,8 @@ paper-menu {
 		margin-right: 5px;
 	}
 </style>
-	<div id="menubar" class="hide"><%
+	<div id="menubar" class="hide">
+	  <div on-click="back">Back</div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>
@@ -15730,7 +15733,7 @@ paper-menu {
 			<ul class="dropdown-content" tabindex="0"><%
 			  var arr = _.map(_.filter(resources, {'Group': n}), function(n4) { return n4.name})
 			  _.forEach(arr, function(n2, key2) { %>
-				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2) %></li><%
+				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2.replace(/_/g,' ')) %></li><%
 			  }) %>
 			</ul>
 		  </iron-dropdown>
@@ -15766,6 +15769,9 @@ paper-menu {
 <script>
 	Polymer({
 		is: "top-bar",
+		back: function() {
+			window.history.back();
+		},
 		open_user_menu: function() {
 			this.$.dropdown_user.toggle()
 		},
@@ -15828,6 +15834,10 @@ paper-menu {
 				<td><div id="resource_name" on-click="change_field"></div></td>
 			</tr>
 			<tr>
+				<td><label class="left_label" for="data"><%= lng('Data')%></label></td>
+				<td><div id="data" on-click="change_field"></div></td>
+			</tr>
+			<tr>
 				<td><label class="left_label" for="order"><%= lng('Order')%></label></td>
 				<td><div id="order" on-click="change_field"></div></td>
 			</tr>
@@ -15858,6 +15868,7 @@ paper-menu {
 			this.show_field("id")
 			this.show_field("profile_name")
 			this.show_field("resource_name")
+			this.show_field("data")
 			this.show_field("order")
 			this.show_field("Group")
 			this.$.dialog.open()
@@ -15890,7 +15901,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- new-form: version 5.10 -->
+<!-- new-form: version 5.20 -->
 
 <dom-module id="ProfileResource-new">
 <template>
@@ -15914,6 +15925,15 @@ paper-menu {
 			<tr>
 				<td><label class="left_label" for="resource"><%= lng('Resource')%></label></td>
 				<td><iron-icon icon="find-in-page" field="resource" on-click="select_field_b"></iron-icon><input id="resource" type="text" name="resource" key=0 on-click="select_field" readonly></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="data"><%= lng('Data')%></label></td>
+				<td><select id="data" name="data">
+						<option value="all"><%= lng('All')%></option>
+						<option value="selected"><%= lng('Selected')%></option>
+						<option value="except"><%= lng('All Except')%></option>
+						<option value="na"><%= lng('Not Apply')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="order"><%= lng('Order')%></label></td>
@@ -15941,6 +15961,8 @@ paper-menu {
 		is: "ProfileResource-new",
 		open_dialog: function() {
 			this.clear()
+/** USER POINT - Open New Dialog **/
+/** END USER POINT - Open New Dialog **/
 			this.$.dialog.open()
 		},
 		clear: function() {
@@ -15971,12 +15993,15 @@ paper-menu {
 			var record = {}
 			record.profile = this.$.profile.key
 			record.resource = this.$.resource.key
+			  record.data = this.$.data.value
 			record.order = Number(this.$.order.value)
 			  record.Group = this.$.Group.value			
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},
 		record_created: function() {
+/** USER POINT - Record Created **/
+/** END USER POINT - Record Created **/
 			alert("Created ProfileResource id="+this.$.ajax2.lastResponse.id)
 			// ask for create another one
 			if (!this.$.repeat.checked) {
@@ -16006,12 +16031,14 @@ paper-menu {
 		ajax_error: function() {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
-		}  
+		}
+/** USER POINT - New Functions **/
+/** END USER POINT - New Functions **/		
 	})
 </script>
 </dom-module>
 
-<!-- display-form: version 5.10 -->
+<!-- display-form: version 5.20 -->
 
 <dom-module id="ProfileResource-display">
 <template>
@@ -16030,6 +16057,15 @@ paper-menu {
 			<tr>
 				<td><label class="left_label" for="resource"><%= lng('Resource')%></label></td>
 				<td><input id="resource" type="text" name="resource" value="{{item.resource_name}}" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="data"><%= lng('Data')%></label></td>
+				<td><select id="data" name="data" disabled>
+						<option value="all"><%= lng('All')%></option>
+						<option value="selected"><%= lng('Selected')%></option>
+						<option value="except"><%= lng('All Except')%></option>
+						<option value="na"><%= lng('Not Apply')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="order"><%= lng('Order')%></label></td>
@@ -16054,19 +16090,24 @@ paper-menu {
 		open_display_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Display Dialog **/
+/** END USER POINT - Open Display Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.data.value = item.data
 			}
+/** USER POINT - Display Functions **/
+/** END USER POINT - Display Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.10 -->
+<!-- edit-form: version 5.20 -->
 
 <dom-module id="ProfileResource-edit">
 <template>
-	<iron-ajax id="ajax" method='PUT' handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
 		<Profile-select id="Profile_select_dialog" on-item_selected="set_select_field"></Profile-select>
 		<Resource-select id="Resource_select_dialog" on-item_selected="set_select_field"></Resource-select>
@@ -16085,6 +16126,15 @@ paper-menu {
 			<tr>
 				<td><label class="left_label" for="resource"><%= lng('Resource')%></label></td>
 				<td><iron-icon icon="find-in-page" field="resource" on-click="select_field_b"></iron-icon><input id="resource" type="text" name="resource" key={{item.resource_id}} value="{{item.resource_name}}" on-click="select_field" readonly></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="data"><%= lng('Data')%></label></td>
+				<td><select id="data" name="data">
+						<option value="all"><%= lng('All')%></option>
+						<option value="selected"><%= lng('Selected')%></option>
+						<option value="except"><%= lng('All Except')%></option>
+						<option value="na"><%= lng('Not Apply')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="order"><%= lng('Order')%></label></td>
@@ -16112,9 +16162,12 @@ paper-menu {
 		open_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Edit Dialog **/
+/** END USER POINT - Open Edit Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.data.value = item.data
 			},
 		select_field_b: function(e) {
 			this.$[e.toElement.getAttribute("field")].click()
@@ -16138,6 +16191,7 @@ paper-menu {
 			record.id = Number(this.$.id.value)
 			record.profile = this.$.profile.key
 			record.resource = this.$.resource.key
+			record.data = this.$.data.value
 			record.order = Number(this.$.order.value)
 			record.Group = this.$.Group.value
 			this.$.ajax.url = config_server() + "ProfileResource/" +record.id
@@ -16145,6 +16199,8 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+/** USER POINT - Record Updated **/
+/** END USER POINT - Record Updated **/
 			alert("<%= lng('Record Updated')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16153,15 +16209,17 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Edit Functions **/
+/** END USER POINT - Edit Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.10 -->
+<!-- delete-form: version 5.20 -->
 
 <dom-module id="ProfileResource-delete">
 <template>
-	<iron-ajax id="ajax" method='DELETE' handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="DELETE" handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
 		<h2 class="card_title"><%= lng("%s %s",lng("Delete"),lng("ProfileResource"))%></h2>
 		<paper-dialog-scrollable>
@@ -16178,6 +16236,15 @@ paper-menu {
 			<tr>
 				<td><label class="left_label" for="resource"><%= lng('Resource')%></label></td>
 				<td><input id="resource" type="text" name="resource" value="{{item.resource_name}}" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="data"><%= lng('Data')%></label></td>
+				<td><select id="data" name="data" disabled>
+						<option value="all"><%= lng('All')%></option>
+						<option value="selected"><%= lng('Selected')%></option>
+						<option value="except"><%= lng('All Except')%></option>
+						<option value="na"><%= lng('Not Apply')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="order"><%= lng('Order')%></label></td>
@@ -16205,9 +16272,12 @@ paper-menu {
 		open_delete_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Delete Dialog **/
+/** END USER POINT - Open Delete Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.data.value = item.data
 			},
 		form_submit: function() {
 			this.$.submit_delete.click()
@@ -16217,6 +16287,8 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+/** USER POINT - Record Deleted **/
+/** END USER POINT - Record Deleted **/
 			alert("<%= lng('Record Deleted')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16225,6 +16297,8 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Delete Functions **/
+/** END USER POINT - Delete Functions **/
 	})
 </script>
 </dom-module>
@@ -16391,7 +16465,8 @@ paper-menu {
 	<select id="filter" on-change="input_type">  <%= lng('Id')%>
 		<option value="id"><%= lng('Id')%></option>
 		<option value="profile_name"><%= lng('Profile')%></option>
-		<option value="resource_name"><%= lng('Resource')%></option>  <%= lng('Order')%>
+		<option value="resource_name"><%= lng('Resource')%></option>  <%= lng('Data')%>
+		<option value="data"><%= lng('Data')%></option>  <%= lng('Order')%>
 		<option value="order"><%= lng('Order')%></option>  <%= lng('Group')%>
 		<option value="Group"><%= lng('Group')%></option>
 	</select>
@@ -16428,6 +16503,7 @@ paper-menu {
 		<option value="id"><%= lng('Id')%></option>
 		<option value="profile_name"><%= lng('Profile')%></option>
 		<option value="resource_name"><%= lng('Resource')%></option>
+		<option value="data"><%= lng('Data')%></option>
 		<option value="order"><%= lng('Order')%></option>
 		<option value="Group"><%= lng('Group')%></option>
 	</select>
@@ -16464,6 +16540,8 @@ paper-menu {
 			<iron-icon id="profile_name_sort" icon="arrow-drop-up"></iron-icon></div></th>
 		<th class="col_resource_name" on-click="sort_by_field"><%= lng('Resource')%><div id="resource_name_sort_d" class="hide">
 			<iron-icon id="resource_name_sort" icon="arrow-drop-up"></iron-icon></div></th>
+		<th class="col_data" on-click="sort_by_field"><%= lng('Data')%><div id="data_sort_d" class="hide">
+			<iron-icon id="data_sort" icon="arrow-drop-up"></iron-icon></div></th>
 		<th class="col_order" on-click="sort_by_field"><%= lng('Order')%><div id="order_sort_d" class="hide">
 			<iron-icon id="order_sort" icon="arrow-drop-up"></iron-icon></div></th>
 		<th class="col_Group" on-click="sort_by_field"><%= lng('Group')%><div id="Group_sort_d" class="hide">
@@ -16476,6 +16554,7 @@ paper-menu {
 		<td class="col_id"></td>
 		<td class="col_profile_name"></td>
 		<td class="col_resource_name"></td>
+		<td class="col_data"></td>
 		<td class="col_order"></td>
 		<td class="col_Group"></td>
 	</tr>
@@ -16489,6 +16568,7 @@ paper-menu {
 		<template is="dom-if" if="{{column.id}}"><td>{{item.id}}</td></template>
 		<template is="dom-if" if="{{column.profile_name}}"><td>{{item.profile_name}}</td></template>
 		<template is="dom-if" if="{{column.resource_name}}"><td>{{item.resource_name}}</td></template>
+		<template is="dom-if" if="{{column.data}}"><td>{{item.data_des}}</td></template>
 		<template is="dom-if" if="{{column.order}}"><td>{{item.order}}</td></template>
 		<template is="dom-if" if="{{column.Group}}"><td>{{item.Group}}</td></template>
 	</tr>
@@ -16521,10 +16601,12 @@ Polymer({
 				{column: "profile_name", type: "string", model: "Profile", display: true},
 				{column: "resource_id", type: "integer", model: "Resource", display: false},
 				{column: "resource_name", type: "string", model: "Resource", display: true},
+				{column: "data", enum: ["all","selected","except","na"], enumdes: ["<%= lng("All")%>","<%= lng("Selected")%>","<%= lng("All Except")%>","<%= lng("Not Apply")%>"], display: true},
 				{column: "order", type: "integer", display: true},
 				{column: "Group", type: "string", display: true}
 		]
 		this.enums = {}
+		this.enums.data = {all:"<%= lng('All')%>",selected:"<%= lng('Selected')%>",except:"<%= lng('All Except')%>",na:"<%= lng('Not Apply')%>"}
 		//var _data = <%- data %>
 		var db = new loki()
 		this.data = db.addCollection("data_ProfileResource")
@@ -16769,6 +16851,7 @@ Polymer({
 		this.$.id_sort_d.classList.add("hide")
 		this.$.profile_name_sort_d.classList.add("hide")
 		this.$.resource_name_sort_d.classList.add("hide")
+		this.$.data_sort_d.classList.add("hide")
 		this.$.order_sort_d.classList.add("hide")
 		this.$.Group_sort_d.classList.add("hide")
 	},
@@ -16940,7 +17023,8 @@ Polymer({
 		{
 			this.$.ajax.lastResponse[i].resource_id = 0
 			this.$.ajax.lastResponse[i].resource_name = ""
-		}	
+		}
+		this.$.ajax.lastResponse[i].data_des= this.enums.data[this.$.ajax.lastResponse[i].data]	
 		this.data.insert(this.$.ajax.lastResponse[i])
 	}
 	this.filter()
@@ -16957,7 +17041,7 @@ Polymer({
 </dom-module>
 <top-bar><%= lng("%s %s",lng("List"),lng("ProfileResource"))%></top-bar>
 <paper-material class="card" elevation="2">
-	<ProfileResource-list></ProfileResource-list>
+	<ProfileResource-list id="ProfileResource_list"></ProfileResource-list>
 </paper-material>
 </body>
 </html>

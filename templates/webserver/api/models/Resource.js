@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-	//migrate: 'alter',
+	//migrate: 'safe',
 
   attributes: {
 	//_card_width: '60em',
@@ -38,8 +38,8 @@ module.exports = {
 	type: {
 		//description: 'Type',
 		type: "string",
-		enum: ["page","api","option","component"]
-		//,enumdes: ["Page", "Api", "Option","component"]
+		enum: ["page","data","api","option","component"]
+		//,enumdes: ["Page","Data","Api", "Option","Component"]
 	},
 	requireaut: {
 		//description: 'Require Aut',

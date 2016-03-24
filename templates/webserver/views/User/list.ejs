@@ -1,4 +1,4 @@
-<!-- list template: version 6.34 -->
+<!-- list template: version 6.41 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -15631,9 +15631,11 @@ paper-menu {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+/** USER POINT - General Style **/
+/** END USER POINT - General Style **/
 </style>
 
-<!-- topBar template: version 1.20 -->
+<!-- topBar template: version 1.22 -->
 
 <dom-module id="top-bar">
 <template>
@@ -15721,7 +15723,8 @@ paper-menu {
 		margin-right: 5px;
 	}
 </style>
-	<div id="menubar" class="hide"><%
+	<div id="menubar" class="hide">
+	  <div on-click="back">Back</div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>
@@ -15730,7 +15733,7 @@ paper-menu {
 			<ul class="dropdown-content" tabindex="0"><%
 			  var arr = _.map(_.filter(resources, {'Group': n}), function(n4) { return n4.name})
 			  _.forEach(arr, function(n2, key2) { %>
-				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2) %></li><%
+				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2.replace(/_/g,' ')) %></li><%
 			  }) %>
 			</ul>
 		  </iron-dropdown>
@@ -15766,6 +15769,9 @@ paper-menu {
 <script>
 	Polymer({
 		is: "top-bar",
+		back: function() {
+			window.history.back();
+		},
 		open_user_menu: function() {
 			this.$.dropdown_user.toggle()
 		},
@@ -15844,8 +15850,8 @@ paper-menu {
 				<td><div id="email" on-click="change_field"></div></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="photo"><%= lng('Photo')%></label></td>
-				<td><div id="photo" on-click="change_field"></div></td>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><div id="language" on-click="change_field"></div></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="status"><%= lng('Status')%></label></td>
@@ -15878,7 +15884,7 @@ paper-menu {
 			this.show_field("pwd")
 			this.show_field("profile_name")
 			this.show_field("email")
-			this.show_field("photo")
+			this.show_field("language")
 			this.show_field("status")
 			this.$.dialog.open()
 		},
@@ -15910,7 +15916,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- new-form: version 5.10 -->
+<!-- new-form: version 5.20 -->
 
 <dom-module id="User-new">
 <template>
@@ -15952,8 +15958,12 @@ paper-menu {
 				<td><input id="email" type="text" name="email"></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="photo"><%= lng('Photo')%></label></td>
-				<td><input id="photo" type="text" name="photo"></td>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><select id="language" name="language">
+						<option value="en"><%= lng('English')%></option>
+						<option value="es"><%= lng('Español')%></option>
+						<option value="pt"><%= lng('Portugues')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="status"><%= lng('Status')%></label></td>
@@ -15980,6 +15990,8 @@ paper-menu {
 		is: "User-new",
 		open_dialog: function() {
 			this.clear()
+/** USER POINT - Open New Dialog **/
+/** END USER POINT - Open New Dialog **/
 			this.$.dialog.open()
 		},
 		clear: function() {
@@ -15992,7 +16004,6 @@ paper-menu {
 			this.$.profile.value = ''
 			this.$.profile.key = 0
 			this.$.email.value = ''
-			this.$.photo.value = ''
 		},
 		select_field_b: function(e) {
 			this.$[e.toElement.getAttribute("field")].click()
@@ -16017,12 +16028,14 @@ paper-menu {
 			  record.pwd = this.$.pwd.value
 			record.profile = this.$.profile.key
 			  record.email = this.$.email.value
-			  record.photo = this.$.photo.value
+			  record.language = this.$.language.value
 			  record.status = this.$.status.value			
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},
 		record_created: function() {
+/** USER POINT - Record Created **/
+/** END USER POINT - Record Created **/
 			alert("Created User id="+this.$.ajax2.lastResponse.id)
 			// ask for create another one
 			if (!this.$.repeat.checked) {
@@ -16052,12 +16065,14 @@ paper-menu {
 		ajax_error: function() {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
-		}  
+		}
+/** USER POINT - New Functions **/
+/** END USER POINT - New Functions **/		
 	})
 </script>
 </dom-module>
 
-<!-- display-form: version 5.10 -->
+<!-- display-form: version 5.20 -->
 
 <dom-module id="User-display">
 <template>
@@ -16094,8 +16109,12 @@ paper-menu {
 				<td><input id="email" type="text" name="email" value="{{item.email}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="photo"><%= lng('Photo')%></label></td>
-				<td><input id="photo" type="text" name="photo" value="{{item.photo}}" disabled></td>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><select id="language" name="language" disabled>
+						<option value="en"><%= lng('English')%></option>
+						<option value="es"><%= lng('Español')%></option>
+						<option value="pt"><%= lng('Portugues')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="status"><%= lng('Status')%></label></td>
@@ -16119,20 +16138,25 @@ paper-menu {
 		open_display_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Display Dialog **/
+/** END USER POINT - Open Display Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.language.value = item.language
 			this.$.status.value = item.status
 			}
+/** USER POINT - Display Functions **/
+/** END USER POINT - Display Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.10 -->
+<!-- edit-form: version 5.20 -->
 
 <dom-module id="User-edit">
 <template>
-	<iron-ajax id="ajax" method='PUT' handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
 		<Account-select id="Account_select_dialog" on-item_selected="set_select_field"></Account-select>
 		<Profile-select id="Profile_select_dialog" on-item_selected="set_select_field"></Profile-select>
@@ -16169,8 +16193,12 @@ paper-menu {
 				<td><input id="email" type="text" name="email" value="{{item.email}}"></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="photo"><%= lng('Photo')%></label></td>
-				<td><input id="photo" type="text" name="photo" value="{{item.photo}}"></td>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><select id="language" name="language">
+						<option value="en"><%= lng('English')%></option>
+						<option value="es"><%= lng('Español')%></option>
+						<option value="pt"><%= lng('Portugues')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="status"><%= lng('Status')%></label></td>
@@ -16197,9 +16225,12 @@ paper-menu {
 		open_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Edit Dialog **/
+/** END USER POINT - Open Edit Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.language.value = item.language
 			this.$.status.value = item.status
 			},
 		select_field_b: function(e) {
@@ -16228,13 +16259,15 @@ paper-menu {
 			record.pwd = this.$.pwd.value
 			record.profile = this.$.profile.key
 			record.email = this.$.email.value
-			record.photo = this.$.photo.value
+			record.language = this.$.language.value
 			record.status = this.$.status.value
 			this.$.ajax.url = config_server() + "User/" +record.id
 			this.$.ajax.params = record
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+/** USER POINT - Record Updated **/
+/** END USER POINT - Record Updated **/
 			alert("<%= lng('Record Updated')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16243,15 +16276,17 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Edit Functions **/
+/** END USER POINT - Edit Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.10 -->
+<!-- delete-form: version 5.20 -->
 
 <dom-module id="User-delete">
 <template>
-	<iron-ajax id="ajax" method='DELETE' handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="DELETE" handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
 		<h2 class="card_title"><%= lng("%s %s",lng("Delete"),lng("User"))%></h2>
 		<paper-dialog-scrollable>
@@ -16286,8 +16321,12 @@ paper-menu {
 				<td><input id="email" type="text" name="email" value="{{item.email}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="photo"><%= lng('Photo')%></label></td>
-				<td><input id="photo" type="text" name="photo" value="{{item.photo}}" disabled></td>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><select id="language" name="language" disabled>
+						<option value="en"><%= lng('English')%></option>
+						<option value="es"><%= lng('Español')%></option>
+						<option value="pt"><%= lng('Portugues')%></option>
+					</select></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="status"><%= lng('Status')%></label></td>
@@ -16314,9 +16353,12 @@ paper-menu {
 		open_delete_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Delete Dialog **/
+/** END USER POINT - Open Delete Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
+			this.$.language.value = item.language
 			this.$.status.value = item.status
 			},
 		form_submit: function() {
@@ -16327,6 +16369,8 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+/** USER POINT - Record Deleted **/
+/** END USER POINT - Record Deleted **/
 			alert("<%= lng('Record Deleted')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16335,6 +16379,8 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Delete Functions **/
+/** END USER POINT - Delete Functions **/
 	})
 </script>
 </dom-module>
@@ -16505,8 +16551,8 @@ paper-menu {
 		<option value="name"><%= lng('Name')%></option>  <%= lng('Password')%>
 		<option value="pwd"><%= lng('Password')%></option>
 		<option value="profile_name"><%= lng('Profile')%></option>  <%= lng('email')%>
-		<option value="email"><%= lng('email')%></option>  <%= lng('Photo')%>
-		<option value="photo"><%= lng('Photo')%></option>  <%= lng('Status')%>
+		<option value="email"><%= lng('email')%></option>  <%= lng('Language')%>
+		<option value="language"><%= lng('Language')%></option>  <%= lng('Status')%>
 		<option value="status"><%= lng('Status')%></option>
 	</select>
 	<select id="op">   
@@ -16546,7 +16592,7 @@ paper-menu {
 		<option value="pwd"><%= lng('Password')%></option>
 		<option value="profile_name"><%= lng('Profile')%></option>
 		<option value="email"><%= lng('email')%></option>
-		<option value="photo"><%= lng('Photo')%></option>
+		<option value="language"><%= lng('Language')%></option>
 		<option value="status"><%= lng('Status')%></option>
 	</select>
 	<select id="op2" class="hide" >   
@@ -16590,8 +16636,8 @@ paper-menu {
 			<iron-icon id="profile_name_sort" icon="arrow-drop-up"></iron-icon></div></th>
 		<th class="col_email" on-click="sort_by_field"><%= lng('email')%><div id="email_sort_d" class="hide">
 			<iron-icon id="email_sort" icon="arrow-drop-up"></iron-icon></div></th>
-		<th class="col_photo" on-click="sort_by_field"><%= lng('Photo')%><div id="photo_sort_d" class="hide">
-			<iron-icon id="photo_sort" icon="arrow-drop-up"></iron-icon></div></th>
+		<th class="col_language" on-click="sort_by_field"><%= lng('Language')%><div id="language_sort_d" class="hide">
+			<iron-icon id="language_sort" icon="arrow-drop-up"></iron-icon></div></th>
 		<th class="col_status" on-click="sort_by_field"><%= lng('Status')%><div id="status_sort_d" class="hide">
 			<iron-icon id="status_sort" icon="arrow-drop-up"></iron-icon></div></th>
 	  </tr>
@@ -16606,7 +16652,7 @@ paper-menu {
 		<td class="col_pwd"></td>
 		<td class="col_profile_name"></td>
 		<td class="col_email"></td>
-		<td class="col_photo"></td>
+		<td class="col_language"></td>
 		<td class="col_status"></td>
 	</tr>
 	</tfoot>-->
@@ -16623,7 +16669,7 @@ paper-menu {
 		<template is="dom-if" if="{{column.pwd}}"><td>{{item.pwd}}</td></template>
 		<template is="dom-if" if="{{column.profile_name}}"><td>{{item.profile_name}}</td></template>
 		<template is="dom-if" if="{{column.email}}"><td>{{item.email}}</td></template>
-		<template is="dom-if" if="{{column.photo}}"><td>{{item.photo}}</td></template>
+		<template is="dom-if" if="{{column.language}}"><td>{{item.language_des}}</td></template>
 		<template is="dom-if" if="{{column.status}}"><td>{{item.status_des}}</td></template>
 	</tr>
 	</template>
@@ -16658,11 +16704,12 @@ Polymer({
 				{column: "pwd", type: "string", display: false},
 				{column: "profile_id", type: "integer", model: "Profile", display: false},
 				{column: "profile_name", type: "string", model: "Profile", display: true},
-				{column: "email", type: "string", display: true},
-				{column: "photo", type: "string", display: false},
+				{column: "email", type: "string", display: false},
+				{column: "language", enum: ["en","es","pt"], enumdes: ["<%= lng("English")%>","<%= lng("Español")%>","<%= lng("Portugues")%>"], display: true},
 				{column: "status", enum: ["A","I"], enumdes: ["<%= lng("Active")%>","<%= lng("Inactive")%>"], display: true}
 		]
 		this.enums = {}
+		this.enums.language = {en:"<%= lng('English')%>",es:"<%= lng('Español')%>",pt:"<%= lng('Portugues')%>"}
 		this.enums.status = {A:"<%= lng('Active')%>",I:"<%= lng('Inactive')%>"}
 		//var _data = <%- data %>
 		var db = new loki()
@@ -16912,7 +16959,7 @@ Polymer({
 		this.$.pwd_sort_d.classList.add("hide")
 		this.$.profile_name_sort_d.classList.add("hide")
 		this.$.email_sort_d.classList.add("hide")
-		this.$.photo_sort_d.classList.add("hide")
+		this.$.language_sort_d.classList.add("hide")
 		this.$.status_sort_d.classList.add("hide")
 	},
 	sort_by_field: function(e) {
@@ -17084,6 +17131,7 @@ Polymer({
 			this.$.ajax.lastResponse[i].profile_id = 0
 			this.$.ajax.lastResponse[i].profile_name = ""
 		}
+		this.$.ajax.lastResponse[i].language_des= this.enums.language[this.$.ajax.lastResponse[i].language]
 		this.$.ajax.lastResponse[i].status_des= this.enums.status[this.$.ajax.lastResponse[i].status]	
 		this.data.insert(this.$.ajax.lastResponse[i])
 	}
@@ -17101,7 +17149,7 @@ Polymer({
 </dom-module>
 <top-bar><%= lng("%s %s",lng("List"),lng("User"))%></top-bar>
 <paper-material class="card" elevation="2">
-	<User-list></User-list>
+	<User-list id="User_list"></User-list>
 </paper-material>
 </body>
 </html>

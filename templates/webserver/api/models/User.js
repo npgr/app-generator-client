@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  //migrate: 'alter',
+  migrate: 'alter',
 
   attributes: {
 	//_card_width: '60em',
@@ -26,6 +26,7 @@ module.exports = {
 		//key_type: 'integer',
 		//display: 'name',
 		//type: 'string',
+		
 		model: 'Account'
 	},
 	usr: {
@@ -56,16 +57,24 @@ module.exports = {
 	},
 	email: {
 		//description: 'email',
+		//hide: true,
 		type: 'string'
 		//,email: true 
     },
 	photo: {
 		//description: 'Photo',
 		//hide: true,
+		//omit: true,
 		type: 'string',
 		defaultsTo: ''
 		//,url: true 
     },
+	language: {
+		//description: 'Language',
+		type: 'string',
+		enum: ['en', 'es', 'pt']
+		//,enumdes: ['English', 'Español', 'Portugues']
+	},
 	status: {
 		//description: "Status",
 		type: 'string',
@@ -73,26 +82,15 @@ module.exports = {
 		//,enumdes: ["Active","Inactive"]
     }
 //End Attributes
-	,prueba: function() {
-		return this.name
-	}
-	,toJSON: function () {
-      var obj = this.toObject();
-
-	  obj.prueba = this.prueba()
-      //delete obj.pwd;
-
-      return obj;
-    }
-  },
-  beforeCreate: function (data, next) {
+  }
+  //,beforeCreate: function (data, next) {
 	// Modelo sails_app2  (/api/services)
     // TODO: replace with new cipher service
     //if (values.password) values.password = CipherService.create('bcrypt', values.password).hashSync();
     
 	//***** data.pwd = require('bcrypt').hashSync(data.pwd, 10);
-	next();
-  }
+	//next();
+  //}
   //,beforeUpdate: function (values, next) {
     // TODO: replace with new cipher service
     //if (values.password) values.password = CipherService.create('bcrypt', values.password).hashSync();

@@ -7,7 +7,7 @@
 
 module.exports = {
 
-	//migrate: 'alter',
+	//migrate: 'safe',
 
   attributes: {
 	//_card_width: '60em',

@@ -34,7 +34,8 @@ Fix:
 	- Error validating Machine (image attached) (ready)
 	- server red msg when key_server get / user
 	- i18n on server (configure language on DB User) (ready)
-	- update app template with Language settings
+	- update app template with Language settings. Compare node modules in zip and folder
+	- Load disk DB with updated tables & data
 	- Menu options with underscore
 	- using pm2 for running app
 	- hide message of key server & change name
@@ -43,7 +44,8 @@ Fix:
 	- Validate nro clients (uuid of client machine)
 	- installer
 	
-	
+	- App Template: UserResource, import/export DB
+	- App Template: add import/export DB option
 	- i18n on client (electron)
 	- When generate MFunction, generate language
 	- replace data.json for generator with ipc

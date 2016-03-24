@@ -1,4 +1,4 @@
-<!-- list template: version 6.34 -->
+<!-- list template: version 6.41 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -15631,9 +15631,11 @@ paper-menu {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+/** USER POINT - General Style **/
+/** END USER POINT - General Style **/
 </style>
 
-<!-- topBar template: version 1.20 -->
+<!-- topBar template: version 1.22 -->
 
 <dom-module id="top-bar">
 <template>
@@ -15721,7 +15723,8 @@ paper-menu {
 		margin-right: 5px;
 	}
 </style>
-	<div id="menubar" class="hide"><%
+	<div id="menubar" class="hide">
+	  <div on-click="back">Back</div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
 	  _.forEach(groups , function(n, key) { 
 		if (n != '') {%>
@@ -15730,7 +15733,7 @@ paper-menu {
 			<ul class="dropdown-content" tabindex="0"><%
 			  var arr = _.map(_.filter(resources, {'Group': n}), function(n4) { return n4.name})
 			  _.forEach(arr, function(n2, key2) { %>
-				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2) %></li><%
+				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2.replace(/_/g,' ')) %></li><%
 			  }) %>
 			</ul>
 		  </iron-dropdown>
@@ -15766,6 +15769,9 @@ paper-menu {
 <script>
 	Polymer({
 		is: "top-bar",
+		back: function() {
+			window.history.back();
+		},
 		open_user_menu: function() {
 			this.$.dropdown_user.toggle()
 		},
@@ -15880,7 +15886,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- new-form: version 5.10 -->
+<!-- new-form: version 5.20 -->
 
 <dom-module id="Account-new">
 <template>
@@ -15921,6 +15927,8 @@ paper-menu {
 		is: "Account-new",
 		open_dialog: function() {
 			this.clear()
+/** USER POINT - Open New Dialog **/
+/** END USER POINT - Open New Dialog **/
 			this.$.dialog.open()
 		},
 		clear: function() {
@@ -15947,6 +15955,8 @@ paper-menu {
 			this.$.ajax2.generateRequest()
 		},
 		record_created: function() {
+/** USER POINT - Record Created **/
+/** END USER POINT - Record Created **/
 			alert("Created Account id="+this.$.ajax2.lastResponse.id)
 			// ask for create another one
 			if (!this.$.repeat.checked) {
@@ -15976,12 +15986,14 @@ paper-menu {
 		ajax_error: function() {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
-		}  
+		}
+/** USER POINT - New Functions **/
+/** END USER POINT - New Functions **/		
 	})
 </script>
 </dom-module>
 
-<!-- display-form: version 5.10 -->
+<!-- display-form: version 5.20 -->
 
 <dom-module id="Account-display">
 <template>
@@ -16016,19 +16028,23 @@ paper-menu {
 		open_display_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Display Dialog **/
+/** END USER POINT - Open Display Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
 			}
+/** USER POINT - Display Functions **/
+/** END USER POINT - Display Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.10 -->
+<!-- edit-form: version 5.20 -->
 
 <dom-module id="Account-edit">
 <template>
-	<iron-ajax id="ajax" method='PUT' handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
 		<h2 class="card_title"><%= lng("%s %s",lng("Edit"),lng("Account"))%></h2>
 		<paper-dialog-scrollable>
@@ -16064,6 +16080,8 @@ paper-menu {
 		open_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Edit Dialog **/
+/** END USER POINT - Open Edit Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
@@ -16091,6 +16109,8 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+/** USER POINT - Record Updated **/
+/** END USER POINT - Record Updated **/
 			alert("<%= lng('Record Updated')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16099,15 +16119,17 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Edit Functions **/
+/** END USER POINT - Edit Functions **/
 	})
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.10 -->
+<!-- delete-form: version 5.20 -->
 
 <dom-module id="Account-delete">
 <template>
-	<iron-ajax id="ajax" method='DELETE' handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
+	<iron-ajax id="ajax" method="DELETE" handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
 		<h2 class="card_title"><%= lng("%s %s",lng("Delete"),lng("Account"))%></h2>
 		<paper-dialog-scrollable>
@@ -16143,6 +16165,8 @@ paper-menu {
 		open_delete_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
+/** USER POINT - Open Delete Dialog **/
+/** END USER POINT - Open Delete Dialog **/
 			this.$.dialog.open()
 		},
 		set_select_fields(item) {
@@ -16155,6 +16179,8 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+/** USER POINT - Record Deleted **/
+/** END USER POINT - Record Deleted **/
 			alert("<%= lng('Record Deleted')%>")
 			this.$.dialog.close()
 			this.fire('close')
@@ -16163,6 +16189,8 @@ paper-menu {
 			console.log(this.$.ajax.lastError)
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
+/** USER POINT - Delete Functions **/
+/** END USER POINT - Delete Functions **/
 	})
 </script>
 </dom-module>
@@ -16707,7 +16735,7 @@ Polymer({
 </dom-module>
 <top-bar><%= lng("%s %s",lng("List"),lng("Account"))%></top-bar>
 <paper-material class="card" elevation="2">
-	<Account-list></Account-list>
+	<Account-list id="Account_list"></Account-list>
 </paper-material>
 </body>
 </html>

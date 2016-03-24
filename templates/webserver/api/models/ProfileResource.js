@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-	//migrate: 'alter',
+	//migrate: 'safe',
 
   attributes: {
 	//_card_width: '60em',
@@ -34,6 +34,12 @@ module.exports = {
 		//display: 'name',
 		//type: 'string',
 		model: 'Resource'
+	},
+	data: {
+		//description: 'Data',
+		type: "string",
+		enum: ["all","selected","except","na"]
+		//,enumdes: ["All","Selected","All Except", "Not Apply"]
 	},
 	order: {
 		//description: 'Order',
