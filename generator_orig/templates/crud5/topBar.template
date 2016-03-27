@@ -1,4 +1,4 @@
-<!-- topBar template: version 1.23 -->
+<!-- topBar template: version 1.25 -->
 
 <dom-module id="top-bar">
 <template>
@@ -78,12 +78,17 @@
 	}
 	.bar_icon {
 		padding: 0;
+		width: 24px;
+		height: 24px;
 	}
 	.inline {
 		display: inline;
 	}
 	#dropdown_user iron-icon {
 		margin-right: 5px;
+	}
+	#dropdown_user {
+		width: 120px;
 	}
 </style>
 	<div id="menubar" class="hide">
@@ -116,13 +121,13 @@
 		  <iron-icon icon="arrow-drop-down"></iron-icon>
 		  <iron-dropdown id="dropdown_user"  horizontal-align="right" vertical-align="top">
 			<ul class="dropdown-content" tabindex="0">
-			  <li class="dropdown-item"><iron-icon icon="assessment"></iron-icon>Dashboard</li>
+			  <!--<li class="dropdown-item"><iron-icon icon="assessment"></iron-icon>Dashboard</li>
 			  <hr>
-			  <li class="dropdown-item"><iron-icon icon="perm-identity"></iron-icon>Profile</li>
 			  <li class="dropdown-item"><iron-icon icon="drafts"></iron-icon>Messages</li>
-			  <li class="dropdown-item"><iron-icon icon="settings"></iron-icon>Preferences</li>
+			  <li class="dropdown-item"><iron-icon icon="settings"></iron-icon>Preferences</li>-->
 			  <hr>
-			  <li class="dropdown-item" on-click="signout"><iron-icon icon="exit-to-app"></iron-icon>Log Out</li>
+			  <li class="dropdown-item"><iron-icon icon="perm-identity"></iron-icon><%= lng('Profile') %></li>
+			  <li class="dropdown-item" on-click="signout"><iron-icon icon="exit-to-app"></iron-icon><%= lng('Log Out') %></li>
 			</ul>
 		  </iron-dropdown>
 		</div>

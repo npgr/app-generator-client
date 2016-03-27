@@ -37,7 +37,13 @@ Fix:
 	- Menu options with underscore (ready)
 	- update app template with Language settings. Compare node modules in zip and folder (ready)
 	- Load App Template disk DB with updated tables & data (ready)
-	- Change User Menu (profile & Logout) - all ejs - Template
+	- Change User Menu (Logout) - all ejs - Template (ready)
+	- list.template without vulcanize (on process)
+	- password input field
+	- change app.css in webserver template & bower_components
+	- script for vulcanize list.ejs
+	
+	- Set Account for Google Analytics (disable while develop)
 	- UserResource is not in template (OJO profile resource "data" attribute)
 	- using pm2 for running app
 	- hide message of key server & change name
@@ -46,6 +52,11 @@ Fix:
 	- Validate nro clients (uuid of client machine)
 	- installer
 	
+	- Generate list with Polymer Components. Afterwards Vulcanize on deploy Folder 
+	(¿ Option for generate vulcanized ?, on Setting, also with app path or in App Settings)
+	- Implement "Other" Language, in User Table
+	- Change User Menu (profile) - Select Languaje
+	- Change User Menu (Preferences, Settings) - Colors, App Path
 	- App Template: UserResource, import/export DB
 	- App Template: add import/export DB option
 	- i18n on client (electron)
