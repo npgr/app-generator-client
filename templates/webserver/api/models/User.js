@@ -43,6 +43,7 @@ module.exports = {
 	pwd: {
 		//description: "Password",
 		//hide: true,
+		//password: true,
 		type: 'string',
 		required: true
 	},
