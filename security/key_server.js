@@ -11,6 +11,8 @@ process.argv.forEach(function(el, i) {
   if ( pos > -1) PORT = el.substring(pos+7)
 })
 
+if (PORT == 0) PORT = process.env.PORT2
+
 //console.log('port = ',process.env.PORT)
 
 //Create a server

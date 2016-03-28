@@ -41,20 +41,28 @@ Fix:
 	- list.template without vulcanize (ready)
 	- password input field (ready)
 	- change app.css in webserver template & bower_components (not was necessary)
-	- using pm2 for running app
-	- start service1 from .sh using pm2 (reading port from file)
-	- serve static content (http-server : app-config/static_server) from diferent port (cluster)
+	- using pm2 for running server app (ready)
+	- start service1 from .sh using pm2 (ready)
+	- include pm2 in webserver app template (ready)
+	- App Status (Started, Stoped)
+	- when change user language send message "You must restart session ..."
+	- include on Webserver template DB all Authorized data resources for Admin Profile
+	- Creating new App With corresponding DB (Postgres & Disk)
+	
 
+	- serve static content (http-server : app-config/static_server) from diferent port (cluster)
 	- script for vulcanize list.ejs
 	- Set Account for Google Analytics (disable while develop)
-	- UserResource is not in template (OJO profile resource "data" attribute)
-	- save session on DB and using session ID
 	- hide message of key server & change name
 	- Deny client Access from browser
-	- Reject access to not authorized resource
+	- Reject access for not authorized resource
 	- Validate nro clients (uuid of client machine)
 	- installer
 	
+	- lng function redundant on ejs views 
+	- save session on DB and using session ID, for enabling cluster option on pm2
+	- UserResource is not in template (OJO profile resource "data" attribute)
+	- include some test (mocha) to webserver template
 	- Generate list with Polymer Components. Afterwards Vulcanize on deploy Folder 
 	(¿ Option for generate vulcanized ?, on Setting, also with app path or in App Settings)
 	- Implement "Other" Language, in User Table

@@ -28,6 +28,16 @@ exports.set_port = function(app, port, path)
 {
 	var fs = require('fs')
 	
+	fs.writeFileSync(path+'/'+app+'/start.sh', 'PORT='+port+' npm start', 'utf8')
+	
+	return 'Success'
+}
+
+
+exports.set_port_old = function(app, port, path)
+{
+	var fs = require('fs')
+	
 	var file = fs.readFileSync(path+'/'+app+'/config/env/development.js', 'utf8')
 	
 	var start = file.indexOf('port:')

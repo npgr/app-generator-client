@@ -32,7 +32,7 @@
 	
 	<div id="list" green></div>
 	<br>
-	<div orange>Close this Window to Stop the App</div>
+	<div orange>Close this Window to Continue</div>
 
 	<script>
 		cont = 0
@@ -62,7 +62,8 @@
 			append_html('Starting:')
 			
 			var spawn = require('child_process').spawn;
-			child = spawn('node',[path+'/'+app+'/app'])
+			
+			child = spawn('sh', [ 'start.sh' ], { cwd: path+'/'+app })
 			
 			//var exec = require('child_process').exec;
 			//child = exec('nodemon Apps/'+app+'/app')
@@ -133,13 +134,13 @@
 		document.getElementById("app").innerHTML = app
 		document.getElementById("path").innerHTML = 'Path: '+path
 		first_time = true
-		//start_app(app, port, path)
-		i18n = require('i18n')
+		start_app(app, port, path)
+		/*i18n = require('i18n')
 		i18n.configure({
 			locales:['en', 'es'],
 			directory: __dirname //+ '/locales'
 		});
-		alert(__('Prueba'))
+		alert(i18n.__('Prueba'))*/
 	</script>
 </body>
 </html>
