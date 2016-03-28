@@ -38,14 +38,17 @@ Fix:
 	- update app template with Language settings. Compare node modules in zip and folder (ready)
 	- Load App Template disk DB with updated tables & data (ready)
 	- Change User Menu (Logout) - all ejs - Template (ready)
-	- list.template without vulcanize (on process)
-	- password input field
-	- change app.css in webserver template & bower_components
+	- list.template without vulcanize (ready)
+	- password input field (ready)
+	- change app.css in webserver template & bower_components (not was necessary)
+	- using pm2 for running app
+	- start service1 from .sh using pm2 (reading port from file)
+	- serve static content (http-server : app-config/static_server) from diferent port (cluster)
+
 	- script for vulcanize list.ejs
-	
 	- Set Account for Google Analytics (disable while develop)
 	- UserResource is not in template (OJO profile resource "data" attribute)
-	- using pm2 for running app
+	- save session on DB and using session ID
 	- hide message of key server & change name
 	- Deny client Access from browser
 	- Reject access to not authorized resource
