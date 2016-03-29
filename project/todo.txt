@@ -44,7 +44,7 @@ Fix:
 	- using pm2 for running server app (ready)
 	- start service1 from .sh using pm2 (ready)
 	- include pm2 in webserver app template (ready)
-	- App Status (Started, Stoped)
+	- App Status (Started, Stopped)
 	- when change user language send message "You must restart session ..."
 	- include on Webserver template DB all Authorized data resources for Admin Profile
 	- Creating new App With corresponding DB (Postgres & Disk)

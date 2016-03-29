@@ -119,6 +119,35 @@
 				}
 			})*/
 		}
+function upd_app_sts(app_id, port)
+{
+	
+	const http = require('http'); 
+	var options = {
+		host: 'localhost',
+		port: port,
+		path: '/App/status?id='+app_id+'&sts=started',
+		method: 'GET',
+		headers: {
+			//  accept: 'application/json'
+		}
+	};
+
+	var request = http.request(options,function(res){
+		res.on('data',function(data_stream){
+			var data = data_stream.toString()
+			var obj = JSON.parse(decrypt(data))
+			console.log(obj)
+		});
+	});
+	
+	request.on('error', function(err) {
+		console.log('Cannot Get License Information')
+		console.log('Error: ', err)
+	})
+	
+	request.end();
+}
 		
 		//Main Logic
 		//console.log('URL: ', window.location.href )
