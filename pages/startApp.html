@@ -57,7 +57,7 @@
 			//child.stdin.setEncoding('utf-8');
 			//child.stdin.write('\x03')
 		}
-		function start_app(app, port, path)
+		function start_app(app_id, app, port, path)
 		{
 			append_html('Starting:')
 			
@@ -94,6 +94,9 @@
 				{
 					//append_html("Process End with code: "+code)
 					append_html('Application Started')
+					const ipcRenderer = require('electron').ipcRenderer;
+					ipcRenderer.send('started-app', {app_id: app_id})
+					//upd_app_sts(app_id, port)
 				}
 				else 
 					append_html("Process End with code: "+code)
@@ -127,10 +130,10 @@ function upd_app_sts(app_id, port)
 		host: 'localhost',
 		port: port,
 		path: '/App/status?id='+app_id+'&sts=started',
-		method: 'GET',
-		headers: {
+		method: 'GET'
+		//headers: {
 			//  accept: 'application/json'
-		}
+		//}
 	};
 
 	var request = http.request(options,function(res){
@@ -155,15 +158,16 @@ function upd_app_sts(app_id, port)
 		var regex = /[=&]/
 		var vars = par.split(regex);
 		
-		var app = vars[1]
-		var port = vars[3]
-		var path = vars[5]
+		var app_id = vars[1]
+		var app = vars[3]
+		var port = vars[5]
+		var path = vars[7]
 
 		document.getElementById("title").innerHTML = 'Start App: '+app
 		document.getElementById("app").innerHTML = app
 		document.getElementById("path").innerHTML = 'Path: '+path
 		first_time = true
-		start_app(app, port, path)
+		start_app(app_id, app, port, path)
 		/*i18n = require('i18n')
 		i18n.configure({
 			locales:['en', 'es'],

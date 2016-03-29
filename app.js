@@ -57,9 +57,15 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		mainSender = event.sender
+		startAppWindow.loadURL('file://'+__dirname+'/pages/startApp.html?id='+arg.id+'&app='+arg.app+'&port='+arg.port+'&path='+arg.path)
 		startAppWindow.show();
 	});
+	
+	ipcMain.on('started-app', function(event, arg) {
+		mainSender.send('started-app', arg)
+	});
+	
 	ipcMain.on('create-model', function(event, arg) {
 		var createModel = new BrowserWindow({
 		width: 360,

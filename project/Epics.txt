@@ -8,7 +8,9 @@
 	- Generate tests
 	- Deploy Option
 	- Option to Publish on Cloud (Bluemix, Openshift, AWS, Google, Heroku)  (PARTNERS PaaS)
-		
+	
+3) ¿ Align Tool with metodology (scrum) ?, roles
+	
 architectures:  
 
 	- on premise with local key (developed) - weak security
