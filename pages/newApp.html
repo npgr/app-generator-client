@@ -57,7 +57,7 @@
 			document.getElementById("list").appendChild(textnode);
 			//node.scrollIntoView()
 		}
-		function create_app(app, port, path)
+		function create_app(app, port, path, app_des, ver, repo, author, license, app_title)
 		{	
 			var spawn = require('child_process').spawn;
 			//var child = spawn('unzip',['templates/webserver.zip','-d','apps/'+app] );
@@ -84,6 +84,8 @@
 					const remote = require('electron').remote
 					var app_util = remote.require('./app_util.js')
 					app_util.set_port(app, port, path)
+					set_package_json(app, path, app_des, ver, repo, author, license)
+					set_view_layout(app_title, path)
 					
 					append_html('Application Created Succefully on Path '+path+'\\'+app)
 					append_html('For start Server, run start.sh in above Path')
@@ -94,6 +96,38 @@
 				else 
 					append_html("Process End with code: "+code)
 			});
+		}
+		
+		function set_package_json(app, path, app_des, ver, repo, author, license) {
+			var fs = require('fs')
+		
+			var data_raw = fs.readFileSync(path+'/'+app+'/package.json')
+			
+			var data = data_raw.toString()
+			
+			data = data.replace(/#app/g, app)
+			data = data.replace(/#app_des/g, app_des)
+			data = data.replace(/#ver/g, ver)
+			data = data.replace(/#repo/g, repo)
+			data = data.replace(/#author/g, author)
+			data = data.replace(/#license/g, license)
+			
+			fs.writeFileSync(path+'/'+app+'/package.json', data)
+	
+			return 'Success'
+		}
+		function set_view_layout (app_title, path) {
+			var fs = require('fs')
+		
+			var data_raw = fs.readFileSync(path+'/'+app+'/views/layout.ejs', 'utf8')
+			
+			var data = data_raw.toString()
+			
+			data = data.replace(/#app_title/g, app_title)
+			
+			fs.writeFileSync(path+'/'+app+'/views/layout.ejs', data, 'utf8')
+	
+			return 'Success'
 		}
 		//Not Used
 		function copy_node_modules() {
@@ -134,10 +168,16 @@
 		var app = vars[1]
 		var port = vars[3]
 		var path = vars[5]
+		var app_des = vars[7]
+		var ver = vars[9]
+		var repo = vars[11]
+		var author = vars[13]
+		var license = vars[15]
+		var app_title = vars[17]
 
 		document.getElementById("app").innerHTML = app
 		//document.getElementById("path").innerHTML = 'Path: '+path
-		create_app(app, port, path)
+		create_app(app, port, path, app_des, ver, repo, author, license, app_title)
 	</script>
 </body>
 </html>

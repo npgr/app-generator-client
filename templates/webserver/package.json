@@ -1,8 +1,8 @@
 {
-  "name": "newApplication",
+  "name": "#app",
   "private": true,
-  "version": "0.0.0",
-  "description": "A new Application",
+  "version": "#ver",
+  "description": "#app_des",
   "keywords": [],
   "dependencies": {
     "bcrypt": "^0.8.5",
@@ -34,12 +34,12 @@
     "winston": "^1.1.0"
   },
   "scripts": {
-    "start": "pm2 start app.js --name Application",
-    "stop": "pm2 delete Application",
-	"restart": "pm2 restart Application",
+    "start": "pm2 start app.js --name #app",
+    "stop": "pm2 delete #app",
+	"restart": "pm2 restart #app",
     "list": "pm2 list",
     "monit": "pm2 monit",
-    "logs": "pm2 logs Application",
+    "logs": "pm2 logs #app",
 	"flush": "pm2 flush",
     "prod": "node app --prod",
     "debug": "node debug app.js"
@@ -47,8 +47,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/datamestra.git"
+    "url": "#repo"
   },
-  "author": "anonymous node/sails user",
-  "license": ""
+  "author": "#author",
+  "license": "#license"
 }

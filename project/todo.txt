@@ -45,14 +45,21 @@ Fix:
 	- start service1 from .sh using pm2 (ready)
 	- include pm2 in webserver app template (ready)
 	- App Status (Started, Stopped) (ready)
-	- i18n on msg "app started" & "app stopped"
-	- Name of app for pm2 instead of "Application"
+	- i18n on msg "app started" & "app stopped" (ready)
+	- Name of app for pm2 instead of "Application" 
+	  (+ app_des, version, repo, author, license on package.json & app_title on view/layout)
 	- when change user language send message "You must restart session ..."
+	- fix layout for list-columns form
+	- Ojo DB list (only supported by Sails)
 	- include on Webserver template DB all Authorized data resources for Admin Profile
 	- Creating new App With corresponding DB (Postgres & Disk)
 	
-
+	- On creating app show time (settimeout 1000ms) or relevant information (Presentation)
+	- Test DB Adapters (!!!!), include SQLServer, Oracle, ¿ DB2 ? - Delegable
 	- serve static content (http-server : app-config/static_server) from diferent port (cluster)
+	- generator.exe as a service (run with pm2)
+	- generate tooltips for each field (list & forms) for help text (premium option)
+	- on StartApp.html using line instead of raw stream (propertly line breaks)
 	- script for vulcanize list.ejs
 	- Set Account for Google Analytics (disable while develop)
 	- hide message of key server & change name

@@ -80,7 +80,7 @@ entries = [ 'node_modules/' ]
 ] */
 
 entries.forEach(function(entry) {
-	console.log('Extracting ('+i+'/17): '+entry + '  .It can take about 3 minutes...')
+	console.log('Extracting ('+i+'/17): '+entry + '  .It can take about 3 minutes (Running...)')
 	zip2.extractEntryTo(entry, path+'\\'+app, /*maintain path*/true, /*overwrite*/false);
 	i++
 })

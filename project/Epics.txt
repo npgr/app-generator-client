@@ -8,6 +8,7 @@
 	- Generate tests
 	- Deploy Option
 	- Option to Publish on Cloud (Bluemix, Openshift, AWS, Google, Heroku)  (PARTNERS PaaS)
+	- ¿ Use SQLServer, Oracle, DB2 ?, validate with customers (Supported by Sailsjs)
 	
 3) ¿ Align Tool with metodology (scrum) ?, roles
 	

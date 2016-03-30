@@ -46,7 +46,8 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path)
+		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path+'&app_des='+arg.app_des+'&ver='+arg.ver+'&repo='+arg.repo+'&author='+arg.author+'&license='+
+		arg.license+'&app_title='+arg.app_title)
 		newAppWindow.show();
 	});
 	ipcMain.on('start-app', function(event, arg) {
