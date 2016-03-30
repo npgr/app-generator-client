@@ -95,7 +95,7 @@
 					//append_html("Process End with code: "+code)
 					append_html('Application Started')
 					const ipcRenderer = require('electron').ipcRenderer;
-					ipcRenderer.send('started-app', {app_id: app_id})
+					ipcRenderer.send('started-app', {app: app})
 					//upd_app_sts(app_id, port)
 				}
 				else 
