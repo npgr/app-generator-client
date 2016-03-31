@@ -2,7 +2,7 @@
   "name": "#app",
   "private": true,
   "version": "#ver",
-  "description": "#app_des",
+  "description": "#ap_des",
   "keywords": [],
   "dependencies": {
     "bcrypt": "^0.8.5",

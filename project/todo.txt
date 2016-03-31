@@ -46,7 +46,7 @@ Fix:
 	- include pm2 in webserver app template (ready)
 	- App Status (Started, Stopped) (ready)
 	- i18n on msg "app started" & "app stopped" (ready)
-	- Name of app for pm2 instead of "Application" 
+	- Name of app for pm2 instead of "Application"  (change below values) 
 	  (+ app_des, version, repo, author, license on package.json & app_title on view/layout)
 	- when change user language send message "You must restart session ..."
 	- fix layout for list-columns form

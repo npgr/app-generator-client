@@ -50,6 +50,7 @@ delete zip
 var zip2 = new AdmZip("./templates/node_modules.zip");
 
 entries = [ 'node_modules/' ]
+//entries = [ ]
 /*entries = [
 	'node_modules/.bin/',
 	'node_modules/bcrypt/',
