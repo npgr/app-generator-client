@@ -46,10 +46,15 @@ app.on('ready', function() {
 		show: false
 		//frame: false  //frameless window
 		})
-		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html?app='+arg.app+'&port='+arg.port+'&path='+arg.path+'&app_des='+arg.app_des+'&ver='+arg.ver+'&repo='+arg.repo+'&author='+arg.author+'&license='+
-		arg.license+'&app_title='+arg.app_title)
+		newAppWindow.loadURL('file://'+__dirname+'/pages/newApp.html')
 		newAppWindow.show();
+		new_app_data = { app: arg.app, port: arg.port, path: arg.path, app_des: arg.app_des, ver: arg.ver, repo: arg.repo, author: arg.author, license: arg.license, app_title: arg.app_title }
 	});
+	
+	ipcMain.on('get-new-app-data', function(event, arg) {
+		event.sender.send('new-app-data', new_app_data)
+	})
+	
 	ipcMain.on('start-app', function(event, arg) {
 		var startAppWindow = new BrowserWindow({
 		width: 520,

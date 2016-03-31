@@ -80,12 +80,12 @@
 				{
 					//copy_node_modules()
 					//append_html("Process End with code: "+code)
-					append_html('Setting Application Port...')
+					append_html('Configuring Application ...')
 					const remote = require('electron').remote
 					var app_util = remote.require('./app_util.js')
 					app_util.set_port(app, port, path)
 					set_package_json(app, path, app_des, ver, repo, author, license)
-					set_view_layout(app_title, path)
+					set_view_layout(app, app_title, path)
 					
 					append_html('Application Created Succefully on Path '+path+'\\'+app)
 					append_html('For start Server, run start.sh in above Path')
@@ -116,7 +116,7 @@
 	
 			return 'Success'
 		}
-		function set_view_layout (app_title, path) {
+		function set_view_layout (app, app_title, path) {
 			var fs = require('fs')
 		
 			var data_raw = fs.readFileSync(path+'/'+app+'/views/layout.ejs', 'utf8')
@@ -129,7 +129,7 @@
 	
 			return 'Success'
 		}
-		//Not Used
+		/**Not Used **/
 		function copy_node_modules() {
 			cont = 0
 			append_html('Intalling Node Modules')
@@ -159,9 +159,10 @@
 					append_html('Process End with code: '+ code)
 			})
 		}
-		//Main Logic
+		
+		/** MAIN PROCESS **/
 		//console.log('URL: ', window.location.href )
-		var par = window.location.search.substring(1)
+		/*var par = window.location.search.substring(1)
 		var regex = /[=&]/
 		var vars = par.split(regex);
 		
@@ -173,11 +174,18 @@
 		var repo = vars[11]
 		var author = vars[13]
 		var license = vars[15]
-		var app_title = vars[17]
-
-		document.getElementById("app").innerHTML = app
-		//document.getElementById("path").innerHTML = 'Path: '+path
-		create_app(app, port, path, app_des, ver, repo, author, license, app_title)
+		var app_title = vars[17]*/
+		
+		const ipcRenderer = require('electron').ipcRenderer;
+		ipcRenderer.send('get-new-app-data')
+		
+		ipcRenderer.on('new-app-data', function(event, arg) {
+		
+			document.getElementById("app").innerHTML = arg.app
+			//document.getElementById("path").innerHTML = 'Path: '+path
+		
+			create_app(arg.app, arg.port, arg.path, arg.app_des, arg.ver, arg.repo, arg.author, arg.license, arg.app_title)
+		})
 	</script>
 </body>
 </html>
