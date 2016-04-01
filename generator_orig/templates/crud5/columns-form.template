@@ -1,4 +1,4 @@
-<!-- list-columns: version 5.10 -->
+<!-- list-columns: version 5.11 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -8,9 +8,6 @@
 <dom-module id="<%= model%>-list-columns">
 <template>
 <style>
-	/*#dialog {
-		width: 24em;
-	}*/
 	.green {
 		background-color: green;
 		color: white;
@@ -20,6 +17,15 @@
 		color: white;
 		background-color: orange;
 		height: 30px;
+	}
+	#dialog {
+		width: 27em;
+	}
+	#dialog table div {
+		width: 5.5em;
+		text-align: center;
+		padding-top: 5px;
+		height: 28px;
 	}
 </style>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%

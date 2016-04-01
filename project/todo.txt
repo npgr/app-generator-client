@@ -46,14 +46,15 @@ Fix:
 	- include pm2 in webserver app template (ready)
 	- App Status (Started, Stopped) (ready)
 	- i18n on msg "app started" & "app stopped" (ready)
-	- Name of app for pm2 instead of "Application"  (change below values) 
+	- Name of app for pm2 instead of "Application"  (change below values)  (ready)
 	  (+ app_des, version, repo, author, license on package.json & app_title on view/layout)
-	- when change user language send message "You must restart session ..."
-	- fix layout for list-columns form
-	- Ojo DB list (only supported by Sails)
+	- Ojo DB list (only supported by Sails) (ready)
+	- fix layout for list-columns form (ready)
 	- include on Webserver template DB all Authorized data resources for Admin Profile
 	- Creating new App With corresponding DB (Postgres & Disk)
-	
+
+
+	- when change user language send message "You must restart session ..." in help tooltip
 	- On creating app show time (settimeout 1000ms) or relevant information (Presentation)
 	- Test DB Adapters (!!!!), include SQLServer, Oracle, ¿ DB2 ? - Delegable
 	- serve static content (http-server : app-config/static_server) from diferent port (cluster)

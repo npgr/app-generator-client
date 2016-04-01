@@ -1,4 +1,4 @@
-<!-- list template: version 7.00 -->
+<!-- list template: version 7.02 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {
@@ -122,13 +122,18 @@ paper-menu {
 <dom-module id="<%= model%>-list">
 <template>
 <%= user_point.list_style %>
-	<iron-ajax id="ajax" handle-as="json" on-response="load_data" on-error="ajax_error"></iron-ajax>
-	<<%= model%>-list-columns id="<%= model%>_list_columns" on-close="update_columns"></<%= model%>-list-columns>
-	<<%= model%>-new id="<%= model%>_new_dialog" on-close="reload"></<%= model%>-new>
-	<<%= model%>-display id="<%= model%>_display_dialog"></<%= model%>-display>
-	<<%= model%>-edit id="<%= model%>_edit_dialog" on-close="reload"></<%= model%>-edit>
+	<iron-ajax id="ajax" handle-as="json" on-response="load_data" on-error="ajax_error"></iron-ajax><% 
+if (columns_form != '') { %>
+	<<%= model%>-list-columns id="<%= model%>_list_columns" on-close="update_columns"></<%= model%>-list-columns><% 
+} if (new_form != '') { %>
+	<<%= model%>-new id="<%= model%>_new_dialog" on-close="reload"></<%= model%>-new><% 
+} if (display_form != '') { %>
+	<<%= model%>-display id="<%= model%>_display_dialog"></<%= model%>-display><% 
+} if (edit_form != '') { %>
+	<<%= model%>-edit id="<%= model%>_edit_dialog" on-close="reload"></<%= model%>-edit><% 
+} if (delete_form != '') { %>
 	<<%= model%>-delete id="<%= model%>_delete_dialog" on-close="reload"></<%= model%>-delete><%
-	for (i=0; i < keys.length; i++) {
+}	for (i=0; i < keys.length; i++) {
 		if (jsondata[keys[i]].model) {%>
 	<<%= jsondata[keys[i]].model%>-select id="<%= jsondata[keys[i]].model%>_select_dialog" on-item_selected="set_select_field"></<%= jsondata[keys[i]].model%>-select><%
 	} }
