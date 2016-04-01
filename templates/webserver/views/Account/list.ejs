@@ -1,4 +1,4 @@
-<!-- list template: version 7.00 -->
+<!-- list template: version 7.02 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -255,14 +255,11 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- list-columns: version 5.10 -->
+<!-- list-columns: version 5.11 -->
 
 <dom-module id="Account-list-columns">
 <template>
 <style>
-	/*#dialog {
-		width: 24em;
-	}*/
 	.green {
 		background-color: green;
 		color: white;
@@ -272,6 +269,15 @@ paper-menu {
 		color: white;
 		background-color: orange;
 		height: 30px;
+	}
+	#dialog {
+		width: 27em;
+	}
+	#dialog table div {
+		width: 5.5em;
+		text-align: center;
+		padding-top: 5px;
+		height: 28px;
 	}
 </style>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
