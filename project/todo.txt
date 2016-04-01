@@ -51,8 +51,13 @@ Fix:
 	- Ojo DB list (only supported by Sails) (ready)
 	- fix layout for list-columns form (ready)
 	- include on Webserver template DB all Authorized data resources for Admin Profile
+	- Reject access for not authorized resource
+	- Deny client Access from browser
 	- Creating new App With corresponding DB (Postgres & Disk)
-
+	- Set Account for Google Analytics (disable while develop)
+	- hide message of key server & change name
+	- Validate nro clients (uuid of client machine)
+	- installer
 
 	- when change user language send message "You must restart session ..." in help tooltip
 	- On creating app show time (settimeout 1000ms) or relevant information (Presentation)
@@ -62,12 +67,7 @@ Fix:
 	- generate tooltips for each field (list & forms) for help text (premium option)
 	- on StartApp.html using line instead of raw stream (propertly line breaks)
 	- script for vulcanize list.ejs
-	- Set Account for Google Analytics (disable while develop)
-	- hide message of key server & change name
-	- Deny client Access from browser
-	- Reject access for not authorized resource
-	- Validate nro clients (uuid of client machine)
-	- installer
+	
 	
 	- lng function redundant on ejs views 
 	- save session on DB and using session ID, for enabling cluster option on pm2
