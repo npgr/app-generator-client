@@ -1,4 +1,4 @@
-<!-- list template: version 7.02 -->
+<!-- list template: version 7.03 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -349,7 +349,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- new-form: version 5.20 -->
+<!-- new-form: version 5.21 -->
 
 <dom-module id="Account-new">
 <template>
@@ -420,7 +420,7 @@ paper-menu {
 		record_created: function() {
 /** USER POINT - Record Created **/
 /** END USER POINT - Record Created **/
-			alert("Created Account id="+this.$.ajax2.lastResponse.id)
+			alert("<%= lng('Record Created')%>")
 			// ask for create another one
 			if (!this.$.repeat.checked) {
 				this.$.dialog.close()

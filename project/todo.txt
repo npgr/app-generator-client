@@ -50,15 +50,20 @@ Fix:
 	  (+ app_des, version, repo, author, license on package.json & app_title on view/layout)
 	- Ojo DB list (only supported by Sails) (ready)
 	- fix layout for list-columns form (ready)
-	- include on Webserver template DB all Authorized data resources for Admin Profile
-	- Reject access for not authorized resource
+	- include on Webserver template DB all Authorized data resources for Admin Profile 
+	- i18n on alerts (created record, ..., etc) and alert title 
+	- Profile option on User Menu
+	- Reject access for not authorized resource & notify rejection
 	- Deny client Access from browser
 	- Creating new App With corresponding DB (Postgres & Disk)
 	- Set Account for Google Analytics (disable while develop)
 	- hide message of key server & change name
 	- Validate nro clients (uuid of client machine)
 	- installer
+	
 
+	- even a user is not authorized to create, it shows the new-form (validate ?)
+	- separate component top-bar (not trivial) convert ejs into html rendering data
 	- when change user language send message "You must restart session ..." in help tooltip
 	- On creating app show time (settimeout 1000ms) or relevant information (Presentation)
 	- Test DB Adapters (!!!!), include SQLServer, Oracle, ¿ DB2 ? - Delegable
