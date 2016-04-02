@@ -1,4 +1,4 @@
-<!-- new-form: version 5.21 -->
+<!-- new-form: version 5.22 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -98,6 +98,12 @@
 			this.$.ajax2.generateRequest()
 		},
 		record_created: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 <%= user_point.record_created %>
 			alert("<%= srv(crud, "Record Created")%>")
 			// ask for create another one

@@ -1,4 +1,4 @@
-<!-- edit-form: version 5.20 -->
+<!-- edit-form: version 5.21 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -104,6 +104,12 @@
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 <%= user_point.record_updated %>
 			alert("<%= srv(crud, "Record Updated")%>")
 			this.$.dialog.close()

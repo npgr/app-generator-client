@@ -1,4 +1,4 @@
-<!-- list template: version 7.03 -->
+<!-- list template: version 7.05 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {
@@ -719,6 +719,12 @@ Polymer({
 	while(this.data.data[0]) {
         this.data.remove(this.data.data[0])
       }
+	/** Validate Resource Authorized **/
+	if (this.$.ajax.lastResponse.auth_msg)
+	{
+		alert(this.$.ajax.lastResponse.auth_msg)
+		return
+	}
 	for (i=0; i< this.$.ajax.lastResponse.length; i++)
 	{<%	for (i=0; i < keys.length; i++) { 
 			if (jsondata[keys[i]].type == "date") {%>

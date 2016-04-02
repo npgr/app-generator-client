@@ -1,4 +1,4 @@
-<!-- delete-form: version 5.20 -->
+<!-- delete-form: version 5.21 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -58,6 +58,12 @@
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 <%= user_point.record_deleted %>
 			alert("<%= srv(crud, "Record Deleted")%>")
 			this.$.dialog.close()
