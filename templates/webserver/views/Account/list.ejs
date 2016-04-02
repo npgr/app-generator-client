@@ -1,4 +1,4 @@
-<!-- list template: version 7.03 -->
+<!-- list template: version 7.05 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -349,7 +349,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- new-form: version 5.21 -->
+<!-- new-form: version 5.22 -->
 
 <dom-module id="Account-new">
 <template>
@@ -418,6 +418,12 @@ paper-menu {
 			this.$.ajax2.generateRequest()
 		},
 		record_created: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 /** USER POINT - Record Created **/
 /** END USER POINT - Record Created **/
 			alert("<%= lng('Record Created')%>")
@@ -503,7 +509,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.20 -->
+<!-- edit-form: version 5.21 -->
 
 <dom-module id="Account-edit">
 <template>
@@ -572,6 +578,12 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_updated: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 /** USER POINT - Record Updated **/
 /** END USER POINT - Record Updated **/
 			alert("<%= lng('Record Updated')%>")
@@ -588,7 +600,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.20 -->
+<!-- delete-form: version 5.21 -->
 
 <dom-module id="Account-delete">
 <template>
@@ -642,6 +654,12 @@ paper-menu {
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
+			/** Validate Resource Authorized **/
+			if (this.$.ajax2.lastResponse.auth_msg)
+			{
+				alert(this.$.ajax2.lastResponse.auth_msg)
+				return
+			}
 /** USER POINT - Record Deleted **/
 /** END USER POINT - Record Deleted **/
 			alert("<%= lng('Record Deleted')%>")
@@ -1180,6 +1198,12 @@ Polymer({
 	while(this.data.data[0]) {
         this.data.remove(this.data.data[0])
       }
+	/** Validate Resource Authorized **/
+	if (this.$.ajax.lastResponse.auth_msg)
+	{
+		alert(this.$.ajax.lastResponse.auth_msg)
+		return
+	}
 	for (i=0; i< this.$.ajax.lastResponse.length; i++)
 	{	
 		this.data.insert(this.$.ajax.lastResponse[i])
