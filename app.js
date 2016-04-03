@@ -35,7 +35,8 @@ app.on('ready', function() {
 		} 
 		var config = JSON.parse(data)
 		mainWindow.setSize(config.width, config.height)
-		mainWindow.loadURL(config.url)
+		var main_options = { "extraHeaders" : "client_appl: Generator\n" }
+		mainWindow.loadURL(config.url, main_options)
 	});
 	
 	ipcMain.on('new-app', function(event, arg) {

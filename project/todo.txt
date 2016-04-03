@@ -52,16 +52,34 @@ Fix:
 	- fix layout for list-columns form (ready)
 	- include on Webserver template DB all Authorized data resources for Admin Profile (ready)
 	- i18n on alert "created record" (ready)
+	- Deny client Access from browser (ready)
+	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
+	- on Logout, close all electron windows
 	- Profile option on User Menu (change password, email & language)
-	- Reject access for not authorized resource & notify rejection, create page for rejection 
-	- Deny client Access from browser
+	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
+	license related)
+	- start.sh or npm start in production mode
+	- Protect server side (& cient side ?) with docker ?  (settings on first run, instead of installer)
+	- check cors & csfr & controller execution (idem for webserver template) 
+	- Obfuscate controllers & policy (specially user controller)  (SECURITY FLAW)
+	- Check routes db/import & export, with bypass option on policy authorized
 	- Creating new App With corresponding DB (Postgres & Disk)
 	- Set Account for Google Analytics (disable while develop)
 	- hide message of key server & change name
 	- Validate nro clients (uuid of client machine)
+	- check security of app (twitter) & other checks (lint)
+	- custom pages 404, 503, etc
+	- protect method controllers from beins invoqued from url
+	- logo & app name
 	- installer  (10 / 4)
+
+	- all views must be on POST Method instead of Get
+	- The server does not denny access to assets
+	- *** Evaluate & Update software once a month: notepad++ (3m), git(3m), tortoise(3m), node, npm, npm3, bower, polymer & all node modules (including pm2)
 	
-	- pages 404, 503, etc
+	- Option for include updates on new template, instead of regenerate all
+
+	- include some test (mocha) to webserver template, implement CI
 	- even a user is not authorized to create, it shows the new-form (validate ?)
 	- separate component top-bar (not trivial) convert ejs into html rendering data
 	- when change user language send message "You must restart session ..." in help tooltip
@@ -77,7 +95,6 @@ Fix:
 	- lng function redundant on ejs views 
 	- save session on DB and using session ID, for enabling cluster option on pm2
 	- UserResource is not in template (OJO profile resource "data" attribute)
-	- include some test (mocha) to webserver template
 	- Generate list with Polymer Components. Afterwards Vulcanize on deploy Folder 
 	(¿ Option for generate vulcanized ?, on Setting, also with app path or in App Settings)
 	- Implement "Other" Language, in User Table
@@ -129,6 +146,7 @@ Fix:
 - create an installer (¿http://wixtoolset.org (electron-squirrel)
 	
 	- Install Nodejs
+	- Install Git & Tortoise (u other)
 	- Install Postgresql
     - create DB & Populate (link server with DB)
 	- set admin pwd
