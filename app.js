@@ -39,6 +39,11 @@ app.on('ready', function() {
 		mainWindow.loadURL(config.url, main_options)
 	});
 	
+	ipcMain.on('exit-main', function(event, arg) {
+		
+		setTimeout(function(){ mainWindow.close() }, 4500);
+	})
+	
 	ipcMain.on('new-app', function(event, arg) {
 		var newAppWindow = new BrowserWindow({
 		width: 600,
