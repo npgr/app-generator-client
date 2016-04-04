@@ -57,6 +57,7 @@ Fix:
 	- define a Good By page (and Welcome Page)
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
 	- Profile option on User Menu (change password, email & language)
+	- Generate secret keys (session, etc) when create new app
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
 	license related)
 	- start.sh or npm start in production mode
