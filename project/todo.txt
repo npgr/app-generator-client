@@ -55,6 +55,7 @@ Fix:
 	- Deny client Access from browser (ready)
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
 	- on Logout, close all electron windows
+	- allow only one submenu open at a time
 	- Profile option on User Menu (change password, email & language)
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
 	license related)
