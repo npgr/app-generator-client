@@ -54,8 +54,9 @@ Fix:
 	- i18n on alert "created record" (ready)
 	- Deny client Access from browser (ready)
 	- on Logout, close all electron windows (ready)
-	- define a Good By page (and Welcome Page)
+	
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
+	- design a Good Bye page (and Welcome Page)
 	- Profile option on User Menu (change password, email & language)
 	- Generate secret keys (session, etc) when create new app
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
