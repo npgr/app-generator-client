@@ -41,7 +41,7 @@ app.on('ready', function() {
 	
 	ipcMain.on('exit-main', function(event, arg) {
 		
-		setTimeout(function(){ mainWindow.close() }, 4500);
+		setTimeout(function(){ mainWindow.close() }, 3500);
 	})
 	
 	ipcMain.on('new-app', function(event, arg) {

@@ -36,11 +36,11 @@
   "scripts": {
     "start": "pm2 start app.js --name #app",
     "stop": "pm2 delete #app",
-	"restart": "pm2 restart #app",
+    "restart": "pm2 restart #app",
     "list": "pm2 list",
     "monit": "pm2 monit",
     "logs": "pm2 logs #app",
-	"flush": "pm2 flush",
+    "flush": "pm2 flush",
     "prod": "node app --prod",
     "debug": "node debug app.js"
   },
