@@ -54,6 +54,9 @@ Fix:
 	- i18n on alert "created record" (ready)
 	- Deny client Access from browser (ready)
 	- on Logout, close all electron windows (ready)
+	- Protect server side (& cient side ?) with docker ?  (settings on first run, instead of installer)
+	- change port 5432 for 5433 in generator container
+
 	
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
 	- design a Good Bye page (and Welcome Page)
@@ -62,7 +65,7 @@ Fix:
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
 	license related)
 	- start.sh or npm start in production mode
-	- Protect server side (& cient side ?) with docker ?  (settings on first run, instead of installer)
+
 	- check cors & csfr & controller execution (idem for webserver template) 
 	- Obfuscate controllers & policy (specially user controller)  (SECURITY FLAW)
 	- Check routes db/import & export, with bypass option on policy authorized
