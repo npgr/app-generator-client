@@ -57,11 +57,13 @@ Fix:
 	- Protect server side (& cient side ?) with docker ?  (settings on first run, instead of installer)
 	- change postgres port 5432 for 5433 in generator container (ready)
 	- HTTPS & PORT2 env variables for docker container generator1.0 (ready) 
-	- error on list columns dialog width
-	- error on auth_msg (choose ajax or ajax2)
 	- include on list template asking for HTTPS env variable + generate all list (ready)
-	- Profile option on User Menu (change password, email & language)
+	- error on list columns dialog width (ready, missing: app.list + app template)
+	- error on auth_msg (choose ajax or ajax2) (ready, missing app.list + app template)
+	- Profile option on User Menu (change password, email & language) -> generate all list + app template
+	-> change password (actual pwd, new pwd, confirm pwd) (also on edit user -> confirm pwd)
 	
+	- load DB on container with all data (create resource + change resource)
 	- publish image node-postgres in docker hub
 	- service1.exe does not run on docker
 	- data binding folder in user
