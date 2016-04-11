@@ -1,4 +1,4 @@
-<!-- list-columns: version 5.11 -->
+<!-- list-columns: version 5.12 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -18,17 +18,17 @@
 		background-color: orange;
 		height: 30px;
 	}
-	#dialog {
+	#dialog_columns {
 		width: 27em;
 	}
-	#dialog table div {
+	#dialog_columns table div {
 		width: 5.5em;
 		text-align: center;
 		padding-top: 5px;
 		height: 28px;
 	}
 </style>
-	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
+	<paper-dialog id="dialog_columns" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation"><%
 	  if (crud == "crud6") { %>
 		<h2 class="card_title">>%= lng("%s %s",lng("Columns"),lng("<%= title%>"))%<</h2><% 
 	  } else { %>	
@@ -76,7 +76,7 @@
 				} else {%>
 			this.show_field("<%= keys[i]%>_<%=jsondata[keys[i]].display%>")<%	
 			} } }%>
-			this.$.dialog.open()
+			this.$.dialog_columns.open()
 		},
 		change_field: function(e) {
 			var field = e.toElement.id
@@ -99,7 +99,7 @@
 		},
 		submit_form: function() {
 			this.updated = true
-			this.$.dialog.close()
+			this.$.dialog_columns.close()
 			this.fire('close')
 		}
 	})

@@ -1,4 +1,4 @@
-<!-- delete-form: version 5.21 -->
+<!-- delete-form: version 5.22 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -59,9 +59,9 @@
 		},
 		record_deleted: function() {
 			/** Validate Resource Authorized **/
-			if (this.$.ajax2.lastResponse.auth_msg)
+			if (typeof this.$.ajax.lastResponse.auth_msg !== 'undefined')
 			{
-				alert(this.$.ajax2.lastResponse.auth_msg)
+				alert(this.$.ajax.lastResponse.auth_msg)
 				return
 			}
 <%= user_point.record_deleted %>

@@ -52,15 +52,27 @@ Fix:
 	- fix layout for list-columns form (ready)
 	- include on Webserver template DB all Authorized data resources for Admin Profile (ready)
 	- i18n on alert "created record" (ready)
-	- Deny client Access from browser (ready)
+	- Deny client Access from browser, include environment var BROWSER (ready)
 	- on Logout, close all electron windows (ready)
 	- Protect server side (& cient side ?) with docker ?  (settings on first run, instead of installer)
-	- change port 5432 for 5433 in generator container
-
+	- change postgres port 5432 for 5433 in generator container (ready)
+	- HTTPS & PORT2 env variables for docker container generator1.0 (ready) 
+	- error on list columns dialog width
+	- error on auth_msg (choose ajax or ajax2)
+	- include on list template asking for HTTPS env variable + generate all list (ready)
+	- Profile option on User Menu (change password, email & language)
 	
+	- publish image node-postgres in docker hub
+	- service1.exe does not run on docker
+	- data binding folder in user
+
+	- Sailsjs Start Automatic all .js in /api/services folder (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+	- Problem, when shutdown sails server does not kill service process. when start again, get an error (already running)
+	- jxcore no more in maintanense, use instead enclosejs
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
 	- design a Good Bye page (and Welcome Page)
-	- Profile option on User Menu (change password, email & language)
+	- on profile validate that "first page", only can be a page
+
 	- Generate secret keys (session, etc) when create new app
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
 	license related)

@@ -23,4 +23,8 @@ docker commit -a "Nuno Goncalves" -m "Nodejs + PostgreSQL" ac46 node-postgres:1.
 -----------------------------------------
 Container: generator 
 
-$ docker run -d -v /n/sails-electron/Generador/server/data:/data -p 5432:5432 -p 5845:3000 -p 6178:6178 --name=generator1.0 node-postgres:1.0
+$ docker run -d -e PORT=3000 -e PORT2=6178 -e HTTPS=false -v /n/sails-electron/Generador/server/data:/data -p 5433:5432 -p 5845:3000 -p 6178:6178 --name=generator1.0 node-postgres:1.0
+
+(--publish for define ip:port)
+
+docker exec -d generator1.0 node /data/app
