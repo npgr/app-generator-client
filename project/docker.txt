@@ -1,0 +1,30 @@
+IMAGES:
+
+postgres
+
+node-postgres
+
+(generator)
+
+-----------------------------------------
+IMAGE: node-postgres  (ports 3000 & 5432)
+
+(FROM postgres)
+
+docker exec -it xxxx /bin/bash
+
+# apt-get update
+# apt-get install --yes nodejs
+# apt-get install --yes nodejs-legacy
+# apt-get install --yes npm
+
+docker commit -a "Nuno Goncalves" -m "Nodejs + PostgreSQL" ac46 node-postgres:1.0
+
+-----------------------------------------
+Container: generator 
+
+$ docker run -d -e PORT=3000 -e PORT2=6178 -e HTTPS=false -v /n/sails-electron/Generador/server/data:/data -p 5433:5432 -p 5845:3000 -p 6178:6178 --name=generator1.0 node-postgres:1.0
+
+(--publish for define ip:port)
+
+docker exec -d generator1.0 node /data/app

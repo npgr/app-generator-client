@@ -38,7 +38,10 @@ app.on('ready', function() {
 		var main_options = { "extraHeaders" : "client_appl: Generator\n" }
 		mainWindow.loadURL(config.url, main_options)
 	});
-	
+	ipcMain.on('exit-main', function(event, arg) {
+		
+		setTimeout(function(){ mainWindow.close() }, 3500);
+	})
 	ipcMain.on('new-app', function(event, arg) {
 		var newAppWindow = new BrowserWindow({
 		width: 600,

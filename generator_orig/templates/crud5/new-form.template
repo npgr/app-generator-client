@@ -1,4 +1,4 @@
-<!-- new-form: version 5.22 -->
+<!-- new-form: version 5.23 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -99,7 +99,7 @@
 		},
 		record_created: function() {
 			/** Validate Resource Authorized **/
-			if (this.$.ajax2.lastResponse.auth_msg)
+			if (typeof this.$.ajax2.lastResponse.auth_msg !== 'undefined')
 			{
 				alert(this.$.ajax2.lastResponse.auth_msg)
 				return
