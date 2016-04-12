@@ -61,10 +61,18 @@ Fix:
 	- error on list columns dialog width (ready, missing: app.list + app template)
 	- error on auth_msg (choose ajax or ajax2) (ready, missing app.list + app template)
 	- Profile option on User Menu (change password, email & language) -> generate all list + app template
-	-> change password (actual pwd, new pwd, confirm pwd) (also on edit user -> confirm pwd)
+	-> change password (actual pwd, new pwd, confirm pwd), i18n (also on edit user -> confirm pwd)
+	
+	- two new user points on topbar template
+	
+	- send all messages according auth_msg (like user profile)
+	- encrypt pwd in DB,  send pwd over http encrypted (hash)
+	- creante env var PWD_MIN_LEN
+	- upgrade sails to v 0.12
 	
 	- load DB on container with all data (create resource + change resource)
 	- publish image node-postgres in docker hub
+	- secure routes
 	- service1.exe does not run on docker
 	- data binding folder in user
 
