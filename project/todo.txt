@@ -80,6 +80,9 @@ Fix:
 	- Problem, when shutdown sails server does not kill service process. when start again, get an error (already running)
 	- jxcore no more in maintanense, use instead enclosejs
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
+	- on Logout, close all electron windows (ready)
+	- allow only one submenu open at a time
+	- Profile option on User Menu (change password, email & language)
 	- design a Good Bye page (and Welcome Page)
 	- on profile validate that "first page", only can be a page
 
