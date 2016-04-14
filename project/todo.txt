@@ -62,13 +62,15 @@ Fix:
 	- error on auth_msg (choose ajax or ajax2) (ready, missing app.list + app template)
 	- Profile option on User Menu (change password, email & language) -> generate all list + app template
 	-> change password (actual pwd, new pwd, confirm pwd), i18n (also on edit user -> confirm pwd)
+	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
 	- User Profile on all lists
 	- two new user points on topbar template
 	- topbar in assets
 	- send all messages according auth_msg (like user profile)
 	- encrypt pwd in DB,  send pwd over http encrypted (hash)
-	- creante env var PWD_MIN_LEN
+	- creante env var PWD_MIN_LEN -> Configuration Model (working)
+	
 	- upgrade sails to v 0.12
 	
 	- load DB on container with all data (create resource + change resource)
@@ -130,8 +132,7 @@ Fix:
 	- Generate list with Polymer Components. Afterwards Vulcanize on deploy Folder 
 	(¿ Option for generate vulcanized ?, on Setting, also with app path or in App Settings)
 	- Implement "Other" Language, in User Table
-	- Change User Menu (profile) - Select Languaje
-	- Change User Menu (Preferences, Settings) - Colors, App Path
+	- Change User Menu (profile) - Select Languaje (ready)
 	- App Template: UserResource, import/export DB
 	- App Template: add import/export DB option
 	- i18n on client (electron)
