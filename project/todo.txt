@@ -58,27 +58,31 @@ Fix:
 	- change postgres port 5432 for 5433 in generator container (ready)
 	- HTTPS & PORT2 env variables for docker container generator1.0 (ready) 
 	- include on list template asking for HTTPS env variable + generate all list (ready)
+
 	- error on list columns dialog width (ready, missing: app.list + app template)
 	- error on auth_msg (choose ajax or ajax2) (ready, missing app.list + app template)
+	
+	
 	- Profile option on User Menu (change password, email & language) -> generate all list + app template
 	-> change password (actual pwd, new pwd, confirm pwd), i18n (also on edit user -> confirm pwd)
-	- Change User Menu (Preferences, Settings) - Colors, App Path
+	- creante app configuration PWD_MIN_LEN -> Configuration Model (ready)
 	
 	- User Profile on all lists
-	- two new user points on topbar template
-	- topbar in assets
-	- send all messages according auth_msg (like user profile)
-	- encrypt pwd in DB,  send pwd over http encrypted (hash)
-	- creante env var PWD_MIN_LEN -> Configuration Model (working)
+	- two new user points on topbar template & edit dialog & new dialog  
+	- encrypt pwd in DB, send pwd over http encrypted (hash)
+	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
 	- upgrade sails to v 0.12
 	
 	- load DB on container with all data (create resource + change resource)
+	
 	- publish image node-postgres in docker hub
 	- secure routes
 	- service1.exe does not run on docker
 	- data binding folder in user
 
+	- topbar in assets
+	- send all messages according auth_msg (like user profile)
 	- Sailsjs Start Automatic all .js in /api/services folder (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
 	- Problem, when shutdown sails server does not kill service process. when start again, get an error (already running)
 	- jxcore no more in maintanense, use instead enclosejs
@@ -89,7 +93,7 @@ Fix:
 	- design a Good Bye page (and Welcome Page)
 	- on profile validate that "first page", only can be a page
 
-	- Generate secret keys (session, etc) when create new app
+	- Generate secret keys (session, encrypt pwd, etc) when create new app
 	- encrypt config.json on client & add config option on user menu (url, width, heigth & colors?, apps path, 
 	license related)
 	- start.sh or npm start in production mode
