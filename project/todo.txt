@@ -68,8 +68,10 @@ Fix:
 	- creante app configuration PWD_MIN_LEN -> Configuration Model (ready)
 	
 	- User Profile on all lists
+	- improve ejs partials
 	- two new user points on topbar template & edit dialog & new dialog  
 	- encrypt pwd in DB, send pwd over http encrypted (hash)
+	
 	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
 	- upgrade sails to v 0.12
