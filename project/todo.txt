@@ -68,6 +68,7 @@ Fix:
 	- creante app configuration PWD_MIN_LEN -> Configuration Model (ready)
 	
 	- User Profile on all lists
+	- User Points: Include all user points
 	- improve ejs partials
 	- two new user points on topbar template & edit dialog & new dialog  
 	- encrypt pwd in DB, send pwd over http encrypted (hash)

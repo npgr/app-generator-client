@@ -12,11 +12,12 @@ module.exports = {
 	list : function (req, res) {
 	//	Resource.find()
 	//		.exec(function(err, data){
-				res.locals.resources = req.session.resources
-				res.locals.user = {user: req.session.user, name: req.session.username}
-	//			res.locals.data = JSON.stringify(data)
-				res.locals.data = []
-				res.view("Resource/list")
+			res.locals.resources = req.session.resources
+			res.locals.user = {id: req.session.userid, user: req.session.user, name: req.session.username, 
+		 email: req.session.email, language: req.session.languagePreference}
+	//		res.locals.data = JSON.stringify(data)
+			res.locals.data = []
+			res.view("Resource/list")
 	//		})
 	},
 	export : function(req, res) {

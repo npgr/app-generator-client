@@ -1,5 +1,6 @@
 // app-util: version 5.01
 
+// Get URL Params
 function url_params()
 {  
 	var query_string = {};
@@ -22,6 +23,7 @@ function url_params()
 	return query_string;
 }
 
+// Return Formated Date
 function datex_dma(datex) {
 	if (datex) {
 		var year = datex.substring( 0, 4)
@@ -32,6 +34,7 @@ function datex_dma(datex) {
 	//else return ''
 }
 
+// Call a Page with POST Method
 function post(path, params, method) {
     method = method || "post"; // Set method to post by default if not specified.
 
@@ -53,4 +56,15 @@ function post(path, params, method) {
     }
     document.body.appendChild(form);
     form.submit();
-  }
+}
+
+//Drop invalid characters for a file or folder name
+// and replace blank space with underscore
+function drop_invalid_file_chars(name)
+{
+	var regex = /[ ]/g
+	var output = name.replace(regex, '_')
+			
+	regex = /[\\/:*?"<>|]/g
+	return output.replace(regex, '')
+}

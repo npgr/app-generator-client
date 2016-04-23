@@ -10,6 +10,27 @@ module.exports = {
 		res.view("User/select")
 	},
 	login: function(req, res) {
+		/** Load App Config **/
+		if (typeof sails.config.appConfig == 'undefined')
+		{
+			sails.config.appConfig = {}
+			Config.find()
+				.exec(function (err, data) {
+					for (i=0; i < data.length; i++)
+						sails.config.appConfig[data[i].item] = data[i].value
+			})
+			//var key = 'PWD_MIN_LEN'
+			//sails.config.appConfig[key] = 65
+		}
+
+		if (process.env.BROWSER != 'true')
+		{
+		  if (!req.headers.client_appl)
+			return res.forbidden('Unathorized Access') //res.view('403')
+		  if (req.headers.client_appl != 'Generator')
+			return res.forbidden('Unathorized Access') //res.view('403')
+		}
+
 		if (req.session.flash) 
 		{ 
 			res.locals.flash = _.clone(req.session.flash)
@@ -20,8 +41,10 @@ module.exports = {
 		res.render("User/login")
 	},
 	signout: function(req, res) {
-		req.session.user = null
-		res.redirect("/login")
+		//req.session.user = null
+		//res.redirect("/login")
+		req.session = null
+		res.redirect("/pages/byebye.html")
 	},
 	validateLogin: function(req, res) {
 		User.findOneByUsr(req.body.username)
@@ -29,14 +52,22 @@ module.exports = {
 			.exec(function(err, data) {
 				if(err) res.json({ "error": err})
 				  else if (data) {
-					if (data.pwd== req.body.password)
+					if (data.pwd == req.body.password)
 					{
 						req.session.userid = data.id
 						req.session.user = req.body.username
 						req.session.username = data.name
 						req.session.profile = data.profile
+						req.session.email = data.email
 						req.session.languagePreference = data.language 
 						
+						/*Resource.find({id: data.profile.firstpage})
+						  .exec(function(err, data2) {
+							var firstpage = 'App/list'
+							if (data2[0])
+								firstpage = data2[0].path
+								res.redirect(firstpage);
+						  })*/
 						ProfileResource.find({profile: req.session.profile.id})
 						 .populate('resource')
 						 .sort('order')
@@ -65,25 +96,54 @@ module.exports = {
 					else
 					{
 						req.session.flash = { err: req.__('Username or Password incorrect')}
-						res.redirect('login')
+						//res.redirect('login')
+						req.headers.client_appl = 'Generator'
+						sails.controllers.user.login(req, res)
 					}	
 				  }
 					else 
 				  {
 					req.session.flash = { err: req.__('Username or Password incorrect')}
-					res.redirect('login')
+					//res.redirect('login')
+					req.headers.client_appl = 'Generator'
+					sails.controllers.user.login(req, res)
 				  }	
 			})
 	},
 	list : function (req, res) {
-		//User.find()
- 			//.exec(function(err, data){
-				res.locals.resources = req.session.resources
- 				res.locals.user = {user: req.session.user, name: req.session.username}
- 				res.locals.data = []
-				res.view("User/list")
- 			//})
+		res.locals.resources = req.session.resources
+		res.locals.user = {id: req.session.userid, user: req.session.user, name: req.session.username, 
+		 email: req.session.email, language: req.session.languagePreference}
+		res.locals.data = []
+		res.view("User/list")
  	},
+	UpdProfile: function (req, res) {
+		User.findOneById(Number(req.param('id')))
+			.exec(function(err, data){
+				if (data.pwd != req.param('pwd_old'))
+				{
+					var msg = { auth_msg: req.__("Current Password Incorrect"), err: true}
+					return res.json(msg)
+					//console.log('Error on password, ',req.param('pwd_old'), data.pwd)
+					//return
+				}
+				var updated_data = { email: req.param('email'), language: req.param('language')}
+				if (req.param('pwd_1') != '')
+					updated_data.pwd =  req.param('pwd_1')
+				
+				User.update({id: req.param('id')}, updated_data)
+				  .exec(function(err, updated) {
+					if (err) console.log('Error: ', err)
+					  else
+					 {
+						req.session.email = req.param('email')
+						req.session.languagePreference = req.param('language')
+						var msg = { auth_msg: req.__("Profile Changed, Close Session to Apply Changes")}
+						return res.json(msg)
+					 }
+				}) 	
+			})
+	},
 	export : function(req, res) {
 		User.find()
 		 .exec(function(err, users) {

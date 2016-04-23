@@ -53,6 +53,9 @@
 	#usr, #pwd {
 		border-radius: 6px;
 	}
+	[hide] {
+		display: none;
+	}
 </style>
 <title>Login</title>
 <script>
@@ -76,14 +79,22 @@
 	</platinum-sw-register>-->
 	 <div id="loginCard">
 	  <form action="/validateLogin" method="post">
-		<input id="usr" type="string" name="username" placeholder="<%= lng('Username') %>">
-		<input id="pwd" type="password" name="password" placeholder="<%= lng('Password') %>">
-		<input id="btn" type="submit" value="<%= lng('Login') %>">
+		<input id="usr" type="string" name="username" placeholder="<%= lng('Username') %>"/>
+		<input id="pwd_1" type="password" name="passwd" placeholder="<%= lng('Password') %>"/>
+		<input id="pwd" type="password" name="password" hide/>
+		<input id="btn2" type="submit" hide>
+		<input id="btn" name="Submit"  type="submit" value="<%= lng('Login') %>" onClick="JavaScript:handleForm()"/>
 	  </form>
 	  <% if (flash.err) {%>
 	 <div id="loginError"><%= flash.err %></div>
 	 <% } %>
 	 </div>
-	 
+	<script>
+		function handleForm() {
+			var pwd = document.getElementById('pwd_1').value
+			document.getElementById('pwd').value = require('crypto').createHash('sha256').update(pwd).digest('base64')
+			document.getElementById('btn2').click()
+		}
+	</script>
 </body>
 </html>

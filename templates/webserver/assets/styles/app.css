@@ -96,14 +96,15 @@ th {
 	padding: 4px;
 	//color: rgb(25, 100, 120);
 	color: rgb(200, 80, 25);
+	width: 32px;
 }
 #btn_area {
 	display: inline-block;
-	margin-left: 140px;
+	margin-left: 120px;
 }
 #btn_area > paper-fab {
-	top: 10px;
-	margin-left: 15px;
+	margin-left: 12px;
+	display: inline-block;
 }
 
 .header_fields input {

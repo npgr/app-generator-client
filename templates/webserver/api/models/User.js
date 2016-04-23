@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  migrate: 'alter',
+  //migrate: 'alter',
 
   attributes: {
 	//_card_width: '60em',
@@ -83,6 +83,11 @@ module.exports = {
 		//,enumdes: ["Active","Inactive"]
     }
 //End Attributes
+  }
+  ,beforeUpdate: function(data, next) {
+	if (data.pwd == '')
+		delete data.pwd
+	next()
   }
   //,beforeCreate: function (data, next) {
 	// Modelo sails_app2  (/api/services)

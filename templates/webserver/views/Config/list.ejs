@@ -12,7 +12,7 @@
 %>  
 <html>
 <head><meta charset="UTF-8">
-	<title><%= lng("%s %s",lng("List"),lng("Account"))%></title>
+	<title><%= lng("%s %s",lng("List"),lng("Configuration"))%></title>
 	<script src="/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 	<script src="/bower_components/intro.js/minified/intro.min.js"></script>
 	<script src="/js2/lokijs/build/lokijs.min.js"></script>
@@ -40,16 +40,7 @@
 	<link rel="import" href="/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
-<script>
-    // Google Analytics
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', Google_Analytics_id(), {'sampleRate': 100});
-  ga('send', 'pageview');
-	
+<script>	
 // Redirect to https
   <% if (process.env.HTTPS == 'true') { %>
   if (window.location.protocol != "https:" && window.location.href.indexOf('localhost') == -1)
@@ -59,7 +50,7 @@
 <style>
 #btn_area {
 	display: inline-block;
-	margin-left: 30px;
+	margin-left: 20px;
 }
 #dialog {
 	width: 30em;
@@ -94,108 +85,16 @@ paper-menu {
 
 <% include ../partials/topBar %>
 
-<!-- list-columns: version 5.12 -->
 
-<dom-module id="Account-list-columns">
-<template>
-<style>
-	.green {
-		background-color: green;
-		color: white;
-		height: 30px;
-	}
-	.orange {
-		color: white;
-		background-color: orange;
-		height: 30px;
-	}
-	#dialog_columns {
-		width: 27em;
-	}
-	#dialog_columns table div {
-		width: 5.5em;
-		text-align: center;
-		padding-top: 5px;
-		height: 28px;
-	}
-</style>
-	<paper-dialog id="dialog_columns" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-		<h2 class="card_title"><%= lng("%s %s",lng("Columns"),lng("Account"))%></h2>
-			<paper-dialog-scrollable>
-			<table class="table_dialog" style="width:100%">
-			<tr>
-				<td><label class="left_label" for="id"><%= lng('Id')%></label></td>
-				<td><div id="id" on-click="change_field"></div></td>
-			</tr>
-			<tr>
-				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
-				<td><div id="name" on-click="change_field"></div></td>
-			</tr>
-			<tr>
-				<td><label class="left_label" for="users"><%= lng('Users')%></label></td>
-				<td><div id="users" on-click="change_field"></div></td>
-			</tr>
-			</table>
-			</paper-dialog-scrollable>
-		<div class="buttons">
-			<div class="card_line">
-				<paper-button id="update_btn" class="btn" on-click="submit_form" raised><%= lng('Change ')%></paper-button>
-				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= lng('Exit')%></paper-button>
-			</div>
-		</div>
-	</paper-dialog>
-</template>
-<script>
-	Polymer({
-		is: "Account-list-columns",
-		properties: {
-			//updated: false,
-			//column: {}
-		},
-		open_list_columns: function(column) {
-			this.updated= false,
-			this.column= column
-			this.show_field("id")
-			this.show_field("name")
-			this.show_field("users")
-			this.$.dialog_columns.open()
-		},
-		change_field: function(e) {
-			var field = e.toElement.id
-			this.column[field] = !this.column[field]
-			this.show_field(field)
-		},
-		show_field: function(field) {
-			if (this.column[field])
-			{  
-				this.$[field].innerHTML = "<%= lng('Show')%>"
-				this.$[field].classList.remove("orange")
-				this.$[field].classList.add("green")
-			}
-			else
-			{
-				this.$[field].innerHTML = "<%= lng('Hide')%>"
-				this.$[field].classList.remove("green")
-				this.$[field].classList.add("orange")
-			}
-		},
-		submit_form: function() {
-			this.updated = true
-			this.$.dialog_columns.close()
-			this.fire('close')
-		}
-	})
-</script>
-</dom-module>
 
 <!-- new-form: version 5.23 -->
 
-<dom-module id="Account-new">
+<dom-module id="Config-new">
 <template>
 	<iron-ajax id="ajax" handle-as="json" on-response="validate_record" on-error="ajax_error"></iron-ajax>
 	<iron-ajax id="ajax2" method="POST" handle-as="json" on-response="record_created" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-		<h2 class="card_title"><%= lng("%s %s",lng("Create"),lng("Account"))%></h2>
+		<h2 class="card_title"><%= lng("%s %s",lng("Create"),lng("Configuration"))%></h2>
 		<paper-dialog-scrollable>
 		  <form id="form" action="javascript:void(0);" on-submit="create">
 			<table class="table_dialog" style="width:100%">
@@ -204,12 +103,16 @@ paper-menu {
 				<td><input id="id" type="number" name="id" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
-				<td><input id="name" type="text" name="name"></td>
+				<td><label class="left_label" for="item"><%= lng('Item')%><strong class="red"> *</strong></label></td>
+				<td><input id="item" type="text" name="item" style="text-transform:uppercase" required></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="users"><%= lng('Users')%></label></td>
-				<td><input id="users" type="number" name="users"></td>
+				<td><label class="left_label" for="description"><%= lng('Description')%><strong class="red"> *</strong></label></td>
+				<td><input id="description" type="text" name="description" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="value"><%= lng('Value')%><strong class="red"> *</strong></label></td>
+				<td><input id="value" type="text" name="value" required></td>
 			</tr>
 			</table>
 			<div class="buttons">
@@ -226,7 +129,7 @@ paper-menu {
 </template>
 <script>
 	Polymer({
-		is: "Account-new",
+		is: "Config-new",
 		open_dialog: function() {
 			this.clear()
 /** USER POINT - Open New Dialog **/
@@ -235,8 +138,9 @@ paper-menu {
 		},
 		clear: function() {
 			this.$.id.value = ''
-			this.$.name.value = ''
-			this.$.users.value = ''
+			this.$.item.value = ''
+			this.$.description.value = ''
+			this.$.value.value = ''
 		},
 		select_field_b: function(e) {
 			this.$[e.toElement.getAttribute("field")].click()
@@ -249,10 +153,11 @@ paper-menu {
 			this.$[this.field].key = this.$[e.srcElement.id].item.key
 		},
 		create: function() {
-			this.$.ajax2.url = config_server() + "Account"
+			this.$.ajax2.url = config_server() + "Config"
 			var record = {}
-			  record.name = this.$.name.value
-			record.users = Number(this.$.users.value)			
+			  record.item = this.$.item.value.toUpperCase()
+			  record.description = this.$.description.value
+			  record.value = this.$.value.value			
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},
@@ -280,7 +185,7 @@ paper-menu {
 			{
 				if (this.$.id.value > 0)
 				{
-					this.$.ajax.url = config_server() + "Account/exist/"+this.$.id.value
+					this.$.ajax.url = config_server() + "Config/exist/"+this.$.id.value
 					this.$.ajax.generateRequest()
 				}
 				else this.$.submit_btn.click()
@@ -303,60 +208,15 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- display-form: version 5.20 -->
 
-<dom-module id="Account-display">
-<template>
-	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
-		<h2 class="card_title"><%= lng("%s %s",lng("Display"),lng("Account"))%></h2>
-		  <paper-dialog-scrollable>
-			<table class="table_dialog" style="width:100%">
-			<tr>
-				<td><label class="left_label" for="id"><%= lng('Id')%></label></td>
-				<td><input id="id" type="number" name="id" value="{{item.id}}" disabled></td>
-			</tr>
-			<tr>
-				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
-				<td><input id="name" type="text" name="name" value="{{item.name}}" disabled></td>
-			</tr>
-			<tr>
-				<td><label class="left_label" for="users"><%= lng('Users')%></label></td>
-				<td><input id="users" type="number" name="users" value="{{item.users}}" disabled></td>
-			</tr>
-			</table>
-		  </paper-dialog-scrollable>
-		<div class="buttons">
-			<div class="card_line">
-				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= lng('Exit')%></paper-button>
-			</div>
-		</div>
-	</paper-dialog>
-</template>
-<script>
-	Polymer({
-		is: "Account-display",
-		open_display_dialog: function(item) {
-			this.item = item
-			this.set_select_fields(item)
-/** USER POINT - Open Display Dialog **/
-/** END USER POINT - Open Display Dialog **/
-			this.$.dialog.open()
-		},
-		set_select_fields(item) {
-			}
-/** USER POINT - Display Functions **/
-/** END USER POINT - Display Functions **/
-	})
-</script>
-</dom-module>
 
 <!-- edit-form: version 5.22 -->
 
-<dom-module id="Account-edit">
+<dom-module id="Config-edit">
 <template>
 	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
-		<h2 class="card_title"><%= lng("%s %s",lng("Edit"),lng("Account"))%></h2>
+		<h2 class="card_title"><%= lng("%s %s",lng("Edit"),lng("Configuration"))%></h2>
 		<paper-dialog-scrollable>
 		<form id="form" action="javascript:void(0);" on-submit="update">
 			<table class="table_dialog" style="width:100%">
@@ -365,12 +225,16 @@ paper-menu {
 				<td><input id="id" type="number" name="id" value="{{item.id}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
-				<td><input id="name" type="text" name="name" value="{{item.name}}"></td>
+				<td><label class="left_label" for="item"><%= lng('Item')%><strong class="red"> *</strong></label></td>
+				<td><input id="item" type="text" name="item" value="{{item.item}}" style="text-transform:uppercase" required></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="users"><%= lng('Users')%></label></td>
-				<td><input id="users" type="number" name="users" value="{{item.users}}"></td>
+				<td><label class="left_label" for="description"><%= lng('Description')%><strong class="red"> *</strong></label></td>
+				<td><input id="description" type="text" name="description" value="{{item.description}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="value"><%= lng('Value')%><strong class="red"> *</strong></label></td>
+				<td><input id="value" type="text" name="value" value="{{item.value}}" required></td>
 			</tr>
 			</table>
 			<div class="buttons">
@@ -386,7 +250,7 @@ paper-menu {
 </template>
 <script>
 	Polymer({
-		is: "Account-edit",
+		is: "Config-edit",
 		open_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
@@ -414,9 +278,10 @@ paper-menu {
 		update: function() {
 			var record = {}
 			record.id = Number(this.$.id.value)
-			record.name = this.$.name.value
-			record.users = Number(this.$.users.value)
-			this.$.ajax.url = config_server() + "Account/" +record.id
+			record.item = this.$.item.value.toUpperCase()
+			record.description = this.$.description.value
+			record.value = this.$.value.value
+			this.$.ajax.url = config_server() + "Config/" +record.id
 			this.$.ajax.params = record
 			this.$.ajax.generateRequest()
 		},
@@ -445,11 +310,11 @@ paper-menu {
 
 <!-- delete-form: version 5.22 -->
 
-<dom-module id="Account-delete">
+<dom-module id="Config-delete">
 <template>
 	<iron-ajax id="ajax" method="DELETE" handle-as="json" on-response="record_deleted" on-error="ajax_error"></iron-ajax>
 	<paper-dialog id="dialog" modal vertical layout entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-		<h2 class="card_title"><%= lng("%s %s",lng("Delete"),lng("Account"))%></h2>
+		<h2 class="card_title"><%= lng("%s %s",lng("Delete"),lng("Configuration"))%></h2>
 		<paper-dialog-scrollable>
 		<form id="form" action="javascript:void(0);" on-submit="delete">
 			<table class="table_dialog" style="width:100%">
@@ -458,12 +323,16 @@ paper-menu {
 				<td><input id="id" type="number" name="id" value="{{item.id}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
-				<td><input id="name" type="text" name="name" value="{{item.name}}" disabled></td>
+				<td><label class="left_label" for="item"><%= lng('Item')%></label></td>
+				<td><input id="item" type="text" name="item" value="{{item.item}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="users"><%= lng('Users')%></label></td>
-				<td><input id="users" type="number" name="users" value="{{item.users}}" disabled></td>
+				<td><label class="left_label" for="description"><%= lng('Description')%></label></td>
+				<td><input id="description" type="text" name="description" value="{{item.description}}" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="value"><%= lng('Value')%></label></td>
+				<td><input id="value" type="text" name="value" value="{{item.value}}" disabled></td>
 			</tr>
 			</table>
 		<div class="buttons">
@@ -479,7 +348,7 @@ paper-menu {
 </template>
 <script>
 	Polymer({
-		is: "Account-delete",
+		is: "Config-delete",
 		open_delete_dialog: function(item) {
 			this.item = item
 			this.set_select_fields(item)
@@ -493,7 +362,7 @@ paper-menu {
 			this.$.submit_delete.click()
 		},
 		delete: function() {
-			this.$.ajax.url = config_server() + "Account/"+this.item.id
+			this.$.ajax.url = config_server() + "Config/"+this.item.id
 			this.$.ajax.generateRequest()
 		},
 		record_deleted: function() {
@@ -521,23 +390,22 @@ paper-menu {
 
 
 
-<dom-module id="Account-list">
+<dom-module id="Config-list">
 <template>
 <!--USER POINT - List Style-->
 <!--END USER POINT - List Style-->
 	<iron-ajax id="ajax" handle-as="json" on-response="load_data" on-error="ajax_error"></iron-ajax>
-	<Account-list-columns id="Account_list_columns" on-close="update_columns"></Account-list-columns>
-	<Account-new id="Account_new_dialog" on-close="reload"></Account-new>
-	<Account-display id="Account_display_dialog"></Account-display>
-	<Account-edit id="Account_edit_dialog" on-close="reload"></Account-edit>
-	<Account-delete id="Account_delete_dialog" on-close="reload"></Account-delete>	
-	<!--<div class="card_title"><%= lng("%s %s",lng("List"),lng("Account"))%></div>-->
+	<Config-new id="Config_new_dialog" on-close="reload"></Config-new>
+	<Config-edit id="Config_edit_dialog" on-close="reload"></Config-edit>
+	<Config-delete id="Config_delete_dialog" on-close="reload"></Config-delete>	
+	<!--<div class="card_title"><%= lng("%s %s",lng("List"),lng("Configuration"))%></div>-->
 <!--USER POINT - List Header-->
 <!--END USER POINT - List Header-->
 	<select id="filter" on-change="input_type">  <%= lng('Id')%>
-		<option value="id"><%= lng('Id')%></option>  <%= lng('Name')%>
-		<option value="name"><%= lng('Name')%></option>  <%= lng('Users')%>
-		<option value="users"><%= lng('Users')%></option>
+		<option value="id"><%= lng('Id')%></option>  <%= lng('Item')%>
+		<option value="item"><%= lng('Item')%></option>  <%= lng('Description')%>
+		<option value="description"><%= lng('Description')%></option>  <%= lng('Value')%>
+		<option value="value"><%= lng('Value')%></option>
 	</select>
 	<select id="op">   
 		<option value="$eq"><%= lng('Equal to')%></option>
@@ -566,12 +434,13 @@ paper-menu {
 		<paper-fab id="btn_help" mini on-click="help" icon="help"></paper-fab>
 		<!--<paper-fab id="btn_menu" mini on-click="menu" icon="list"></paper-fab>-->
 	</div>
-	<a href="{{download_data}}" id="link" class="hide" download="Account.xml">Download Data</a>
+	<a href="{{download_data}}" id="link" class="hide" download="Configuration.xml">Download Data</a>
 	<br>
 	<select id="filter2" class="hide" on-change="input_type2">
 		<option value="id"><%= lng('Id')%></option>
-		<option value="name"><%= lng('Name')%></option>
-		<option value="users"><%= lng('Users')%></option>
+		<option value="item"><%= lng('Item')%></option>
+		<option value="description"><%= lng('Description')%></option>
+		<option value="value"><%= lng('Value')%></option>
 	</select>
 	<select id="op2" class="hide" >   
 		<option value="$eq"><%= lng('Equal to')%></option>
@@ -589,7 +458,6 @@ paper-menu {
 
 	<paper-dialog id="menu_dialog"> 
 		<paper-menu>
-			<paper-item on-click="display" style="min-height:20px;line-height:35px;"><%= lng('Display')%></paper-item>
 			<paper-item on-click="edit" style="min-height:20px;line-height:35px;"><%= lng('Edit')%></paper-item>
 			<paper-item on-click="delete" style="min-height:20px;line-height:35px;"><%= lng('Delete')%></paper-item>
 <!--USER POINT - List Detail Menu-->
@@ -602,18 +470,21 @@ paper-menu {
 		<th id="th_ops" class="ops"><paper-icon-button on-click="list_columns" icon="settings"></paper-icon-button></th>
 		<th class="col_id" on-click="sort_by_field"><%= lng('Id')%><div id="id_sort_d" class="hide">
 			<iron-icon id="id_sort" icon="arrow-drop-up"></iron-icon></div></th>
-		<th class="col_name" on-click="sort_by_field"><%= lng('Name')%><div id="name_sort_d" class="hide">
-			<iron-icon id="name_sort" icon="arrow-drop-up"></iron-icon></div></th>
-		<th class="col_users" on-click="sort_by_field"><%= lng('Users')%><div id="users_sort_d" class="hide">
-			<iron-icon id="users_sort" icon="arrow-drop-up"></iron-icon></div></th>
+		<th class="col_item" on-click="sort_by_field"><%= lng('Item')%><div id="item_sort_d" class="hide">
+			<iron-icon id="item_sort" icon="arrow-drop-up"></iron-icon></div></th>
+		<th class="col_description" on-click="sort_by_field"><%= lng('Description')%><div id="description_sort_d" class="hide">
+			<iron-icon id="description_sort" icon="arrow-drop-up"></iron-icon></div></th>
+		<th class="col_value" on-click="sort_by_field"><%= lng('Value')%><div id="value_sort_d" class="hide">
+			<iron-icon id="value_sort" icon="arrow-drop-up"></iron-icon></div></th>
 	  </tr>
 	</thead>
 	<!--<tfoot>
 	<tr>
 		<td class="ops"></td>
 		<td class="col_id"></td>
-		<td class="col_name"></td>
-		<td class="col_users"></td>
+		<td class="col_item"></td>
+		<td class="col_description"></td>
+		<td class="col_value"></td>
 	</tr>
 	</tfoot>-->
 	<tbody>
@@ -623,8 +494,9 @@ paper-menu {
 			<paper-icon-button key="{{item.id}}" on-click="item_menu_toggle" class="icon-op" icon="list"></paper-icon-button>
 		</td>
 		<template is="dom-if" if="{{column.id}}"><td>{{item.id}}</td></template>
-		<template is="dom-if" if="{{column.name}}"><td>{{item.name}}</td></template>
-		<template is="dom-if" if="{{column.users}}"><td>{{item.users}}</td></template>
+		<template is="dom-if" if="{{column.item}}"><td>{{item.item}}</td></template>
+		<template is="dom-if" if="{{column.description}}"><td>{{item.description}}</td></template>
+		<template is="dom-if" if="{{column.value}}"><td>{{item.value}}</td></template>
 	</tr>
 	</template>
 	</tbody>
@@ -632,7 +504,7 @@ paper-menu {
 </template>
 <script>
 Polymer({
-	is: "Account-list",
+	is: "Config-list",
 	properties: {
 		//cur_sort: { field: "id", isdesc: false },
 		//cur_filter: {}
@@ -647,18 +519,19 @@ Polymer({
 				return this.indexOf(str) === 0;
 			}
 		}
-		this.$.ajax.url = config_server() + "Account"
+		this.$.ajax.url = config_server() + "Config"
 		this.cur_sort = { field: "id", isdesc: true }
 		this.cur_filter = {}
-		var _model = [{column: "id", type: "integer", display: true},
-				{column: "name", type: "string", display: true},
-				{column: "users", type: "integer", display: true}
+		var _model = [{column: "id", type: "integer", display: false},
+				{column: "item", type: "string", display: true},
+				{column: "description", type: "string", display: true},
+				{column: "value", type: "string", display: true}
 		]
 		this.enums = {}
 		//var _data = <%- data %>
 		var db = new loki()
-		this.data = db.addCollection("data_Account")
-		this.model = db.addCollection("model_Account")
+		this.data = db.addCollection("data_Config")
+		this.model = db.addCollection("model_Config")
 		this.reload()
 		for (i=0; i< _model.length ; i++)
 			this.model.insert(_model[i])
@@ -682,7 +555,7 @@ Polymer({
 //END USER POINT - List End Ready
 	},
 	help: function() {
-		ga('send', 'event', 'Account', 'Account_help')
+
 		var intro = introJs()
 		
 		intro.setOptions({ 
@@ -709,27 +582,21 @@ Polymer({
 				{element: '#data_table',
 				intro: 'Lista de registros filtrados',
 				position: 'top'},
-				{element: '#th_ops',
-				intro: 'Consigurar columnas a mostrar en lista de registros'},
 				{element: '#td_ops',
 				intro: 'Opciones para:<br> - Visualizar Registro<br> - Editar Registro<br> - Borrar Registro'}
 			]
 		})
 		intro.start()
 	},
-	list_columns: function() {
-		ga('send', 'event', 'Account', 'Account_list_columns')
-		this.$.Account_list_columns.open_list_columns(this.column)
-	},
 	update_columns: function() {
 		var columns = {}
-		this.column = this.$.Account_list_columns.column
+		this.column = this.$.Config_list_columns.column
 		for (i=0; i < this.model.data.length; i++ )
 		{
 			this.model.data[i].display = this.column[this.model.data[i].column]
 			columns[this.model.data[i].column] = this.column[this.model.data[i].column]
 		}
-		localStorage["Account-list-columns"] = JSON.stringify(columns)
+		localStorage["Config-list-columns"] = JSON.stringify(columns)
 		this.show_columns()
 		// reset filter
 		this.$.filter.value = "id"
@@ -792,9 +659,9 @@ Polymer({
 		this.$[this.field].value = this.$[e.srcElement.id].item.name
 	},
 	set_filter: function() {
-		if (localStorage["Account-list-filter"])
+		if (localStorage["Config-list-filter"])
 		{
-			var stored_filter = JSON.parse(localStorage["Account-list-filter"])
+			var stored_filter = JSON.parse(localStorage["Config-list-filter"])
 			this.$.filter.value = stored_filter.filter
 			this.$.op.value = stored_filter.op
 			this.input_type()
@@ -830,9 +697,9 @@ Polymer({
 			}
 			this.filter()
 		}
-		if (localStorage["Account-list-columns"])
+		if (localStorage["Config-list-columns"])
 		{
-			var columns = JSON.parse(localStorage["Account-list-columns"])
+			var columns = JSON.parse(localStorage["Config-list-columns"])
 			for (i=0; i < this.model.data.length; i++ )
 			  this.model.data[i].display = columns[this.model.data[i].column]
 		}
@@ -841,7 +708,7 @@ Polymer({
 	filter: function() {
 		var stored_filter = {}
  		var name = this.$.filter.value
-		ga('send', 'event', 'Account', 'Account_filter_by_'+name)
+
 		stored_filter.filter = name
 		var op = this.$.op.value
 		stored_filter.op = op 
@@ -879,7 +746,7 @@ Polymer({
 			this.cur_filter = {}
 			this.cur_filter[logic_op] = [filtro, filtro2]	
 		}
-		localStorage["Account-list-filter"] = JSON.stringify(stored_filter)
+		localStorage["Config-list-filter"] = JSON.stringify(stored_filter)
 		this.result_set = this.data.chain().find(this.cur_filter).simplesort(this.cur_sort.field, this.cur_sort.isdesc)
 		this.filtered_data = []
 		this.filtered_data = this.result_set.data()
@@ -887,12 +754,13 @@ Polymer({
 	},
 	hide_sort_icons: function() {
 		this.$.id_sort_d.classList.add("hide")
-		this.$.name_sort_d.classList.add("hide")
-		this.$.users_sort_d.classList.add("hide")
+		this.$.item_sort_d.classList.add("hide")
+		this.$.description_sort_d.classList.add("hide")
+		this.$.value_sort_d.classList.add("hide")
 	},
 	sort_by_field: function(e) {
 		var field = e.target.classList[0].replace('col_','')
-		ga('send', 'event', 'Account', 'Account_sort_by_'+field)
+
 		this.hide_sort_icons()
 		this.sort(field)
 		if (this.cur_sort.isdesc)
@@ -982,11 +850,11 @@ Polymer({
 		
 	},
 	print: function() {
-		ga('send', 'event', 'Account', 'Account_print')
+
 		window.print()
 	},
 	download: function() {
-		ga('send', 'event', 'Account', 'Account_download')
+
 		var x2js = new X2JS();
 		var datoi = this.data.data
 		for (i=0; i<datoi.length; i++)
@@ -1008,36 +876,29 @@ Polymer({
 		this.$.menu_dialog.style.left = "30px"
 		this.$.menu_dialog.open()
 	},
-  display: function(e) {
-	ga('send', 'event', 'Account', 'Account_display')
-	this.$.menu_dialog.close()
-	var filtro = {"id": this.key}
-	var item = this.data.find(filtro)[0]
-	this.$.Account_display_dialog.open_display_dialog(item)
-  },
   edit: function(e) {
-	ga('send', 'event', 'Account', 'Account_edit')
+
 	this.$.menu_dialog.close()
 	var filtro = {"id": this.key}
 	var item = this.data.find(filtro)[0]
-	this.$.Account_edit_dialog.open_dialog(item)
+	this.$.Config_edit_dialog.open_dialog(item)
   },
   delete: function(e) {
-	ga('send', 'event', 'Account', 'Account_delete')
+
 	this.$.menu_dialog.close()
 	var filtro = {"id": this.key}
 	var item = this.data.find(filtro)[0]
-	this.$.Account_delete_dialog.open_delete_dialog(item)
+	this.$.Config_delete_dialog.open_delete_dialog(item)
   },
   new: function() {
-	ga('send', 'event', 'Account', 'Account_new')
-	this.$.Account_new_dialog.open_dialog()
+
+	this.$.Config_new_dialog.open_dialog()
   },
   reload: function() {
 	this.$.ajax.generateRequest()
   },
   load_data: function() {
-	ga('send', 'event', 'Account', 'Account_load_data')
+
 	while(this.data.data[0]) {
         this.data.remove(this.data.data[0])
       }
@@ -1054,7 +915,7 @@ Polymer({
 	this.filter()
   },
   ajax_error: function() {
-	ga('send', 'event', 'Account', 'Account_ajax_error')
+
 	console.log(this.$.ajax.lastError)
 	alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
   }
@@ -1063,9 +924,9 @@ Polymer({
 });
 </script>
 </dom-module>
-<top-bar><%= lng("%s %s",lng("List"),lng("Account"))%></top-bar>
+<top-bar><%= lng("%s %s",lng("List"),lng("Configuration"))%></top-bar>
 <paper-material class="card" elevation="2">
-	<Account-list id="Account_list"></Account-list>
+	<Config-list id="Config_list"></Config-list>
 </paper-material>
 </body>
 </html>

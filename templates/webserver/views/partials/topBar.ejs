@@ -1,0 +1,305 @@
+<!-- topBar template: version 1.35 -->
+
+<dom-module id="top-bar">
+<template>
+<style>
+	.topbar1 {
+		position: fixed;
+		top: 0;
+		margin-top: 0;
+		width: 100%;
+		z-index: 1;
+		//background-color: #039BE5;
+		//background-color: #26A69A;
+		background-color: #0097A7; //cyan 700
+		color: white;
+		//height: 40px;
+		font-family: verdana, sans-serif;
+	}
+	.topBar {
+		display: flex;
+		justify-content: space-between;
+		width: 94%;
+		margin-top: 10px;
+		margin-left:3%;
+		z-index: 1;
+		//background-color: #039BE5; blue
+		//background-color: #26A69A; green
+		background-color: #0097A7; 
+		color: white;
+		height: 30px;
+	}
+	.menubar {
+		width: 100%;
+		position: relative;
+		top: 23px;
+		z-index: 1;
+		display: flex;
+		//justify-content: space-between;
+		justify-content: flex-start;
+		background-color: #007080;
+		height: 30px;
+	}
+	.menubar > div {
+		color: white;
+		margin-left: 20px;
+		margin-top: 5px;
+	}
+	.menubar > div:first-of-type {
+		margin-left: 120px;
+	}
+	.barTitle {
+		margin-top: -3px;
+		font-size: 20px;
+	}
+	.barItem {
+		font-size: 15px;
+	}
+	.dropdown-content {
+		margin-top: 30px;
+		//margin-left: 0px,
+		display: block;
+		position: relative;
+		background-color: #fff;
+		color: black;
+		box-shadow: 0px 2px 6px #ccc;
+		padding: 10px;
+		border-radius: 3px;
+    }
+	.dropdown-item {
+		padding: 5px;
+		color: rgb(100, 100, 100);
+	}
+	/*.dropdown-item:not(:last-of-type) {
+		border-bottom: 1px solid #eee;
+	}*/
+	.top_border {
+		border-top: 1px solid #eee;
+	}
+	.bar_icon {
+		padding: 0;
+		width: 24px;
+		height: 24px;
+	}
+	.inline {
+		display: inline;
+	}
+	#dropdown_user iron-icon {
+		margin-right: 5px;
+	}
+	#dropdown_user {
+		width: 120px;
+	}
+</style>
+	<user-edit-profile id='user_edit_profile'></user-edit-profile>
+	<div id="menubar" class="hide">
+	  <div on-click="back"><%= lng('Back') %></div><%
+	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
+	  _.forEach(groups , function(n, key) { 
+		if (n != '') {%>
+		<div on-click="open_<%= n %>_menu"><%= lng(n) %>
+		  <iron-dropdown id="dropdown_<%= n %>"  horizontal-align="left"  vertical-align="top">
+			<ul class="dropdown-content" tabindex="0"><%
+			  var arr = _.map(_.filter(resources, {'Group': n}), function(n4) { return n4.name})
+			  _.forEach(arr, function(n2, key2) { %>
+				<li class="dropdown-item" on-click="<%= n2 %>"><iron-icon icon="chevron-right"></iron-icon><%= lng(n2.replace(/_/g,' ')) %></li><%
+			  }) %>
+			</ul>
+		  </iron-dropdown>
+		</div><%
+	  } } ) %>
+	</div>
+	<div class="topbar1">
+	  <div class="topBar">
+		<div class="barItem" on-click="open_app_menu">
+		  <paper-icon-button class="bar_icon" icon="menu"></paper-icon-button>
+		  <div class="inline">Menu</div>
+		</div>
+		<div class="barTitle"><content></content></div>
+		<div class="barItem" on-click="open_user_menu">
+		  <paper-icon-button class="bar_icon" icon="account-circle"></paper-icon-button>
+		  <div class="inline dropdown-trigger"><%= user.user%></div>
+		  <iron-icon icon="arrow-drop-down"></iron-icon>
+		  <iron-dropdown id="dropdown_user"  horizontal-align="right" vertical-align="top">
+			<ul class="dropdown-content" tabindex="0">
+			  <!--<li class="dropdown-item"><iron-icon icon="assessment"></iron-icon>Dashboard</li>
+			  <hr>
+			  <li class="dropdown-item"><iron-icon icon="drafts"></iron-icon>Messages</li>
+			  <li class="dropdown-item"><iron-icon icon="settings"></iron-icon>Preferences</li>-->
+<!-- USER POINT - User Menu -->
+<!-- END USER POINT - User Menu -->
+			  <hr>
+			  <li class="dropdown-item" on-click="edit_profile"><iron-icon icon="perm-identity"></iron-icon><%= lng('Profile') %></li>
+			  <li class="dropdown-item" on-click="signout"><iron-icon icon="exit-to-app"></iron-icon><%= lng('Log Out') %></li>
+			</ul>
+		  </iron-dropdown>
+		</div>
+	  </div>
+	</div>
+</template>
+<script>
+	Polymer({
+		is: "top-bar",
+		ready: function() {
+ 			this.user = <%- JSON.stringify(user) %>
+ 		},
+		back: function() {
+			window.history.back();
+		},
+		open_user_menu: function() {
+			this.$.dropdown_user.toggle()
+		},
+		open_app_menu: function() {
+			this.$.menubar.classList.toggle('hide')
+			this.$.menubar.classList.toggle('menubar')
+		},
+		signout: function() {
+			window.location.assign(config_server() + "signout")
+		}<%
+	_.forEach(groups, function(n, key) {
+	  if(n != '') {%>
+		,open_<%= n %>_menu: function() {
+			this.$.dropdown_<%= n%>.toggle()
+		}<%
+	}})
+	_.forEach(resources, function(n, key) { 
+	  if (n.resource.type == "page") {%>
+		,<%= n.name %>: function() {
+			window.location.assign(config_server() + "<%= n.path.substring(1) %>")
+		}<%
+	}})%>
+	,edit_profile: function() {
+		this.user.usr = this.user.user
+		this.$.user_edit_profile.open_dialog(this.user)
+	}
+/** USER POINT - Top Bar Functions **/
+/** END USER POINT - Top Bar Functions **/
+	})
+</script>
+</dom-module>
+
+<!-- edit-form: version 5.21 -->
+
+<dom-module id="User-edit-profile">
+<template
+	<style>
+		#dialog_profile {
+			width: 36em;
+		}
+	</style>
+	<iron-ajax id="ajax" method="PUT" handle-as="json" on-response="record_updated" on-error="ajax_error"></iron-ajax>
+	<paper-dialog id="dialog_profile" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
+		<h2 class="card_title"><%= lng("%s %s",lng("Edit"),lng("User"))%></h2>
+		<paper-dialog-scrollable>
+		<form id="form" action="javascript:void(0);" on-submit="update">
+			<table class="table_dialog" style="width:100%">
+			<tr>
+				<td><label class="left_label" for="usr"><%= lng('User')%></label></td>
+				<td><input id="usr" type="text" name="usr" value="{{item.usr}}" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="name"><%= lng('Name')%></label></td>
+				<td><input id="name" type="text" name="name" value="{{item.name}}" disabled></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="pwd_old"><%= lng('Current Password')%><strong class="red"> *</strong></label></td>
+				<td><input id="pwd_old" type="password" name="pwd_old" value="{{item.pwd_old}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="pwd_1"><%= lng('New Password')%></label></td>
+				<td><input id="pwd_1" type="password" name="pwd_1"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="pwd_2"><%= lng('Confirm New Password')%></label></td>
+				<td><input id="pwd_2" type="password" name="pwd_2"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="email"><%= lng('email')%></label></td>
+				<td><input id="email" type="text" name="email" value="{{item.email}}"></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="language"><%= lng('Language')%></label></td>
+				<td><select id="language" name="language">
+						<option value="en"><%= lng('English')%></option>
+						<option value="es"><%= lng('Español')%></option>
+						<option value="pt"><%= lng('Portugues')%></option>
+					</select></td>
+			</tr>
+			</table>
+			<div class="buttons">
+			  <input id="submit_update" class="hide" type="submit" value="CAMBIAR">
+			  <div class="card_line">
+				<paper-button id="update_btn" class="btn" on-click="submit_form" raised><%= lng('Change ')%></paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= lng('Exit')%></paper-button>
+			  </div>
+			</div>
+		</form>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "User-edit-profile",
+		open_dialog: function(item) {
+			this.item = item
+			this.set_select_fields(item)
+			this.$.dialog_profile.open()
+		},
+		set_select_fields(item) {
+			this.$.language.value = item.language
+			},
+		select_field_b: function(e) {
+			this.$[e.toElement.getAttribute("field")].click()
+		},
+		set_select_field: function(e) {
+			this.$[this.field].value = this.$[e.srcElement.id].item.name
+			this.$[this.field].key = this.$[e.srcElement.id].item.key
+		},
+		submit_form: function() {
+			var minlength = Number(<%= sails.config.appConfig.PWD_MIN_LEN || 6 %>)
+			if (this.$.pwd_1.value.length < minlength & this.$.pwd_1.value != '')
+			{
+				alert("<%= lng('Password Must have al least %s Characters', sails.config.appConfig.PWD_MIN_LEN || 6) %>")
+				return
+			}
+			if (this.$.pwd_1.value != this.$.pwd_2.value)
+			{
+				alert('New Password must be equal to Confirm Password')
+				return 
+			}
+			if ((this.$.pwd_1.value != '') && (this.$.pwd_old.value == '')) 
+			{
+				alert('Old Password missing')
+				return
+			}
+			this.$.submit_update.click()
+		},
+		update: function() {
+			var record = {}
+			//record.id = this.item.id
+			record.pwd_old = require('crypto').createHash('sha256').update(this.$.pwd_old.value).digest('base64')
+			record.pwd_1 = this.$.pwd_1.value
+			if (this.$.pwd_1.value != '')
+				record.pwd_1 = require('crypto').createHash('sha256').update(this.$.pwd_1.value).digest('base64')
+			record.email = this.$.email.value
+			record.language = this.$.language.value
+			this.$.ajax.url = config_server() + "User/UpdProfile/"+this.item.id
+			this.$.ajax.params = record
+			this.$.ajax.generateRequest()
+		},
+		record_updated: function() {
+			/** Validate Resource Authorized **/
+			alert(this.$.ajax.lastResponse.auth_msg)
+			if (typeof this.$.ajax.lastResponse.err === 'undefined')
+			{
+				this.$.dialog_profile.close()
+				this.fire('close')
+			}
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
+		}
+	})
+</script>
+</dom-module>
