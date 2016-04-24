@@ -73,6 +73,7 @@
 			this.$[this.field].key = this.$[e.srcElement.id].item.key
 		},
 		submit_form: function() {
+<%= user_point.validate_before_update %>
 			this.$.submit_update.click()
 		},
 		update: function() {

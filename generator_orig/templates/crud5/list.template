@@ -1,8 +1,11 @@
-<!-- list template: version 7.10 -->
+<!-- list template: version 7.20 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {
 	return __("word")
+ }
+ function lng(word1, word2) {
+	return __(word1, word2)
  }
  function lng(word1, word2, word3) {
 	return __(word1, word2, word3)
@@ -82,7 +85,7 @@
 }
 .card {
 	width: <%= card_width%>;
-	top: 30px;
+	top: 13px;
 	left: 15px;
 }
 th div {
@@ -107,7 +110,7 @@ paper-menu {
 <%= user_point.general_style %>
 </style>
 
-<%= topBar %>
+>% include ../partials/topBar %<
 
 <%= columns_form %>
 

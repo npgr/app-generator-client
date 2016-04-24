@@ -114,6 +114,7 @@
 				this.clear()
 		},
 		submit_form: function() {
+<%= user_point.validate_before_create %>
 			if (!isNaN(this.$.<%= key.name%>.value))
 			{
 				if (this.$.<%= key.name%>.value > 0)
