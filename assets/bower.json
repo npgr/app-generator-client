@@ -15,8 +15,5 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "paper-elements": "~1.0.6",
-    "iron-elements": "~1.0.7"
-  }
+  "dependencies": {}
 }
