@@ -74,7 +74,11 @@ Fix:
 	
 	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
+	- improve hash password on server side & client side
+	
 	- upgrade sails to v 0.12 (ready on server)
+	
+	- move lokijs & x2js to bower_components
 	
 	- load DB on container with all data (create resource + change resource)
 	
