@@ -1,0 +1,23 @@
+cliente:
+
+    salt = función usuario + fecha
+	
+	pwd_client_hash = hash_512 ( salt + pwd)  ¿ how to apply salt ?
+	
+	enviar usuario, pwd_client_hash y fecha
+	
+servidor
+	
+	salt = random
+	
+	pwd_server_hash = hash_512( salt + pwd_client_hash )
+	
+	guardar salt y hash en db
+	
+	---------------------------
+	
+	lee db: salt_db y hash_db
+	
+	pwd_server_hash = hash_512( salt_db + pwd_client_hash )
+	
+	if (hash_db == pwd_server_hash)
