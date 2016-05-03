@@ -1,10 +1,10 @@
 cliente:
 
-    salt = función usuario + fecha
+    salt = usuario  (no se uso la fecha)
 	
-	pwd_client_hash = hash_512 ( salt + pwd)  ¿ how to apply salt ?
+	pwd_client_hash = hash_512 ( salt + pwd) 
 	
-	enviar usuario, pwd_client_hash y fecha
+	enviar usuario, pwd_client_hash y fecha no
 	
 servidor
 	

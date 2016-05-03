@@ -71,16 +71,18 @@ Fix:
 	- User Points: Include all user points (ready)
 	- two new user points on topbar template & edit dialog & new dialog (ready)  
 	- encrypt pwd in DB, send pwd over http encrypted (hash) (ready)
+	- improve hash password on server side & client side
+	- change salt on every correct login
 	
 	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
-	- improve hash password on server side & client side
+	- upgrade sails to v 0.12 (ready on server, missing on template)
 	
-	- upgrade sails to v 0.12 (ready on server)
-	
-	- move lokijs & x2js to bower_components
+	- move lokijs & x2js to bower_components (ready)
 	
 	- load DB on container with all data (create resource + change resource)
+	
+	- generator on java with casper templates
 	
 	- test listjs
 	- test apache zeppelin
