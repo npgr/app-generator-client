@@ -9,11 +9,41 @@ module.exports = {
 	select: function (req, res) {
 		res.view("User/select")
 	},
+	create: function(req, res, next) {
+		var record = req.params.all();
+		record.salt = require('crypto').randomBytes(12)
+		
+		var Hashes = require('jshashes')
+		var SHA512 = new Hashes.SHA512
+		//record.pwd = require('crypto').createHash('sha256').update(this.$.pwd.value).digest('base64')
+		record.pwd = SHA512.b64_hmac(record.salt+record.pwd, sails.config.appConfig.HMAC_KEY2)
+		
+		User.create(record, function (err, created){
+			if (err) return next(err);
+			return res.json(created);
+		})
+	},
+	update: function(req, res, next) {
+		var record = req.params.all();
+		if (record.pwd != '')
+		{
+			record.salt = require('crypto').randomBytes(12)
+			var Hashes = require('jshashes')
+			var SHA512 = new Hashes.SHA512
+			record.pwd = SHA512.b64_hmac(record.salt+record.pwd, sails.config.appConfig.HMAC_KEY2)
+		}
+		User.update({id: record.id},record)
+			.exec(function (err, updated){
+			if (err) 
+				return next(err);
+			return res.json(updated);
+		})
+	},
 	login: function(req, res) {
 		/** Load App Config **/
-		if (typeof sails.config.appConfig == 'undefined')
+		if (typeof sails.config.appConfig.loaded == 'undefined')
 		{
-			sails.config.appConfig = {}
+			sails.config.appConfig.loaded = true
 			Config.find()
 				.exec(function (err, data) {
 					for (i=0; i < data.length; i++)
@@ -52,8 +82,21 @@ module.exports = {
 			.exec(function(err, data) {
 				if(err) res.json({ "error": err})
 				  else if (data) {
-					if (data.pwd == req.body.password)
+				  
+					var client_pwd = req.body.password
+					var Hashes = require('jshashes')
+					var SHA512 = new Hashes.SHA512
+		
+					var pwd = SHA512.b64_hmac(data.salt+client_pwd, sails.config.appConfig.HMAC_KEY2)
+					//var pwd = client_pwd
+					
+					if (data.pwd == pwd)
 					{
+						/** Update New PWD - Salt in DB -- Seems not necesary **/
+						//var salt_new = require('crypto').randomBytes(12)
+						//var pwd_new = SHA512.b64_hmac(salt_new+pwd_new, sails.config.appConfig.HMAC_KEY2)
+						//User.Update({id: data.id}, {salt: salt_new, pwd: pwd_new})
+						
 						req.session.userid = data.id
 						req.session.user = req.body.username
 						req.session.username = data.name
@@ -120,7 +163,12 @@ module.exports = {
 	UpdProfile: function (req, res) {
 		User.findOneById(Number(req.param('id')))
 			.exec(function(err, data){
-				if (data.pwd != req.param('pwd_old'))
+				var Hashes = require('jshashes')
+				var SHA512 = new Hashes.SHA512
+
+				var pwd = SHA512.b64_hmac(data.salt+req.param('pwd_old'), sails.config.appConfig.HMAC_KEY2)
+
+				if (data.pwd != pwd)
 				{
 					var msg = { auth_msg: req.__("Current Password Incorrect"), err: true}
 					return res.json(msg)
@@ -129,8 +177,11 @@ module.exports = {
 				}
 				var updated_data = { email: req.param('email'), language: req.param('language')}
 				if (req.param('pwd_1') != '')
-					updated_data.pwd =  req.param('pwd_1')
-				
+				{
+					updated_data.salt = require('crypto').randomBytes(12)
+					updated_data.pwd = SHA512.b64_hmac(updated_data.salt+req.param('pwd_1'), sails.config.appConfig.HMAC_KEY2)
+					//updated_data.pwd =  req.param('pwd_1')
+				}
 				User.update({id: req.param('id')}, updated_data)
 				  .exec(function(err, updated) {
 					if (err) console.log('Error: ', err)

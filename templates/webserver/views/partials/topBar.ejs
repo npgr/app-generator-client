@@ -92,6 +92,7 @@
 	}
 </style>
 	<user-edit-profile id='user_edit_profile'></user-edit-profile>
+	<user-settings id='user_settings'></user-settings>
 	<div id="menubar" class="hide">
 	  <div on-click="back"><%= lng('Back') %></div><%
 	  groups = _.map(_.uniq(resources, 'Group'),function(n) { return n.Group })
@@ -124,12 +125,13 @@
 			<ul class="dropdown-content" tabindex="0">
 			  <!--<li class="dropdown-item"><iron-icon icon="assessment"></iron-icon>Dashboard</li>
 			  <hr>
-			  <li class="dropdown-item"><iron-icon icon="drafts"></iron-icon>Messages</li>
-			  <li class="dropdown-item"><iron-icon icon="settings"></iron-icon>Preferences</li>-->
+			  <li class="dropdown-item"><iron-icon icon="drafts"></iron-icon>Messages</li>-->
+			  
 <!-- USER POINT - User Menu -->
 <!-- END USER POINT - User Menu -->
-			  <hr>
 			  <li class="dropdown-item" on-click="edit_profile"><iron-icon icon="perm-identity"></iron-icon><%= lng('Profile') %></li>
+			  <hr>
+			  <li class="dropdown-item" on-click="settings"><iron-icon icon="settings"></iron-icon>Settings</li>
 			  <li class="dropdown-item" on-click="signout"><iron-icon icon="exit-to-app"></iron-icon><%= lng('Log Out') %></li>
 			</ul>
 		  </iron-dropdown>
@@ -171,6 +173,9 @@
 	,edit_profile: function() {
 		this.user.usr = this.user.user
 		this.$.user_edit_profile.open_dialog(this.user)
+	}
+	,settings: function() {
+		this.$.user_settings.open_dialog()
 	}
 /** USER POINT - Top Bar Functions **/
 /** END USER POINT - Top Bar Functions **/
@@ -256,8 +261,15 @@
 			this.$[this.field].key = this.$[e.srcElement.id].item.key
 		},
 		submit_form: function() {
-			var minlength = Number(<%= sails.config.appConfig.PWD_MIN_LEN || 6 %>)
-			if (this.$.pwd_1.value.length < minlength & this.$.pwd_1.value != '')
+			var userMinLength = Number(<%= sails.config.appConfig.USER_MIN_LEN || 6 %>)
+			var pwdMinLength  = Number(<%= sails.config.appConfig.PWD_MIN_LEN  || 6 %>)
+			
+			if (this.$.usr.value.length < userMinLength)
+			{
+				alert("<%= lng('Username Must have al least %s Characters', sails.config.appConfig.USER_MIN_LEN || 6) %>")
+				return
+			}
+			if (this.$.pwd_1.value.length < pwdMinLength & this.$.pwd_1.value != '')
 			{
 				alert("<%= lng('Password Must have al least %s Characters', sails.config.appConfig.PWD_MIN_LEN || 6) %>")
 				return
@@ -273,6 +285,102 @@
 				return
 			}
 			this.$.submit_update.click()
+		},
+		update: function() {
+			var record = {}
+			//record.id = this.item.id
+			var pwd_old = this.$.pwd_old.value
+			var pwd_1 = this.$.pwd_1.value
+			var usr = this.$.usr.value
+
+			var SHA512 = new Hashes.SHA512
+
+			record.pwd_old = SHA512.b64_hmac(usr+pwd_old, '<%= sails.config.appConfig.HMAC_KEY1 %>')
+			record.pwd_1 = SHA512.b64_hmac(usr+pwd_1, '<%= sails.config.appConfig.HMAC_KEY1 %>')
+			
+			record.email = this.$.email.value
+			record.language = this.$.language.value
+			this.$.ajax.url = config_server() + "User/UpdProfile/"+this.item.id
+			this.$.ajax.params = record
+			this.$.ajax.generateRequest()
+		},
+		record_updated: function() {
+			/** Validate Resource Authorized **/
+			alert(this.$.ajax.lastResponse.auth_msg)
+			if (typeof this.$.ajax.lastResponse.err === 'undefined')
+			{
+				this.$.dialog_profile.close()
+				this.fire('close')
+			}
+		},
+		ajax_error: function() {
+			console.log(this.$.ajax.lastError)
+			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
+		}
+	})
+</script>
+</dom-module>
+
+
+<dom-module id="User-settings">
+<template
+	<style>
+		#dialog_settings {
+			width: 36em;
+		}
+		#server_url {
+			width: 180px;
+		}
+		#window_width, #window_height {
+			width: 80px;
+		}
+	</style>
+	<paper-dialog id="dialog_settings" modal vertical layout entry-animation="scale-up-animation" 	exit-animation="fade-out-animation">
+		<h2 class="card_title"><%= lng("%s %s",lng("Edit"),lng("Settings"))%></h2>
+		<paper-dialog-scrollable>
+		<form id="form" action="javascript:void(0);" on-submit="update">
+			<table class="table_dialog" style="width:100%">
+			<tr>
+				<td><label class="left_label" for="server_url"><%= lng('Server URL')%><strong class="red"> *</strong></label></td>
+				<td><input id="server_url" type="text" name="server_url" value="{{item.server_url}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="width"><%= lng('Window Width')%><strong class="red"> *</strong></label></td>
+				<td><input id="width" type="text" name="width" value="{{item.width}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="height"><%= lng('Window Height')%><strong class="red"> *</strong></label></td>
+				<td><input id="height" type="text" name="height" value="{{item.height}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="path"><%= lng('App Path')%><strong class="red"> *</strong></label></td>
+				<td><textarea id="path" name="path" rows="3" cols="42" on-click="select_path" readOnly required></textarea></td>
+			</tr>
+			</table>
+			<div class="buttons">
+			  <div class="card_line">
+				<paper-button id="update_btn" class="btn" on-click="submit_form" raised><%= lng('Change ')%></paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised><%= lng('Exit')%></paper-button>
+			  </div>
+			</div>
+		</form>
+		</paper-dialog-scrollable>
+	</paper-dialog>
+</template>
+<script>
+	Polymer({
+		is: "User-settings",
+		open_dialog: function() {
+			/** Load Data from file */
+			this.$.dialog_settings.open()
+		},
+		submit_form: function() {
+
+		},
+		select_path: function() {
+			const dialog = require('electron').remote.dialog;
+			var path = dialog.showOpenDialog({ properties: [ 'openDirectory' ]})
+			this.$.path.value = path[0]
 		},
 		update: function() {
 			var record = {}
@@ -295,10 +403,6 @@
 				this.$.dialog_profile.close()
 				this.fire('close')
 			}
-		},
-		ajax_error: function() {
-			console.log(this.$.ajax.lastError)
-			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
 	})
 </script>

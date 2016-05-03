@@ -1,4 +1,4 @@
-<!-- list template: version 7.20 -->
+<!-- list template: version 7.23 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -15,8 +15,9 @@
 	<title><%= lng("%s %s",lng("List"),lng("Resource"))%></title>
 	<script src="/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 	<script src="/bower_components/intro.js/minified/intro.min.js"></script>
-	<script src="/js2/lokijs/build/lokijs.min.js"></script>
-	<script src="/js2/x2js-v1.1.5/xml2json.min.js"></script>
+	<script src="/bower_components/jshashes/hashes.min.js"></script>
+	<script src="/bower_components/lokijs/build/lokijs.min.js"></script>
+	<script src="/bower_components/abdmob/x2js/xml2json.min.js"></script>
 	<script src="/components/app-config/app-config.js"></script>
 	<script src="/components/app-util/app-util.js"></script>
 	<link rel="stylesheet" href="/styles/app.css">
@@ -40,6 +41,8 @@
 	<link rel="import" href="/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
+<!-- USER POINT - Include Libraries, Styles & Components -->
+<!-- END USER POINT - Include Libraries, Styles & Components -->
 <script>
     // Google Analytics
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -297,7 +300,9 @@ paper-menu {
 			  record.method = this.$.method.value
 			  record.path = this.$.path.value
 			  record.type = this.$.type.value
-			  record.requireaut = this.$.requireaut.value			
+			  record.requireaut = this.$.requireaut.value
+/** USER POINT - Before Create **/
+/** END USER POINT - Before Create **/			
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},
@@ -425,7 +430,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.22 -->
+<!-- edit-form: version 5.23 -->
 
 <dom-module id="Resource-edit">
 <template>
@@ -525,6 +530,8 @@ paper-menu {
 			record.type = this.$.type.value
 			record.requireaut = this.$.requireaut.value
 			this.$.ajax.url = config_server() + "Resource/" +record.id
+/** USER POINT - Before Update **/
+/** END USER POINT - Before Update **/
 			this.$.ajax.params = record
 			this.$.ajax.generateRequest()
 		},
@@ -551,7 +558,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.22 -->
+<!-- delete-form: version 5.23 -->
 
 <dom-module id="Resource-delete">
 <template>
@@ -631,6 +638,8 @@ paper-menu {
 			this.$.submit_delete.click()
 		},
 		delete: function() {
+/** USER POINT - Before Delete **/
+/** END USER POINT - Before Delete **/
 			this.$.ajax.url = config_server() + "Resource/"+this.item.id
 			this.$.ajax.generateRequest()
 		},

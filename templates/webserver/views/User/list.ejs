@@ -1,4 +1,4 @@
-<!-- list template: version 7.20 -->
+<!-- list template: version 7.23 -->
  <% 
  function lng(word) {
 	return __("word")
@@ -15,8 +15,9 @@
 	<title><%= lng("%s %s",lng("List"),lng("User"))%></title>
 	<script src="/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 	<script src="/bower_components/intro.js/minified/intro.min.js"></script>
-	<script src="/js2/lokijs/build/lokijs.min.js"></script>
-	<script src="/js2/x2js-v1.1.5/xml2json.min.js"></script>
+	<script src="/bower_components/jshashes/hashes.min.js"></script>
+	<script src="/bower_components/lokijs/build/lokijs.min.js"></script>
+	<script src="/bower_components/abdmob/x2js/xml2json.min.js"></script>
 	<script src="/components/app-config/app-config.js"></script>
 	<script src="/components/app-util/app-util.js"></script>
 	<link rel="stylesheet" href="/styles/app.css">
@@ -40,6 +41,8 @@
 	<link rel="import" href="/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
+<!-- USER POINT - Include Libraries, Styles & Components -->
+<!-- END USER POINT - Include Libraries, Styles & Components -->
 <script>
     // Google Analytics
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -332,11 +335,14 @@ paper-menu {
 			record.account = this.$.account.key
 			  record.usr = this.$.usr.value
 			  record.name = this.$.name.value
-			  record.pwd = require('crypto').createHash('sha256').update(this.$.pwd.value).digest('base64')
 			record.profile = this.$.profile.key
 			  record.email = this.$.email.value
 			  record.language = this.$.language.value
-			  record.status = this.$.status.value			
+			  record.status = this.$.status.value
+/** USER POINT - Before Create **/
+			var SHA512 = new Hashes.SHA512
+			record.pwd = SHA512.b64_hmac(record.usr+this.$.pwd.value, '<%= sails.config.appConfig.HMAC_KEY1 %>')
+/** END USER POINT - Before Create **/			  
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},
@@ -359,6 +365,19 @@ paper-menu {
 		},
 		submit_form: function() {
 /** USER POINT - Validate Before Create **/
+			var userMinLength = Number(<%= sails.config.appConfig.USER_MIN_LEN || 6 %>)
+			var pwdMinLength  = Number(<%= sails.config.appConfig.PWD_MIN_LEN  || 6 %>)
+
+			if (this.$.usr.value.length < userMinLength)
+			{
+				alert("<%= lng('Username Must have al least %s Characters', sails.config.appConfig.USER_MIN_LEN || 6) %>")
+				return
+			}
+			if (this.$.pwd.value.length < pwdMinLength & this.$.pwd.value != '')
+			{
+				alert("<%= lng('Password Must have al least %s Characters', sails.config.appConfig.PWD_MIN_LEN || 6) %>")
+				return
+			}
 			if (this.$.pwd.value != this.$.pwd_2.value)
 			{
 				alert("<%= lng('New Password must be equal to Confirm Password') %>")
@@ -417,10 +436,6 @@ paper-menu {
 				<td><input id="name" type="text" name="name" value="{{item.name}}" disabled></td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="pwd"><%= lng('Password')%></label></td>
-				<td><input id="pwd" type="password" name="pwd" value="{{item.pwd}}" disabled></td>
-			</tr>
-			<tr>
 				<td><label class="left_label" for="profile"><%= lng('Profile')%></label></td>
 				<td><input id="profile" type="text" name="profile" value="{{item.profile_name}}" disabled></td>
 			</tr>
@@ -472,7 +487,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- edit-form: version 5.22 -->
+<!-- edit-form: version 5.23 -->
 
 <dom-module id="User-edit">
 <template>
@@ -575,8 +590,15 @@ paper-menu {
 		},
 		submit_form: function() {
 /** USER POINT - Validate Before Update **/
-			var minlength = Number(<%= sails.config.appConfig.PWD_MIN_LEN || 6 %>)
-			if (this.$.pwd.value.length < minlength & this.$.pwd.value != '')
+			var pwdMinLength  = Number(<%= sails.config.appConfig.PWD_MIN_LEN  || 6 %>)
+			var userMinLength = Number(<%= sails.config.appConfig.USER_MIN_LEN || 6 %>)
+			
+			if (this.$.usr.value.length < userMinLength)
+			{
+				alert("<%= lng('Username Must have al least %s Characters', sails.config.appConfig.USER_MIN_LEN || 6) %>")
+				return
+			}
+			if (this.$.pwd.value.length < pwdMinLength & this.$.pwd.value != '')
 			{
 				alert("<%= lng('Password Must have al least %s Characters', sails.config.appConfig.PWD_MIN_LEN || 6) %>")
 				return
@@ -595,12 +617,17 @@ paper-menu {
 			record.account = this.$.account.key
 			record.usr = this.$.usr.value
 			record.name = this.$.name.value
-			if (this.$.pwd.value != '')
-				record.pwd = require('crypto').createHash('sha256').update(this.$.pwd.value).digest('base64')
 			record.profile = this.$.profile.key
 			record.email = this.$.email.value
 			record.language = this.$.language.value
 			record.status = this.$.status.value
+/** USER POINT - Before Update **/
+			if (this.$.pwd.value != '')
+			{
+				var SHA512 = new Hashes.SHA512
+				record.pwd = SHA512.b64_hmac(record.usr+this.$.pwd.value, '<%= sails.config.appConfig.HMAC_KEY1 %>')
+			}
+/** END USER POINT - Before Update **/
 			this.$.ajax.url = config_server() + "User/" +record.id
 			this.$.ajax.params = record
 			this.$.ajax.generateRequest()
@@ -628,7 +655,7 @@ paper-menu {
 </script>
 </dom-module>
 
-<!-- delete-form: version 5.22 -->
+<!-- delete-form: version 5.23 -->
 
 <dom-module id="User-delete">
 <template>
@@ -711,6 +738,8 @@ paper-menu {
 			this.$.submit_delete.click()
 		},
 		delete: function() {
+/** USER POINT - Before Delete **/
+/** END USER POINT - Before Delete **/
 			this.$.ajax.url = config_server() + "User/"+this.item.id
 			this.$.ajax.generateRequest()
 		},

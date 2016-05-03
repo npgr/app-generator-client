@@ -10,6 +10,7 @@
 <html>
 <head>
 	<script src="/components/app-config/app-config.js"></script>
+	<script src="/bower_components/jshashes/hashes.min.js"></script>
 	<!--<link rel="import" href="/bower_components/platinum-sw/platinum-sw-register.html">
 	<link rel="import" href="/bower_components/platinum-sw/platinum-sw-cache.html">-->
  <!--<link rel="prerender" href="/styles/app.css"  as="stylesheet" probability="1.0"/>-->
@@ -18,11 +19,14 @@
 		//background-color: rgb(240, 215, 240);
 		background-color: rgba(165, 205, 235, .8); 
 	}
+	body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
 	#loginCard {
-		position: absolute;
-		top: 30%;
-		left: 30%;
-		display: block;
+		margin-top: -50px;
 		padding: 40px 60px 25px;
 		background-color: rgb(170, 230, 170);
 		border-radius: 8px;
@@ -31,7 +35,15 @@
 		//opacity: .88;
 	}
 	#loginError {
-		color: red;		
+		margin-top: 20px;
+		color: red;
+		padding: 10px 20px;
+		background-color: rgb(170, 230, 170);
+		border-radius: 8px;
+		box-shadow: 5px 5px 8px #909090;
+		background-color: lighthGray;
+		//opacity: .88;
+		//margin-top: 220px;
 	}
 	form {
 		display: flex;
@@ -50,7 +62,7 @@
 		border-radius: 6px;
 		font-weight: bold;
 	}
-	#usr, #pwd {
+	#usr, #pwd, #pwd1 {
 		border-radius: 6px;
 	}
 	[hide] {
@@ -58,6 +70,7 @@
 	}
 </style>
 <title>Login</title>
+<script src="/js2/login/login.js"></script>
 <script>
    // Google Analytics
   /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -78,22 +91,42 @@
 		</platinum-sw-cache>
 	</platinum-sw-register>-->
 	 <div id="loginCard">
-	  <form action="/validateLogin" method="post">
-		<input id="usr" type="string" name="username" placeholder="<%= lng('Username') %>"/>
+	  <form id="formLogin" action="/validateLogin" method="post">
+		<input id="usr" type="text" name="username" placeholder="<%= lng('Username') %>"/>
 		<input id="pwd_1" type="password" name="passwd" placeholder="<%= lng('Password') %>"/>
 		<input id="pwd" type="password" name="password" hide/>
-		<input id="btn2" type="submit" hide>
-		<input id="btn" name="Submit"  type="submit" value="<%= lng('Login') %>" onClick="JavaScript:handleForm()"/>
+		<input id="today" type="text" name="today" hide/>
+		<input id="btn" type="button" name="Submit" value="<%= lng('Login') %>" onClick="JavaScript:handleForm()"/>
 	  </form>
-	  <% if (flash.err) {%>
-	 <div id="loginError"><%= flash.err %></div>
-	 <% } %>
 	 </div>
+	<div id="loginError" <%= flash.err ? '' : 'hide' %>><%= flash.err || '' %></div>
 	<script>
 		function handleForm() {
 			var pwd = document.getElementById('pwd_1').value
-			document.getElementById('pwd').value = require('crypto').createHash('sha256').update(pwd).digest('base64')
-			document.getElementById('btn2').click()
+			var usr = document.getElementById('usr').value
+			
+			if (usr == '')
+			{
+				var loginError = document.getElementById('loginError')
+				loginError.removeAttribute('hide')
+				loginError.innerHTML = '<%= lng('Username Required') %>'
+				return
+			}
+			
+			if (pwd == '')
+			{
+				var loginError = document.getElementById('loginError')
+				loginError.removeAttribute('hide')
+				loginError.innerHTML = '<%= lng('Password Required') %>'
+				return
+			}
+
+			var SHA512 = new Hashes.SHA512
+
+			var pwd_hash = SHA512.b64_hmac(usr+pwd, '<%= sails.config.appConfig.HMAC_KEY1 %>')
+			document.getElementById('pwd').value = pwd_hash
+			
+			document.getElementById('formLogin').submit()
 		}
 	</script>
 </body>

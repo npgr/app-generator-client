@@ -49,6 +49,8 @@ module.exports.routes = {
   "/": "UserController.login",
   "/login": "UserController.login",
   "/signout": "UserController.signout",
+  "post /User": "UserController.create",
+  "put /User/:id": "UserController.update",
   "post /validateLogin": "UserController.validateLogin",
   "/User/list": "UserController.list",
   "/Account/list": "AccountController.list",
