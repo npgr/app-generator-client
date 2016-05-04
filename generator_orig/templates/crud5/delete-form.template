@@ -1,4 +1,4 @@
-<!-- delete-form: version 5.22 -->
+<!-- delete-form: version 5.23 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -54,6 +54,7 @@
 			this.$.submit_delete.click()
 		},
 		delete: function() {
+<%= user_point.before_delete %>
 			this.$.ajax.url = config_server() + "<%= model%>/"+this.item.id
 			this.$.ajax.generateRequest()
 		},

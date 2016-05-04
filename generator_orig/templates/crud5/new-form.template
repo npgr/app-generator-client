@@ -93,7 +93,8 @@
 			record.<%= keys[i]%> = this.$.<%= keys[i]%>.key<%
 				} } else { %>
 			record.<%= keys[i]%> = Number(this.$.<%= keys[i]%>.value)<% 
-			} } }%>			
+			} } }%>
+<%= user_point.before_create %>			
 			this.$.ajax2.params = record
 			this.$.ajax2.generateRequest()
 		},

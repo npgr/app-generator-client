@@ -394,6 +394,8 @@ function generate_model_select(model, display, key, description, crud) {
 
 function get_user_points(){
 	user_point = {
+		'include_libs': '<!-- USER POINT - Include Libraries, Styles & Components -->\n'+
+						'<!-- END USER POINT - Include Libraries, Styles & Components -->',
 		'general_style': '/** USER POINT - General Style **/\n'+
 						 '/** END USER POINT - General Style **/',
 		'list_style': '<!--USER POINT - List Style-->\n'+
@@ -433,12 +435,23 @@ function get_user_points(){
 		'record_created': '/** USER POINT - Record Created **/\n'+
 						'/** END USER POINT - Record Created **/',
 		'new_functions': '/** USER POINT - New Functions **/\n'+
-						'/** END USER POINT - New Functions **/'
+						'/** END USER POINT - New Functions **/',
+		'before_create': '/** USER POINT - Before Create **/\n'+
+						'/** END USER POINT - Before Create **/',
+		'before_update': '/** USER POINT - Before Update **/\n'+
+						'/** END USER POINT - Before Update **/',
+		'before_delete': '/** USER POINT - Before Delete **/\n'+
+						'/** END USER POINT - Before Delete **/'				
 	}
 	
 	if (fs.existsSync('./views/'+model+'/list.ejs'))
 	{
 		var list_file = fs.readFileSync('./views/'+model+'/list.ejs', 'utf8');
+		
+		var start = list_file.indexOf("<!-- USER POINT - Include Libraries, Styles & Components -->")
+		var end = list_file.indexOf("<!-- END USER POINT - Include Libraries, Styles & Components -->")		
+		if (end != -1)
+			user_point.include_libs = list_file.substring(start, end+64)
 		
 		var start = list_file.indexOf("/** USER POINT - General Style **/")
 		var end = list_file.indexOf("/** END USER POINT - General Style **/")		
@@ -539,6 +552,21 @@ function get_user_points(){
 		end = list_file.indexOf("/** END USER POINT - New Functions **/")
 		if (end != -1)
 			user_point.new_functions = list_file.substring(start, end+38)
+			
+		start = list_file.indexOf("/** USER POINT - Before Create **/")
+		end = list_file.indexOf("/** END USER POINT - Before Create **/")
+		if (end != -1)
+			user_point.before_create = list_file.substring(start, end+38)
+			
+		start = list_file.indexOf("/** USER POINT - Before Update **/")
+		end = list_file.indexOf("/** END USER POINT - Before Update **/")
+		if (end != -1)
+			user_point.before_update = list_file.substring(start, end+38)
+			
+		start = list_file.indexOf("/** USER POINT - Before Delete **/")
+		end = list_file.indexOf("/** END USER POINT - Before Delete **/")
+		if (end != -1)
+			user_point.before_display = list_file.substring(start, end+38)
 	}
 }
 

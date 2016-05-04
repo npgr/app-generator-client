@@ -1,4 +1,4 @@
-<!-- list template: version 7.20 -->
+<!-- list template: version 7.23 -->
 <% if (crud == "crud6") { 
 %> >% 
  function lng(word) {
@@ -26,8 +26,9 @@
   } %>
 	<script src="/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 	<script src="/bower_components/intro.js/minified/intro.min.js"></script>
-	<script src="/js2/lokijs/build/lokijs.min.js"></script>
-	<script src="/js2/x2js-v1.1.5/xml2json.min.js"></script>
+	<script src="/bower_components/jshashes/hashes.min.js"></script>
+	<script src="/bower_components/lokijs/build/lokijs.min.js"></script>
+	<script src="/bower_components/abdmob/x2js/xml2json.min.js"></script>
 	<script src="/components/app-config/app-config.js"></script>
 	<script src="/components/app-util/app-util.js"></script>
 	<link rel="stylesheet" href="/styles/app.css">
@@ -50,7 +51,8 @@
 	<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
 	<link rel="import" href="/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
-	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html"><%
+	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
+<%= user_point.include_libs %><%
   if (crud == "crud5") { %>
 	<link rel="import" href="/components/<%= model%>-list-columns/<%= model%>-list-columns.html">
 	<link rel="import" href="/components/<%= model%>-new/<%= model%>-new.html">

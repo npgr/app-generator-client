@@ -1,4 +1,4 @@
-<!-- edit-form: version 5.22 -->
+<!-- edit-form: version 5.23 -->
 <% function srv(crud, word) {
 	if (crud == "crud6")
 		return ">%= lng('" + word + "')%<"
@@ -101,6 +101,7 @@
 			record.<%= keys[i]%> = Number(this.$.<%= keys[i]%>.value)<% 		
 			}}}}%>
 			this.$.ajax.url = config_server() + "<%= model%>/" +record.<%= key.name%>
+<%= user_point.before_update %>
 			this.$.ajax.params = record
 			this.$.ajax.generateRequest()
 		},
