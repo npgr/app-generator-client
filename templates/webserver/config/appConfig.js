@@ -7,9 +7,9 @@
 module.exports.appConfig = {
   
 	/** Client Side **/
-	HMAC_KEY1 : 'IYSÑ(S][A()#FG[?=])])dihyb38d{´{}}',
+	HMAC_KEY1 : '#hmac_key1',
 	
 	/** Server Side **/
-	HMAC_KEY2 : 'oiuJT9398j)/&6303$#282365]DPJjuhgd',
+	HMAC_KEY2 : '#hmac_key2'
 
 };

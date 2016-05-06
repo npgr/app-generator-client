@@ -62,9 +62,8 @@ Fix:
 	- error on list columns dialog width (ready, missing: app.list + app template) (ready))
 	- error on auth_msg (choose ajax or ajax2) (ready, missing app.list + app template) (ready))
 	
-	
 	- Profile option on User Menu (change password, email & language) -> generate all list + app template (ready))
-	-> change password (actual pwd, new pwd, confirm pwd), i18n (also on edit user -> confirm pwd)
+	-> change password (actual pwd, new pwd, confirm pwd), i18n (also on edit user -> confirm pwd) (ready)
 	- creante app configuration PWD_MIN_LEN -> Configuration Model (ready)
 	
 	- User Profile on all lists (ready)
@@ -75,13 +74,17 @@ Fix:
 	- change salt on every correct login (not apply)
 	- improve hash password on server side & client side (hash + salt + hmac key) (ready)
 	- Include hash password improvements in template (ready)
-
-	- update bower_components & node_modules in webserver template
-	- Generate hmac keys when create new App (config/appConfig)
-	- logout when client is browser
+	- logout when client is browser, configure EXIT_PAGE (ready)
+	- update bower_components & node_modules in webserver template (ready)
+	
+	- Generate hmac keys when create new App (config/appConfig) & session secret (ready)
+	
+	- generate routes & language
+	
 	- ¿ Get js assets from CDNjs ?
 	- Improve performance with Solid Disk State.
-	- Generate Engine in Java
+	- Generate Engine in Java (no)
+	- Enclosejs
 	- validate duplicated username
 	
 	- Change User Menu (Preferences, Settings) - Colors, App Path

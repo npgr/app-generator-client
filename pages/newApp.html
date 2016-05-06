@@ -85,6 +85,8 @@
 					var app_util = remote.require('./app_util.js')
 					app_util.set_port(app, port, path)
 					set_package_json(app, path, app_des, ver, repo, author, license)
+					set_session_secret()
+					set_hmac_keys()
 					set_view_layout(app, app_title, path)
 					
 					append_html('Application Created Succefully on Path '+path+'\\'+app)
@@ -113,6 +115,44 @@
 			data = data.replace(/#license/g, license)
 			
 			fs.writeFileSync(path+'/'+app+'/package.json', data)
+	
+			return 'Success'
+		}
+		
+		function set_session_secret() {
+			var fs = require('fs')
+		
+			var data_raw = fs.readFileSync(path+'/'+app+'/config/session.js')
+			
+			var data = data_raw.toString()
+	
+			var crypto = require('crypto')
+		
+			var secret = crypto.randomBytes(20).toString('hex');
+			
+			data = data.replace(/#secret/g, secret)
+			
+			fs.writeFileSync(path+'/'+app+'/config/session.js', data)
+	
+			return 'Success'
+		}
+		
+		function set_hmac_keys() {
+			var fs = require('fs')
+		
+			var data_raw = fs.readFileSync(path+'/'+app+'/config/appConfig.js')
+			
+			var data = data_raw.toString()
+	
+			var crypto = require('crypto')
+			
+			var hmac_key1 = crypto.randomBytes(12)
+			var hmac_key2 = crypto.randomBytes(12)
+			
+			data = data.replace(/#hmac_key1/g, hmac_key1)
+			data = data.replace(/#hmac_key2/g, hmac_key2)
+			
+			fs.writeFileSync(path+'/'+app+'/config/appConfig.js', data)
 	
 			return 'Success'
 		}
