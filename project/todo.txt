@@ -79,6 +79,8 @@ Fix:
 	
 	- Generate hmac keys when create new App (config/appConfig) & session secret (ready)
 	
+	- Put BROWSER environment variable in appConfig.js
+	
 	- generate routes & language
 	
 	- ¿ Get js assets from CDNjs ?
@@ -93,7 +95,7 @@ Fix:
 	
 	- load DB on container with all data (create resource + change resource)
 	
-	- generator on java with casper templates
+	- generator on java with casper templates (no -> enclosejs)
 	
 	- test listjs
 	- test apache zeppelin
@@ -103,7 +105,7 @@ Fix:
 	- include app cache / service worker (addyosmany dev tools videos)
 	- publish image node-postgres in docker hub
 	- secure routes
-	- service1.exe does not run on docker
+	- service1.exe does not run on docker (regenerate with enclosejs)
 	- data binding folder in user
 	- improve ejs partials
 	
