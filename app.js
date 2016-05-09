@@ -36,7 +36,9 @@ app.on('ready', function() {
 		var config = JSON.parse(data)
 		mainWindow.setSize(config.width, config.height)
 		var main_options = { "extraHeaders" : "client_appl: Generator\n" }
-		mainWindow.loadURL(config.url, main_options)
+		//mainWindow.loadURL(config.url, main_options)
+		//mainWindow.loadURL('file://'+__dirname+'/pages/config.html')
+		mainWindow.loadURL('file://'+__dirname+'/pages/start.html?url=file://'+__dirname+'/pages/config.html&url2='+config.url)
 	});
 	ipcMain.on('exit-main', function(event, arg) {
 		

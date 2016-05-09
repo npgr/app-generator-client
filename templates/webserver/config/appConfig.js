@@ -10,6 +10,10 @@ module.exports.appConfig = {
 	HMAC_KEY1 : '#hmac_key1',
 	
 	/** Server Side **/
-	HMAC_KEY2 : '#hmac_key2'
+	HMAC_KEY2 : '#hmac_key2',
+	
+	BROWSER: true,
+	
+	CLIENT_KEY: ''
 
 };

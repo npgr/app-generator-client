@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="UTF-8">
+	<title>Configuration</title>
+	<script src="../assets/bower_components/webcomponentsjs/webcomponents.min.js"></script>
+	<script src="../assets/bower_components/intro.js/minified/intro.min.js"></script>
+	<link rel="stylesheet" href="../assets/styles/app.css">
+	<link rel="stylesheet" href="../assets/bower_components/intro.js/minified/introjs.min.css">
+	<!-- polymer Components -->
+	<link rel="import" href="../assets/bower_components/paper-material/paper-material.html">
+	<link rel="import" href="../assets/bower_components/paper-input/paper-input.html">
+	<link rel="import" href="../assets/bower_components/paper-fab/paper-fab.html">
+	<link rel="import" href="../assets/bower_components/iron-icon/iron-icon.html">
+	<link rel="import" href="../assets/bower_components/iron-icons/iron-icons.html">
+	<link rel="import" href="../assets/bower_components/paper-icon-button/paper-icon-button.html">
+	<link rel="import" href="../assets/bower_components/paper-button/paper-button.html">
+	<link rel="import" href="../assets/bower_components/iron-ajax/iron-ajax.html">
+	<!-- Forms imports -->
+	<link rel="import" href="../assets/bower_components/polymer/polymer.html">
+<!-- USER POINT - Include Libraries, Styles & Components -->
+<!-- END USER POINT - Include Libraries, Styles & Components -->
+</head>
+<body>
+
+<style>
+	#form {
+		position: absolute;
+		top: 100px;
+	}
+	#server_url {
+		width: 250px;
+	}
+	#window_width, #window_height {
+		width: 80px;
+	}
+</style>
+
+<dom-module id="User-settings">
+<template
+	
+		<form id="form" action="javascript:void(0);" on-submit="update">
+			<table class="table_dialog" style="width:100%">
+			<tr>
+				<td><label class="left_label" for="server_url">Server URL<strong class="red"> *</strong></label></td>
+				<td><input id="server_url" type="text" name="server_url" value="{{item.url}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="width">Window Width<strong class="red"> *</strong></label></td>
+				<td><input id="window_width" type="text" name="width" value="{{item.width}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="height">Window Height<strong class="red"> *</strong></label></td>
+				<td><input id="window_height" type="text" name="height" value="{{item.height}}" required></td>
+			</tr>
+			<tr>
+				<td><label class="left_label" for="path">App Path<strong class="red"> *</strong></label></td>
+				<td><textarea id="path" name="path" rows="3" cols="42" value="{{item.apps_path}}" on-click="select_path" readOnly required></textarea></td>
+			</tr>
+			</table>
+			<div class="buttons">
+			  <div class="card_line">
+				<paper-button id="update_btn" class="btn" on-click="submit_form" raised>Change</paper-button>
+				<paper-button id="exit_btn" class="btn" dialog-confirm raised>Exit</paper-button>
+			  </div>
+			</div>
+		</form>
+
+</template>
+<script>
+	Polymer({
+		is: "User-settings",
+		ready: function() {
+			/** Load Data from file */
+			var fs = require('fs')
+			var data_raw = fs.readFileSync('./config.json', 'utf-8')
+			this.item = JSON.parse(data_raw)
+			
+			console.log('data: ', this.item)
+		},
+		submit_form: function() {
+
+		},
+		select_path: function() {
+			const dialog = require('electron').remote.dialog;
+			var path = dialog.showOpenDialog({ properties: [ 'openDirectory' ]})
+			this.$.path.value = path[0]
+		},
+		update: function() {
+			var record = {}
+			//record.id = this.item.id
+			record.pwd_old = require('crypto').createHash('sha256').update(this.$.pwd_old.value).digest('base64')
+			record.pwd_1 = this.$.pwd_1.value
+			if (this.$.pwd_1.value != '')
+				record.pwd_1 = require('crypto').createHash('sha256').update(this.$.pwd_1.value).digest('base64')
+			record.email = this.$.email.value
+			record.language = this.$.language.value
+			this.$.ajax.url = config_server() + "User/UpdProfile/"+this.item.id
+			this.$.ajax.params = record
+			this.$.ajax.generateRequest()
+		},
+		record_updated: function() {
+			/** Validate Resource Authorized **/
+			alert(this.$.ajax.lastResponse.auth_msg)
+			if (typeof this.$.ajax.lastResponse.err === 'undefined')
+			{
+				this.$.dialog_profile.close()
+				this.fire('close')
+			}
+		}
+	})
+</script>
+</dom-module>
+
+	<User-settings></User-settings>
+
+</body>
+</html>

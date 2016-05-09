@@ -79,17 +79,18 @@ Fix:
 	
 	- Generate hmac keys when create new App (config/appConfig) & session secret (ready)
 	
-	- Put BROWSER environment variable in appConfig.js
+	- Put BROWSER environment variable in appConfig.js (ready)
+	
+	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
 	- generate routes & language
 	
+	- Improve CLIENT_KEY configuration
 	- ¿ Get js assets from CDNjs ?
 	- Improve performance with Solid Disk State.
 	- Generate Engine in Java (no)
 	- Enclosejs
 	- validate duplicated username
-	
-	- Change User Menu (Preferences, Settings) - Colors, App Path
 	
 	- upgrade sails to v 0.12 (ready on server, missing on template)
 	
