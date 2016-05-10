@@ -23,20 +23,21 @@
 
 <style>
 	#form {
-		position: absolute;
-		top: 100px;
+		//position: absolute;
+		top: 20px;
+		left: 20px;
 	}
 	#server_url {
-		width: 250px;
+		width: 300px;
 	}
 	#window_width, #window_height {
-		width: 80px;
+		width: 55px;
 	}
 </style>
 
 <dom-module id="User-settings">
-<template
-	
+<template>
+		<h5 class="card_title">Edit Settings</h5>
 		<form id="form" action="javascript:void(0);" on-submit="update">
 			<table class="table_dialog" style="width:100%">
 			<tr>
@@ -45,14 +46,14 @@
 			</tr>
 			<tr>
 				<td><label class="left_label" for="width">Window Width<strong class="red"> *</strong></label></td>
-				<td><input id="window_width" type="number" name="width" value="{{item.width}}" required></td>
+				<td><input id="window_width" type="number" name="width" value="{{item.width}}" required> px</td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="height">Window Height<strong class="red"> *</strong></label></td>
-				<td><input id="window_height" type="number" name="height" value="{{item.height}}" required></td>
+				<td><input id="window_height" type="number" name="height" value="{{item.height}}" required> px</td>
 			</tr>
 			<tr>
-				<td><label class="left_label" for="path">App Path<strong class="red"> *</strong></label></td>
+				<td><label class="left_label" for="path">Apps Path<strong class="red"> *</strong></label></td>
 				<td><textarea id="path" name="path" rows="3" cols="42" value="{{item.apps_path}}" on-click="select_path" readOnly required></textarea></td>
 			</tr>
 			</table>
@@ -79,7 +80,32 @@
 			var path = dialog.showOpenDialog({ properties: [ 'openDirectory' ]})
 			this.$.path.value = path[0]
 		},
+		validate: function() {
+			if (this.$.server_url.value.indexOf('http') == -1){
+				this.$.server_url.focus()
+				alert('Server URL must start with http:// or https://')
+				return false
+			}
+			if (Number(this.$.window_width.value) < 500) {
+				this.$.window_width.focus()
+				alert('Window Width must be Greater than 500px')
+				return false
+			}
+			if (Number(this.$.window_height.value) < 400) {
+				this.$.window_height.focus()
+				alert('Window Height must be Greater than 400px')
+				return false
+			}
+			if (this.$.path.value == "") {
+				this.$.path.focus()
+				alert('Applications Path Required')
+				return false
+			}
+			return true
+		},
 		change: function() {
+			if (!this.validate()) return
+			
 			var config = {}
 			config.url = this.$.server_url.value
 			config.width = Number(this.$.window_width.value)
@@ -97,6 +123,8 @@
 			window.history.back()
 		},
 		exit: function() {
+			if (!this.validate()) return
+			
 			window.history.back()
 		}
 	})
