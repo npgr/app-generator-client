@@ -45,11 +45,11 @@
 			</tr>
 			<tr>
 				<td><label class="left_label" for="width">Window Width<strong class="red"> *</strong></label></td>
-				<td><input id="window_width" type="text" name="width" value="{{item.width}}" required></td>
+				<td><input id="window_width" type="number" name="width" value="{{item.width}}" required></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="height">Window Height<strong class="red"> *</strong></label></td>
-				<td><input id="window_height" type="text" name="height" value="{{item.height}}" required></td>
+				<td><input id="window_height" type="number" name="height" value="{{item.height}}" required></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="path">App Path<strong class="red"> *</strong></label></td>
@@ -58,8 +58,8 @@
 			</table>
 			<div class="buttons">
 			  <div class="card_line">
-				<paper-button id="update_btn" class="btn" on-click="submit_form" raised>Change</paper-button>
-				<paper-button id="exit_btn" class="btn" dialog-confirm raised>Exit</paper-button>
+				<paper-button id="update_btn" class="btn" on-click="change" raised>Change</paper-button>
+				<paper-button id="exit_btn" class="btn" on-click="exit" raised>Exit</paper-button>
 			  </div>
 			</div>
 		</form>
@@ -73,38 +73,31 @@
 			var fs = require('fs')
 			var data_raw = fs.readFileSync('./config.json', 'utf-8')
 			this.item = JSON.parse(data_raw)
-			
-			console.log('data: ', this.item)
-		},
-		submit_form: function() {
-
 		},
 		select_path: function() {
 			const dialog = require('electron').remote.dialog;
 			var path = dialog.showOpenDialog({ properties: [ 'openDirectory' ]})
 			this.$.path.value = path[0]
 		},
-		update: function() {
-			var record = {}
-			//record.id = this.item.id
-			record.pwd_old = require('crypto').createHash('sha256').update(this.$.pwd_old.value).digest('base64')
-			record.pwd_1 = this.$.pwd_1.value
-			if (this.$.pwd_1.value != '')
-				record.pwd_1 = require('crypto').createHash('sha256').update(this.$.pwd_1.value).digest('base64')
-			record.email = this.$.email.value
-			record.language = this.$.language.value
-			this.$.ajax.url = config_server() + "User/UpdProfile/"+this.item.id
-			this.$.ajax.params = record
-			this.$.ajax.generateRequest()
+		change: function() {
+			var config = {}
+			config.url = this.$.server_url.value
+			config.width = Number(this.$.window_width.value)
+			config.height = Number(this.$.window_height.value)
+			config.apps_path = this.$.path.value
+			config.colors = ""
+
+			var config_data = JSON.stringify(config)
+
+			var fs = require('fs')
+			fs.writeFileSync('./config.json', config_data, 'utf-8')
+			
+			alert('Configuration Updated')
+			
+			window.history.back()
 		},
-		record_updated: function() {
-			/** Validate Resource Authorized **/
-			alert(this.$.ajax.lastResponse.auth_msg)
-			if (typeof this.$.ajax.lastResponse.err === 'undefined')
-			{
-				this.$.dialog_profile.close()
-				this.fire('close')
-			}
+		exit: function() {
+			window.history.back()
 		}
 	})
 </script>
