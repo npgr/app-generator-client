@@ -81,7 +81,11 @@ Fix:
 	
 	- Put BROWSER environment variable in appConfig.js (ready)
 	
-	- Change User Menu (Preferences, Settings) - Colors, App Path
+	- Change User Menu (Preferences, Settings) - Colors, App Path (ready)
+	
+	- ¿ Error when change user-profile -> change password ?
+	
+	- In all alerts, set title "Warning", "Info", "Error"
 	
 	- generate routes & language
 	
@@ -98,6 +102,7 @@ Fix:
 	
 	- generator on java with casper templates (no -> enclosejs)
 	
+	- test appmetrics
 	- test listjs
 	- test apache zeppelin
 	- test generatron
