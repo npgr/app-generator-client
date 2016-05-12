@@ -83,22 +83,22 @@
 		validate: function() {
 			if (this.$.server_url.value.indexOf('http') == -1){
 				this.$.server_url.focus()
-				alert('Server URL must start with http:// or https://')
+				alert('Server URL must start with http:// or https://','Warning')
 				return false
 			}
 			if (Number(this.$.window_width.value) < 500) {
 				this.$.window_width.focus()
-				alert('Window Width must be Greater than 500px')
+				alert('Window Width must be Greater than 500px','Warning')
 				return false
 			}
 			if (Number(this.$.window_height.value) < 400) {
 				this.$.window_height.focus()
-				alert('Window Height must be Greater than 400px')
+				alert('Window Height must be Greater than 400px','Warning')
 				return false
 			}
 			if (this.$.path.value == "") {
 				this.$.path.focus()
-				alert('Applications Path Required')
+				alert('Applications Path Required','Warning')
 				return false
 			}
 			return true
@@ -106,19 +106,17 @@
 		change: function() {
 			if (!this.validate()) return
 			
-			var config = {}
-			config.url = this.$.server_url.value
-			config.width = Number(this.$.window_width.value)
-			config.height = Number(this.$.window_height.value)
-			config.apps_path = this.$.path.value
-			config.colors = ""
+			this.item.url = this.$.server_url.value
+			this.item.width = Number(this.$.window_width.value)
+			this.item.height = Number(this.$.window_height.value)
+			this.item.apps_path = this.$.path.value
 
-			var config_data = JSON.stringify(config)
+			var config_data = JSON.stringify(this.item)
 
 			var fs = require('fs')
 			fs.writeFileSync('./config.json', config_data, 'utf-8')
 			
-			alert('Configuration Updated')
+			alert('Configuration Updated','Info')
 			
 			window.history.back()
 		},

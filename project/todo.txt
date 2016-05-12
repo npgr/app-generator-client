@@ -83,9 +83,13 @@ Fix:
 	
 	- Change User Menu (Preferences, Settings) - Colors, App Path (ready)
 	
+	- when generate app, take path from client settings, remove path from app model (doing)
+	
+	- generate path field
+	- sometimes when load login page, some resources not are ready, need validation
+	- config.json must be completed the first time 
 	- ¿ Error when change user-profile -> change password ?
 	- client does not work when change server port
-	- when generate app, take path from client settings, remove path from app model (doing)
 	
 	- In all alerts, set title "Warning", "Info", "Error"
 	
