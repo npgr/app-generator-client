@@ -85,8 +85,8 @@
 					var app_util = remote.require('./app_util.js')
 					app_util.set_port(app, port, path)
 					set_package_json(app, path, app_des, ver, repo, author, license)
-					set_session_secret()
-					set_hmac_keys()
+					set_session_secret(app, path)
+					set_hmac_keys(app, path)
 					set_view_layout(app, app_title, path)
 					
 					append_html('Application Created Succefully on Path '+path+'\\'+app)
@@ -119,7 +119,7 @@
 			return 'Success'
 		}
 		
-		function set_session_secret() {
+		function set_session_secret(app, path) {
 			var fs = require('fs')
 		
 			var data_raw = fs.readFileSync(path+'/'+app+'/config/session.js')
@@ -137,7 +137,7 @@
 			return 'Success'
 		}
 		
-		function set_hmac_keys() {
+		function set_hmac_keys(app, path) {
 			var fs = require('fs')
 		
 			var data_raw = fs.readFileSync(path+'/'+app+'/config/appConfig.js')

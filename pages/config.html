@@ -74,6 +74,12 @@
 			var fs = require('fs')
 			var data_raw = fs.readFileSync('./config.json', 'utf-8')
 			this.item = JSON.parse(data_raw)
+			/*if (item.path == "")
+			{
+				var path = __dirname
+				var end = path.indexOf('Generador\\client')
+				item.path = path.substring(0, end+16) + '\\apps'
+			}*/
 		},
 		select_path: function() {
 			const dialog = require('electron').remote.dialog;

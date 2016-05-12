@@ -85,7 +85,7 @@ Fix:
 	
 	- when generate app, take path from client settings, remove path from app model (doing)
 	
-	- generate path field
+	- generate path field - a textarea field that have select file
 	- sometimes when load login page, some resources not are ready, need validation
 	- config.json must be completed the first time 
 	- ¿ Error when change user-profile -> change password ?
@@ -108,6 +108,7 @@ Fix:
 	
 	- generator on java with casper templates (no -> enclosejs)
 	
+	- test nativefier
 	- test appmetrics
 	- test listjs
 	- test apache zeppelin
@@ -124,7 +125,7 @@ Fix:
 	- send all messages according auth_msg (like user profile)
 	- Sailsjs Start Automatic all .js in /api/services folder (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
 	- Problem, when shutdown sails server does not kill service process. when start again, get an error (already running)
-	- jxcore no more in maintanense, use instead enclosejs
+	- jxcore no more in maintanense, use instead enclosejs or nexe
 	- Reject access for not authorized resource & notify rejection, create page for rejection (ready api, missing page), not case sensitive for resource (check for webserver template)
 	- on Logout, close all electron windows (ready)
 	- allow only one submenu open at a time
