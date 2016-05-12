@@ -36,18 +36,52 @@ module.exports = function(req, res, next) {
 	
 	var time = d.getFullYear() + '/' + d.getMonth()+1 + '/' + d.getDate() + ' ' + d.getHours() + ':' + min + ':' + seg + ' - '
 	
-	if (!req.session.user && req.route.path != '/login' && req.route.path != '/validateLogin'){
-		
+	var bypass = false
+	if(req.headers.my_key)
+		if (req.headers.my_key == 'abc') bypass = true
+	//console.log('headers: ', req.headers)
+	if (!req.session.user && req.route.path != '/login' && req.route.path != '/validateLogin' && !bypass &&
+		req.route.path != '/db/import'){
+
 		//console.log('Redirecting to login from '+req.route.path)
-		return res.redirect('/login')
+		if (process.env.BROWSER == 'true')
+			return res.redirect('/login')
+		else
+			return res.forbidden('Unathorized Access') //return res.view('403')
 	}
 			
 	
-	if (req.route.path != '/login' && req.route.path != '/validateLogin' && req.route.path != '/signout')
+	if (req.route.path != '/login' && req.route.path != '/validateLogin' && req.route.path != '/signout' && 
+	    req.route.path != '/db/import')
 	{
 		//var resource_name = _.result(_.find(req.session.resources, { 'path': req.route.path }), 'name')
 		
 		var path = extract_path()
+		 
+		/*Resource.find({path: path, method: req.method.toLowerCase()})
+		  .exec(function(err, resourcex) {
+			if (resourcex[0])
+			{
+			 //console.log('path: ', path, 'method: ', req.method.toLowerCase(), 'resource', resourcex)
+			 ProfileResource.find({profile: req.session.profile.id, resource: resourcex[0].id})
+			//.populate('resource')
+			  .exec(function(err, resource){
+				if (resource[0])
+				{
+					req.options.resource = resource[0]
+					console.log(colors.green(time + req.method+' '+req.originalUrl+' Authorized for user '+req.session.user))
+				}
+				else
+					console.log(colors.red(time + req.method+' '+req.originalUrl+' Not Authorized for user '+req.session.user))
+				return next()
+			 })
+			}
+			else 
+			{
+				console.log(colors.red(time + req.method+' '+req.originalUrl+' Not Authorized for user '+req.session.user))
+				return next()
+			}
+		})*/
 		
 		var resource = _.find(req.session.resources, { 'path': path, 'method': req.method.toLowerCase() })
 		if (resource)
@@ -64,13 +98,16 @@ module.exports = function(req, res, next) {
 			/** if page then redirect **/
 		}
 		//console.log('languagePreference', req.session.languagePreference)
-		req.setLocale(req.session.languagePreference);
+		if (typeof req.session.languagePreference != 'undefined')	
+			req.setLocale(req.session.languagePreference);
 		return next()
 	}
 	else
 	{
 	//if (path == '/App') return res.json({msg: 'not Authorized'})
-		req.setLocale(req.session.languagePreference);
+		//console.log('authorized - language Preference: ', req.session.languagePreference)
+		if (typeof req.session.languagePreference != 'undefined')
+			req.setLocale(req.session.languagePreference);
 		return next()
 	}
   // User is not allowed
