@@ -44,7 +44,7 @@ module.exports = function(req, res, next) {
 		req.route.path != '/db/import'){
 
 		//console.log('Redirecting to login from '+req.route.path)
-		if (process.env.BROWSER != 'false')
+		if (sails.config.appConfig.BROWSER != 'false')
 			return res.redirect('/login')
 		else
 			return res.forbidden('Unathorized Access') //return res.view('403')

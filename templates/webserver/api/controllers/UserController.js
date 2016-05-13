@@ -53,7 +53,7 @@ module.exports = {
 			//sails.config.appConfig[key] = 65
 		}
 
-		if (process.env.BROWSER == 'false')
+		if (sails.config.appConfig.BROWSER == 'false')
 		{
 		  if (!req.headers.client_appl)
 			return res.forbidden('Unathorized Access') //res.view('403')
