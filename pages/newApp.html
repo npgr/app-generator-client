@@ -146,8 +146,8 @@
 	
 			var crypto = require('crypto')
 			
-			var hmac_key1 = crypto.randomBytes(12)
-			var hmac_key2 = crypto.randomBytes(12)
+			var hmac_key1 = crypto.randomBytes(20).toString('base64');
+			var hmac_key2 = crypto.randomBytes(20).toString('base64');
 			
 			data = data.replace(/#hmac_key1/g, hmac_key1)
 			data = data.replace(/#hmac_key2/g, hmac_key2)
