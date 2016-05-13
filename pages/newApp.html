@@ -1,6 +1,6 @@
 <html>
 <head>
- <title>New App</title>
+ <title id='title'>New App</title>
  <style>
 		html, div {
 			background-color: rgb(30, 30, 30);
@@ -27,6 +27,7 @@
 </head>
 <body> <!-- onload="newContent();"-->
 	
+	
 	<div yellow>> Creating Application 
 		<strong id="app"></strong>
 	</div>
@@ -42,6 +43,24 @@
 		}
 	</script>-->
 	<script>
+		title = document.getElementById('title')
+		sec = 0
+
+		animation = setInterval(function() { animate()} , 1000)
+
+		function animate() 
+		{
+			sec ++
+			var min = Math.floor(sec / 60)
+			var seco = sec % 60 
+
+			title.textContent =  seco + ' seg'
+
+			if (min > 0) title.textContent = min + ' min ' + title.textContent
+
+			title.textContent =  'New App  - ' + title.textContent
+		}
+
 		cont = 0
 		function append_html(txt)
 		{
@@ -75,7 +94,8 @@
 			});
 	
 			child.on('close', function (code, signal) {
-				//console.log('child process terminated due to receipt of signal ' + signal);	
+				//console.log('child process terminated due to receipt of signal ' + signal);
+				clearInterval(animation)
 				if (code == 0)
 				{
 					//copy_node_modules()
