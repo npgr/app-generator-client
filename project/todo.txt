@@ -85,7 +85,9 @@ Fix:
 	
 	- when generate app, take path from client settings, remove path from app model (ready)
 	
-	- generate path field - a textarea field that have select file
+	- npm link
+	- MAINTAIN A CLI GENERATOR (encrypted)
+	- generate file field - a textarea field that have select file
 	- sometimes when load login page, some resources not are ready, need validation
 	- config.json must be completed the first time 
 	- ¿ Error when change user-profile -> change password ?

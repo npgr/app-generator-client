@@ -3,6 +3,7 @@
 		
 2) Improve generator (generate graphs, drag options like trello)
 	- ¿ Open source crud template for improves ?
+	- CLI option (encrypted & licensed) (SAAS)
 	- Migrate DB (Partial)
 	- Graphs
 	- Generate tests
