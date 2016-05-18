@@ -8,13 +8,23 @@ var program = require('commander');
  
 program
   .version('0.0.1')
-  .option('app [app_name]', 'Create Application', create_app)
+  .option('app [app_name]', 'Create Application')  //, create_app)
   .option('crud [model_name]', 'Create Crud', generate_crud)
+  .option('--pwd [pwd]', 'Admin Password')
   .parse(process.argv);
  
 
 /*if (program.app) 
 	console.log('Generating application %s', program.app);*/
+
+if (program.pwd)
+	{
+		console.log('App name: ', program.app)
+		console.log('Password: ', program.pwd)
+	}
+
+if (program.app)
+	create_app(program.app)
 
 function create_app(app_name)
 {
