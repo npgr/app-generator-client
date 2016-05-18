@@ -30,7 +30,7 @@ function create_app(app_name)
 	var bar = new ProgressBar('[:bar] :percent / :elapseds - ETA :etas', {
 		complete: '=',
 		incomplete: ' ',
-		width: 30,
+		width: 25,
 		total: 1936
 	});
 	
@@ -68,7 +68,7 @@ function extract_node_modules(app_name)
 	var bar2 = new ProgressBar('[:bar] :percent / :elapseds - ETA :etas', {
 		complete: '=',
 		incomplete: ' ',
-		width: 30,
+		width: 25,
 		total: 13860
 	});
 
@@ -85,6 +85,10 @@ function extract_node_modules(app_name)
 		if (count == 13860)
 			bar2.tick(60)
 	});
+	
+	child2.on('close', function (code, signal) {
+		echo('App '+app_name+' created')
+	})
 	
 	/*if (exec('tar -xf node_modules.tar.gz -C '+app_name).code == 0) {
 		echo('Application %s Created', app_name)
