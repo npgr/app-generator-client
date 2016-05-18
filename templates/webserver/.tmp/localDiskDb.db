@@ -9,6 +9,32 @@
         "id": 4
       }
     ],
+    "config": [
+      {
+        "item": "USER_MIN_LEN",
+        "description": "User Minimun Length",
+        "value": "4",
+        "createdAt": "2016-05-18T20:36:48.627Z",
+        "updatedAt": "2016-05-18T20:36:48.627Z",
+        "id": 1
+      },
+      {
+        "item": "PWD_MIN_LEN",
+        "description": "Password Min Length",
+        "value": "4",
+        "createdAt": "2016-05-18T20:37:08.676Z",
+        "updatedAt": "2016-05-18T20:37:08.676Z",
+        "id": 2
+      },
+      {
+        "item": "EXIT_PAGE",
+        "description": "Exit Page",
+        "value": "/login",
+        "createdAt": "2016-05-18T20:37:29.781Z",
+        "updatedAt": "2016-05-18T20:37:29.781Z",
+        "id": 3
+      }
+    ],
     "language": [],
     "profile": [
       {
@@ -23,38 +49,42 @@
       {
         "profile": 1,
         "resource": 1,
-        "order": 900,
-        "Group": "Security",
+        "order": 905,
+        "Group": "Admin",
         "createdAt": "2015-12-30T17:34:04.943Z",
-        "updatedAt": "2015-12-30T17:34:04.943Z",
-        "id": 1
+        "updatedAt": "2016-05-18T20:33:22.184Z",
+        "id": 1,
+        "data": ""
       },
       {
         "profile": 1,
         "resource": 2,
         "order": 910,
-        "Group": "Security",
+        "Group": "Admin",
         "createdAt": "2015-12-30T17:37:20.919Z",
-        "updatedAt": "2015-12-30T17:37:20.919Z",
-        "id": 2
+        "updatedAt": "2016-05-18T20:22:28.909Z",
+        "id": 2,
+        "data": ""
       },
       {
         "profile": 1,
         "resource": 3,
         "order": 920,
-        "Group": "Security",
+        "Group": "Admin",
         "createdAt": "2015-12-30T17:37:50.720Z",
-        "updatedAt": "2015-12-30T17:37:50.720Z",
-        "id": 3
+        "updatedAt": "2016-05-18T20:22:19.963Z",
+        "id": 3,
+        "data": ""
       },
       {
         "profile": 1,
         "resource": 4,
         "order": 930,
-        "Group": "Security",
+        "Group": "Admin",
         "createdAt": "2015-12-30T17:38:18.253Z",
-        "updatedAt": "2015-12-30T17:40:13.563Z",
-        "id": 4
+        "updatedAt": "2016-05-18T20:21:55.456Z",
+        "id": 4,
+        "data": ""
       },
       {
         "profile": 1,
@@ -225,6 +255,56 @@
         "createdAt": "2016-04-01T19:05:52.639Z",
         "updatedAt": "2016-04-01T19:05:52.639Z",
         "id": 21
+      },
+      {
+        "profile": 1,
+        "resource": 23,
+        "data": "all",
+        "order": 900,
+        "Group": "Admin",
+        "createdAt": "2016-05-18T20:33:53.365Z",
+        "updatedAt": "2016-05-18T20:33:53.365Z",
+        "id": 23
+      },
+      {
+        "profile": 1,
+        "resource": 24,
+        "data": "all",
+        "order": 0,
+        "Group": "",
+        "createdAt": "2016-05-18T20:34:08.659Z",
+        "updatedAt": "2016-05-18T20:34:08.659Z",
+        "id": 24
+      },
+      {
+        "profile": 1,
+        "resource": 25,
+        "data": "all",
+        "order": 0,
+        "Group": "",
+        "createdAt": "2016-05-18T20:34:26.053Z",
+        "updatedAt": "2016-05-18T20:34:26.053Z",
+        "id": 25
+      },
+      {
+        "profile": 1,
+        "resource": 26,
+        "data": "all",
+        "order": 0,
+        "Group": "",
+        "createdAt": "2016-05-18T20:34:35.254Z",
+        "updatedAt": "2016-05-18T20:34:35.254Z",
+        "id": 26
+      },
+      {
+        "profile": 1,
+        "resource": 27,
+        "data": "all",
+        "order": 0,
+        "Group": "",
+        "createdAt": "2016-05-18T20:34:46.358Z",
+        "updatedAt": "2016-05-18T20:34:46.358Z",
+        "id": 27
       }
     ],
     "resource": [
@@ -437,22 +517,73 @@
         "createdAt": "2016-04-01T19:05:21.280Z",
         "updatedAt": "2016-04-01T19:05:21.280Z",
         "id": 21
+      },
+      {
+        "name": "Config",
+        "method": "get",
+        "path": "/Config/list",
+        "type": "page",
+        "requireaut": "Yes",
+        "createdAt": "2016-05-18T20:25:37.082Z",
+        "updatedAt": "2016-05-18T20:25:37.082Z",
+        "id": 23
+      },
+      {
+        "name": "Config Data",
+        "method": "get",
+        "path": "/Config",
+        "type": "data",
+        "requireaut": "Yes",
+        "createdAt": "2016-05-18T20:26:04.405Z",
+        "updatedAt": "2016-05-18T20:26:04.405Z",
+        "id": 24
+      },
+      {
+        "name": "Create Conifg",
+        "method": "post",
+        "path": "/Config",
+        "type": "api",
+        "requireaut": "Yes",
+        "createdAt": "2016-05-18T20:26:41.798Z",
+        "updatedAt": "2016-05-18T20:26:41.798Z",
+        "id": 25
+      },
+      {
+        "name": "Change Config",
+        "method": "put",
+        "path": "/Config",
+        "type": "api",
+        "requireaut": "Yes",
+        "createdAt": "2016-05-18T20:26:59.403Z",
+        "updatedAt": "2016-05-18T20:26:59.403Z",
+        "id": 26
+      },
+      {
+        "name": "Delete Config",
+        "method": "delete",
+        "path": "/Config",
+        "type": "api",
+        "requireaut": "Yes",
+        "createdAt": "2016-05-18T20:27:41.872Z",
+        "updatedAt": "2016-05-18T20:27:41.872Z",
+        "id": 27
       }
     ],
     "user": [
       {
         "account": 0,
         "usr": "Admin",
-        "name": "Admin",
-        "pwd": "admin",
+        "name": "Administrator",
+        "pwd": "PSMI6bFDKVmIBcTzC2ctd5wYTq7mLGNR2PXw3dHYPVyHPueoUujHZ+CWT5OIiP5dzhFwsJzeEsw45IndjdGHxg==",
+        "salt": "p\u0003�\f�\u000e�\u001b��>�",
         "profile": 1,
         "email": "",
         "photo": "",
         "status": "A",
         "createdAt": "2015-12-30T17:21:37.191Z",
-        "updatedAt": "2016-04-01T19:07:22.033Z",
+        "updatedAt": "2016-05-18T20:39:05.775Z",
         "id": 2,
-        "language": "es"
+        "language": "en"
       }
     ]
   },
@@ -469,6 +600,29 @@
       },
       "users": {
         "type": "integer"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "config": {
+      "id": {
+        "type": "integer",
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true
+      },
+      "item": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
       },
       "createdAt": {
         "type": "datetime"
@@ -641,6 +795,9 @@
       "pwd": {
         "type": "string"
       },
+      "salt": {
+        "type": "string"
+      },
       "profile": {
         "type": "integer",
         "model": "profile",
@@ -698,10 +855,10 @@
       "id": 3
     },
     "profileresource": {
-      "id": 22
+      "id": 27
     },
     "resource": {
-      "id": 22
+      "id": 27
     },
     "account": {
       "id": 4
@@ -710,6 +867,9 @@
       "id": 2
     },
     "app": {
+      "id": 3
+    },
+    "config": {
       "id": 3
     }
   }

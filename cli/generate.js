@@ -31,7 +31,7 @@ function create_app(app_name)
 		complete: '=',
 		incomplete: ' ',
 		width: 25,
-		total: 1936
+		total: 1938
 	});
 	
 	var readline  = require('readline');
@@ -46,12 +46,14 @@ function create_app(app_name)
 		count++
 		if ((count % 50) == 0) 
 			bar.tick(50);
-		if (count == 1936)
-			bar.tick(36)
+		if (count == 1938)
+			bar.tick(38)
+		/*if (count > 1900)
+			bar.tick(1)*/
 	});
 	
 	child.on('close', function (code, signal) {
-		//echo('\n')
+		echo('\n')
 		extract_node_modules(app_name)
 	})
 }

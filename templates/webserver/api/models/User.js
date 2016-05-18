@@ -47,6 +47,12 @@ module.exports = {
 		type: 'string',
 		required: true
 	},
+	salt: {
+		//description: "Salt",
+		//hide: true,
+		//omit: true,
+		type: 'string'
+	},
 	profile: {
 		//description: 'Profile',
 		//key: id,
