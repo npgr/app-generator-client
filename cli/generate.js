@@ -282,8 +282,15 @@ function extract_node_modules(app_name)
 	
 }
 
-function generate_crud(model_name)
+function generate_crud(model)
 {
-	console.log('Generating Crud %s', model_name)
+	var fs = require('fs')
+
+	var data_raw = fs.readFileSync('./app01/api/models/'+model+'.js')
+	
+	var obj = JSON.parse(data_raw.toString())
+	
+	console.log('model: ', obj)
+	//console.log('model: ', data_raw.toString())
 }
 

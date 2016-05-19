@@ -87,8 +87,9 @@ Fix:
 	
 	
 	- MAINTAIN A CLI GENERATOR (encrypted)
-	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (as newApp.html)
-	- redirect from / to /login
+	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
+	- redirect from / to /login (ready)
+	- generate crud
 	- error o progress bar
 	- option to deploy (minimize, etc)
 	- upgrade nodejs from v4.4 to v6
