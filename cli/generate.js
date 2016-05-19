@@ -11,9 +11,10 @@ program
   .option('app [app_name]', 'Create Application')  //, create_app)
   .option('crud [model_name]', 'Create Crud', generate_crud)
   .option('--pwd [pwd]', 'Admin Password')
+  .option('--port <port>', 'Port Number')
+  .option('--title [title]', 'Application Title')
   .parse(process.argv);
  
-
 /*if (program.app) 
 	console.log('Generating application %s', program.app);*/
 
