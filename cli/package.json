@@ -11,6 +11,7 @@
   "dependencies": {
     "commander": "^2.9.0",
     "progress": "^1.1.8",
+    "prompt": "^1.0.0",
     "shelljs": "^0.7.0"
   }
 }
