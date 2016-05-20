@@ -1,5 +1,4 @@
-exports.set_port = function(app, port)
-{
+exports.set_port = function(app, port) {
 	var fs = require('fs')
 
 	fs.writeFileSync('./'+app+'/start.sh', 'PORT='+port+' npm start', 'utf8')
@@ -21,8 +20,7 @@ exports.set_view_layout = function(app, app_title) {
 	return 'Success'
 }
 
-exports.set_session_secret = function(app)
-{
+exports.set_session_secret = function(app) {
 	var fs = require('fs')
 
 	var data_raw = fs.readFileSync('./'+app+'/config/session.js')
@@ -40,8 +38,7 @@ exports.set_session_secret = function(app)
 	return 'Success'
 }
 
-exports.set_package_json = function(pkg)
-{ 
+exports.set_package_json = function(pkg) { 
 	var fs = require('fs')
 
 	var data_raw = fs.readFileSync('./'+pkg.app+'/package.json')
@@ -58,4 +55,33 @@ exports.set_package_json = function(pkg)
 	fs.writeFileSync('./'+pkg.app+'/package.json', data)
 	
 	return 'Success'
+}
+
+exports.get_model = function(model, cb)
+{
+	var fs = require('fs')
+		
+	fs.readFile('./api/models/'+model+'.js', 'utf-8', function (err, data) {
+		if (err) {
+			console.log(err)
+			return false
+		}
+		else {
+			var jsonic = require('jsonic')
+			var start = data.indexOf("attributes: {")
+			//var end = data.indexOf("};")
+			var end = data.indexOf("//End Attributes")
+			if (end == -1)
+			{
+				console.log('Missing //End Attributes directive on model file')
+				process.exit()
+			}
+			data = data.substring(start+12, end-1)
+			data += '}'
+			//jsondata = JSON.parse(data)
+			// pending replace all //
+			data = data.replace(/\//g, '')
+			cb(jsonic(data))
+		}
+	})
 }

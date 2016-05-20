@@ -1,6 +1,7 @@
 node_modules_old
 node_modules/*
 !node_modules/crud5
+cli/node_modules
 deploy/*
 assets/bower_components
 apps/*

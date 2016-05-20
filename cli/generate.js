@@ -26,7 +26,7 @@ program
 
 if (program.app)
 {	
-	//create_app(program.app)
+	create_app(program.app)
 	set_app()
 }
 	
@@ -197,6 +197,16 @@ function config_app()
 
 function create_app(app_name)
 {
+	var tar = require('tar-fs')
+	var fs = require('fs')
+	
+	console.log('Extracting...')
+	fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
+	console.log('End Extracting')
+}
+
+function create_app_old(app_name)
+{
 	console.log('Creating Dir %s', app_name )
 	
 	require('shelljs/global');
@@ -284,13 +294,10 @@ function extract_node_modules(app_name)
 
 function generate_crud(model)
 {
-	var fs = require('fs')
-
-	var data_raw = fs.readFileSync('./app01/api/models/'+model+'.js')
+	var util = require('./util.js')
 	
-	var obj = JSON.parse(data_raw.toString())
-	
-	console.log('model: ', obj)
-	//console.log('model: ', data_raw.toString())
+	util.get_model(model, function(jsondat) {
+		console.log('model: ', jsondat)
+	})
 }
 
