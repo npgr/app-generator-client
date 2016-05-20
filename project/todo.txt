@@ -89,6 +89,7 @@ Fix:
 	- MAINTAIN A CLI GENERATOR (encrypted)
 	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
 	- redirect from / to /login (ready)
+	- remove node_module shelljs from cli
 	- generate crud
 	- error o progress bar
 	- option to deploy (minimize, etc)
