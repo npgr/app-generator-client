@@ -87,9 +87,14 @@ Fix:
 	
 	
 	- MAINTAIN A CLI GENERATOR (encrypted)
+	/** AQUI **/
 	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
+	- on generate app -> complete messages, finish with help (include ascii art)
+	- remove unused fonts from figlet (aprox 3MB)
+	- session data in redis
+	- DB options (Postgres -> Docker, etc) (ask for)
+	- install sails globally -> this reduce node_modules (ask for)
 	- redirect from / to /login (ready)
-	- remove node_module shelljs from cli
 	- generate crud
 	- error o progress bar
 	- option to deploy (minimize, etc)

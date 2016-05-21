@@ -23,18 +23,18 @@ program
   .parse(process.argv);
 
 /** Main **/  
-
+var colors = require("colors/safe");
 if (program.app)
 {	
 	create_app(program.app)
-	set_app()
+	//set_app()
 }
 	
 /** Functions **/
 function set_app()
 {
 	/** Not use chalk **/
-	var colors = require("colors/safe");
+	//var colors = require("colors/safe");
 	var ask = false
 	var schema = { properties: {} }
 	if (program.title)
@@ -147,7 +147,7 @@ function set_app()
 	}
 	if (ask)
 	{
-		console.log(colors.cyan('\nStart\n'))
+		console.log(colors.green('\n\n Configure App\n'))
 		var prompt = require('prompt')
 		prompt.message = colors.green('> ')
 		prompt.delimiter = ''
@@ -157,7 +157,7 @@ function set_app()
 		prompt.get(schema, function(err, result) {
 			if (result.pwd != result.pwd2)
 				result.pwd = 'admin'
-			console.log('result: ', result)
+			//console.log('result: ', result)
 			Object.assign(program, result)
 			//console.log('program: ', program)
 			config_app()
@@ -183,28 +183,97 @@ function config_app()
 		license: program.lic
 	}
 	util.set_package_json(pkg)
-	console.log('Set package.json')
+	//console.log('Set package.json')
 	/** Set view layout **/
 	util.set_view_layout(program.app, program.title)
-	console.log('Set View layout')
+	//console.log('Set View layout')
 	/** Set Session Secret **/
 	util.set_session_secret(program.app)
-	console.log('Set Session Secret')
+	//console.log('Set Session Secret')
 	/** Missing set hmac keys & admin password **/
-	console.log('Finish')
-	console.log('Run app: bash start.sh')
+	console.log(colors.green('\n App Configured !!!'))
+	console.log(colors.yellow(' Run app: '))
+	console.log(colors.yellow('     1) cd '+program.app))
+	console.log(colors.yellow('     2) bash start.sh'))
+	console.log(colors.yellow('     3) browser url http://localhost:'+program.port))
 }
 
 function create_app(app_name)
 {
-	var tar = require('tar-fs')
-	var fs = require('fs')
-	
-	console.log('Extracting...')
-	fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
-	console.log('End Extracting')
+	var colors = require("colors/safe");
+	var figlet = require('figlet')
+	console.log()
+	figlet('{ Generate App }', function(err, data) {
+		if (err) {
+			console.log('Generate 1.0');
+			//console.dir(err);
+			return;
+		}
+		console.log(colors.cyan(data))
+		console.log('\n'+colors.cyan(' Version 1.0'))
+		create_app2(app_name)
+	});
 }
 
+function create_app2(app_name) 
+{	
+	var colors = require("colors/safe");
+	var tar = require('tar-fs')
+	var readline = require('readline');
+	var fs = require('fs')
+	/** First time extract webserver.tar.gz **/
+	if (fs.existsSync(__dirname+'/webserver.tar.gz'))
+	{
+		console.log(colors.green('\n Preparing files...'))
+		var sh = require('shelljs');
+		var cwd = sh.pwd()
+		//console.log('Current Directory', cwd)
+		sh.cd(__dirname)
+		var child = sh.exec('gzip -d webserver.tar.gz '); //, {async:true, silent:true});
+		sh.cd(cwd)
+	}
+	var extract = tar.extract('./'+app_name)
+	var bar = {count: 0, total: 17452, size:0}
+	
+	extract.on('entry', function(header, stream, callback) {
+		bar.count ++
+		//bar.size += header.size
+		stream.on('end', function() {
+			//console.log(header.name)
+			callback() // ready for next entry
+		})
+		//stream.resume() // just auto drain the stream
+	})
+	extract.on('finish', function() {
+		clearInterval(interval);
+		readline.cursorTo(process.stdout, 0);
+		var min = Math.floor(seg/60)
+		seg = seg % 60
+		var msg = ' Elapsed Time: '
+		if (min > 0)
+			msg += (min+'m:')
+		msg += (seg+'s                         ')
+		process.stdout.write(msg)
+		//console.log('\nFinish !!!')
+		set_app()
+	})
+	/** Percentage of Extraction **/
+	var seg = 0
+	var interval = setInterval(function(){  
+		seg++
+		readline.cursorTo(process.stdout, 0);
+		var pct = Math.floor(bar.count / bar.total * 1000 )
+		var eta = Math.floor(seg / pct * 10000)
+		eta = Math.floor(eta - seg*10)/10
+		process.stdout.write('  ETA: '+eta+'s - '+ pct/10+ '%             ')
+	}, 1000);
+	/** Start extracting **/
+	console.log(colors.green('\n Extracting...\n'))
+	fs.createReadStream(__dirname+'/webserver.tar').pipe(extract)
+	//fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
+}
+
+/** Not Used **/
 function create_app_old(app_name)
 {
 	console.log('Creating Dir %s', app_name )
