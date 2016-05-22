@@ -23,18 +23,15 @@ program
   .parse(process.argv);
 
 /** Main **/  
-var colors = require("colors/safe");
+var colors = require("cli-color");
 if (program.app)
 {	
 	create_app(program.app)
-	//set_app()
 }
 	
 /** Functions **/
 function set_app()
 {
-	/** Not use chalk **/
-	//var colors = require("colors/safe");
 	var ask = false
 	var schema = { properties: {} }
 	if (program.title)
@@ -171,7 +168,7 @@ function config_app()
 	var util = require('./util.js')
 	/** Set Port **/
 	util.set_port(program.app, program.port)
-	console.log('Set Port = ', program.port)
+	//console.log('Set Port = ', program.port)
 	/** Set package.json **/
 	var pkg = 
 	{
@@ -192,15 +189,20 @@ function config_app()
 	//console.log('Set Session Secret')
 	/** Missing set hmac keys & admin password **/
 	console.log(colors.green('\n App Configured !!!'))
-	console.log(colors.yellow(' Run app: '))
+	console.log(colors.yellow('\n Run app: '))
 	console.log(colors.yellow('     1) cd '+program.app))
-	console.log(colors.yellow('     2) bash start.sh'))
-	console.log(colors.yellow('     3) browser url http://localhost:'+program.port))
+	console.log(colors.yellow('     2) bash start.sh (it Runs App with PM2)'))
+	console.log(colors.yellow('     3) browse Url http://localhost:'+program.port))
+	console.log(colors.yellow('     4) login => User: Admin; Password: Configured Value'))
+	console.log(colors.yellow('     5) Read Documentation: http://'))
+	console.log(colors.yellow('    ... npm stop (At the End)'))
+	console.log(colors.cyan('\n       ENJOY YOUR NEW APP !!!'))
+	
+	process.exit()
 }
 
 function create_app(app_name)
 {
-	var colors = require("colors/safe");
 	var figlet = require('figlet')
 	console.log()
 	figlet('{ Generate App }', function(err, data) {
@@ -211,13 +213,13 @@ function create_app(app_name)
 		}
 		console.log(colors.cyan(data))
 		console.log('\n'+colors.cyan(' Version 1.0'))
+		//process.exit(0)
 		create_app2(app_name)
 	});
 }
 
 function create_app2(app_name) 
 {	
-	var colors = require("colors/safe");
 	var tar = require('tar-fs')
 	var readline = require('readline');
 	var fs = require('fs')
@@ -273,100 +275,34 @@ function create_app2(app_name)
 	//fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
 }
 
-/** Not Used **/
-function create_app_old(app_name)
-{
-	console.log('Creating Dir %s', app_name )
-	
-	require('shelljs/global');
-	mkdir(app_name)
-	
-	/** decompress App */
-	echo('Extracting webserver.tar')
-	
-	var ProgressBar = require('progress');
-	var bar = new ProgressBar('[:bar] :percent / :elapseds - ETA :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 25,
-		total: 1938
-	});
-	
-	var readline  = require('readline');
-	var child = exec('tar -xvf webserver.tar.gz -C '+app_name, {async:true, silent:true});
-	
-	count = 0
-	readline.createInterface({
-		input     : child.stdout,
-		terminal  : false
-	}).on('line', function(line) {
-		//console.log(line);
-		count++
-		if ((count % 50) == 0) 
-			bar.tick(50);
-		if (count == 1938)
-			bar.tick(38)
-		/*if (count > 1900)
-			bar.tick(1)*/
-	});
-	
-	child.on('close', function (code, signal) {
-		echo('\n')
-		extract_node_modules(app_name)
-	})
-}
-
-function extract_node_modules(app_name)
-{
-	//require('shelljs/global');
-	var ProgressBar = require('progress');
-	var readline  = require('readline');
-	
-	/** Decompress node_modules **/
-	echo('Extracting node_modules.tar')
-	
-	var bar2 = new ProgressBar('[:bar] :percent / :elapseds - ETA :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 25,
-		total: 13860
-	});
-
-	var child2 = exec('tar -xvf node_modules.tar.gz -C '+app_name, {async:true, silent:true})
-	count = 0
-	readline.createInterface({
-		input     : child2.stdout,
-		terminal  : false
-	}).on('line', function(line) {
-		//console.log(line);
-		count++
-		if ((count % 100) == 0) 
-			bar2.tick(100);
-		if (count == 13860)
-			bar2.tick(60)
-	});
-	
-	child2.on('close', function (code, signal) {
-		echo('App '+app_name+' created')
-		set_app()
-	})
-	
-	/*if (exec('tar -xf node_modules.tar.gz -C '+app_name).code == 0) {
-		echo('Application %s Created', app_name)
-		echo('Finish')
-	} else {
-		echo('Error creating App');
-		return
-	}*/
-	
-}
-
 function generate_crud(model)
 {
+	var get = require('simple-get')
+	var concat = require('concat-stream')
 	var util = require('./util.js')
 	
 	util.get_model(model, function(jsondat) {
-		console.log('model: ', jsondat)
+		//console.log('model: ', jsondat)
+		
+		var get = require('simple-get')
+ 
+		var opts = {
+			url: 'http://localhost:7272',
+			//body: 'dato',//JSON.stringify(jsondat),
+			headers: {
+				'key': 'my key',
+				'data': JSON.stringify(jsondat)
+			}
+		}
+		get.post(opts, function (err, res) {
+			if (err) throw err
+			res.setTimeout(10000)
+			res.pipe(concat(function (data) {
+				// `data` is the decoded response, after it's been gunzipped or inflated 
+				// (if applicable) 
+				console.log('got the response: ' + data)
+			}))
+		})
 	})
 }
 
