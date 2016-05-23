@@ -5,8 +5,7 @@
   "description": "#ap_des",
   "keywords": [],
   "dependencies": {
-    "bcrypt": "^0.8.5",
-    "colors": "^1.1.2",
+    "cli-color": "^1.1.2",
     "data2xml": "^1.2.2",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",

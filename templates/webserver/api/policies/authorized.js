@@ -28,7 +28,7 @@ module.exports = function(req, res, next) {
   
 	//Bypass Security
 	//if (req.route.path == '/Order/SalesCube') return next()
-	var colors = require('colors/safe');
+	var colors = require('cli-color');
 	
 	var d = new Date()
 	var min = d.getMinutes(); if (min < 10) min = '0'+min 
