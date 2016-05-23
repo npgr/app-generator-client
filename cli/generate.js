@@ -294,16 +294,19 @@ function generate_crud(model)
 			//body: 'dato',//JSON.stringify(jsondat),
 			headers: {
 				'key': 'my key',
-				'data': JSON.stringify(jsondat)
+				'data': JSON.stringify(jsondat),
+				'model': model
 			}
 		}
 		get.post(opts, function (err, res) {
 			if (err) throw err
 			res.setTimeout(10000)
+			var routes = res.getHeader('data-routes')
+			console.log('Routes: \n', routes)
 			res.pipe(concat(function (data) {
 				// `data` is the decoded response, after it's been gunzipped or inflated 
 				// (if applicable) 
-				console.log('got the response: ' + data)
+				console.log('\ngot the response: ' + data)
 			}))
 		})
 	})
