@@ -13,7 +13,6 @@ program
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
-  .option('--path [path]', 'App Path')
   .option('--ver [version]', 'App version')
   .option('--repo [repo]', 'Url Source Repository')
   .option('--aut [author]', 'App Author')
@@ -64,15 +63,6 @@ function set_app()
 			required: true,
 			default: 3000,
 			message: 'Port must be Numeric',
-		}
-	}
-	if (program.path)
-		console.log(colors.green('> App Path: '), colors.cyan(program.path))
-	else {
-		ask = true
-		schema.properties.path = { 
-			description: colors.green('App Path: '), 
-			type: 'string'
 		}
 	}
 	if (program.ver)
@@ -189,14 +179,18 @@ function config_app()
 	//console.log('Set Session Secret')
 	/** Missing set hmac keys & admin password **/
 	console.log(colors.green('\n App Configured !!!'))
-	console.log(colors.yellow('\n Run app: '))
-	console.log(colors.yellow('     1) cd '+program.app))
-	console.log(colors.yellow('     2) bash start.sh (it Runs App with PM2)'))
-	console.log(colors.yellow('     3) browse Url http://localhost:'+program.port))
-	console.log(colors.yellow('     4) login => User: Admin; Password: Configured Value'))
-	console.log(colors.yellow('     5) Read Documentation: http://'))
-	console.log(colors.yellow('    ... npm stop (At the End)'))
-	console.log(colors.cyan('\n       ENJOY YOUR NEW APP !!!'))
+	console.log(colors.green('\n Getting Started: '))
+	console.log('\n   1) cd '+program.app)
+	console.log('\n   2) Start App, options:')
+	console.log('\n      2.1) bash start.sh (it Runs App with PM2), Or')
+	console.log('\n      2.2) PORT=<port Number> node app')
+	console.log('\n   3) browse Url http://localhost:'+program.port)
+	console.log('\n   4) login => User: Admin; Password: Configured Value')
+	console.log('\n   -> View Running Process (if running on PM2) -> npm run list')
+	console.log('\n   -> View Logs (if running on PM2) -> npm run logs')
+	console.log('\n   -> Stop App (if running on PM2) -> npm stop')
+	console.log('\n      Read Documentation: http://')
+	console.log(colors.yellow('\n       ENJOY YOUR NEW APP !!!'))
 	
 	process.exit()
 }
@@ -223,6 +217,8 @@ function create_app2(app_name)
 	var tar = require('tar-fs')
 	var readline = require('readline');
 	var fs = require('fs')
+	
+	console.log(colors.green('\n Generating App: '+program.app))
 	/** First time extract webserver.tar.gz **/
 	if (fs.existsSync(__dirname+'/webserver.tar.gz'))
 	{
@@ -235,7 +231,7 @@ function create_app2(app_name)
 		sh.cd(cwd)
 	}
 	var extract = tar.extract('./'+app_name)
-	var bar = {count: 0, total: 17452, size:0}
+	var bar = {count: 0, total: 17010, size:0}
 	
 	extract.on('entry', function(header, stream, callback) {
 		bar.count ++
@@ -251,10 +247,10 @@ function create_app2(app_name)
 		readline.cursorTo(process.stdout, 0);
 		var min = Math.floor(seg/60)
 		seg = seg % 60
-		var msg = ' Elapsed Time: '
+		var msg = ' ['+colors.green('===============')+'] 100% - Elapsed Time: '
 		if (min > 0)
 			msg += (min+'m:')
-		msg += (seg+'s                         ')
+		msg += (seg+'s             ')
 		process.stdout.write(msg)
 		//console.log('\nFinish !!!')
 		set_app()
@@ -265,10 +261,17 @@ function create_app2(app_name)
 		seg++
 		readline.cursorTo(process.stdout, 0);
 		var pct = Math.floor(bar.count / bar.total * 1000 )
+		var barl = Math.floor(pct / 67)
 		var eta = Math.floor(seg / pct * 10000)
 		eta = Math.floor(eta - seg*10)/10
-		process.stdout.write('  ETA: '+eta+'s - '+ pct/10+ '%             ')
-	}, 1000);
+		process.stdout.write(' [')
+		for (var i=0; i < barl; i++)
+			//process.stdout.write(colors.bgGreen(' '))
+			process.stdout.write(colors.green('='))
+		for (var i=barl; i<15; i++)
+			process.stdout.write(' ')
+		process.stdout.write('] '+ pct/10+ '% - ETA: '+eta+'s             ')
+	}, 1500);
 	/** Start extracting **/
 	console.log(colors.green('\n Extracting...\n'))
 	fs.createReadStream(__dirname+'/webserver.tar').pipe(extract)
