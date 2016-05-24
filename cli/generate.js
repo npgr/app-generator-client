@@ -190,7 +190,7 @@ function config_app()
 	console.log('\n   -> View Logs (if running on PM2) -> npm run logs')
 	console.log('\n   -> Stop App (if running on PM2) -> npm stop')
 	console.log('\n      Read Documentation: http://')
-	console.log(colors.yellow('\n       ENJOY YOUR NEW APP !!!'))
+	console.log(colors.cyan('\n       ENJOY YOUR NEW APP !!!'))
 	
 	process.exit()
 }
@@ -301,7 +301,7 @@ function generate_crud(model)
 		get.post(opts, function (err, res) {
 			if (err) throw err
 			res.setTimeout(10000)
-			var routes = res.getHeader('data-routes')
+			var routes = res.headers['data-routes']
 			console.log('Routes: \n', routes)
 			res.pipe(concat(function (data) {
 				// `data` is the decoded response, after it's been gunzipped or inflated 
