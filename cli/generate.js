@@ -278,6 +278,8 @@ function create_app2(app_name)
 	//fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
 }
 
+var crud_data = ''
+
 function generate_crud(model)
 {
 	var get = require('simple-get')
@@ -288,6 +290,8 @@ function generate_crud(model)
 		//console.log('model: ', jsondat)
 		
 		var get = require('simple-get')
+		var fs = require('fs')
+		var crud_data = ''
  
 		var opts = {
 			url: 'http://localhost:7272',
@@ -301,14 +305,43 @@ function generate_crud(model)
 		get.post(opts, function (err, res) {
 			if (err) throw err
 			res.setTimeout(10000)
-			var routes = res.headers['data-routes']
-			console.log('Routes: \n', routes)
+			//var routes = res.headers['data-routes']
+
+			/*res.on('data', function(data) {
+				console.log('data length:', data.length)	
+			})*/
+			
 			res.pipe(concat(function (data) {
 				// `data` is the decoded response, after it's been gunzipped or inflated 
 				// (if applicable) 
-				console.log('\ngot the response: ' + data)
+				//console.log('\ngot the response: \n' + data)
+				console.log('Finish Data length: ', data.length)
+				crud_data = data
+				create_crud()
+				
 			}))
+			res.pipe(fs.createWriteStream('./crud_orig.js'))
+			
+			/*res.on('end', function() {
+				console.log('Data received')
+				console.log('data length: ',data.length)	
+			})*/
 		})
+	})
+}
+function create_crud()
+{
+	var fs = require('fs')
+	
+	console.log('crud_data: ',crud_data.substring(0,100))
+	
+	var ini = crud_data.indexOf('/******* CRUD *******/')
+	ini += 23
+	console.log('ini: ', ini)
+	
+	fs.writeFile('./crud.js', crud_data.substring(ini), function (err) {
+		if (err) console.log(err);
+		console.log('Created file crud.js')
 	})
 }
 
