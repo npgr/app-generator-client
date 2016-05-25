@@ -133,6 +133,7 @@ Fix:
 	- test generatron
 	- test expand js
 	- test progress roller
+	- review electro crud & awesome crud
 	- include app cache / service worker (addyosmany dev tools videos)
 	- publish image node-postgres in docker hub
 	- secure routes
