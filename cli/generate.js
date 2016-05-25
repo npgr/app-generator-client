@@ -9,7 +9,8 @@ var program = require('commander');
 program
   .version('0.1.0')
   .option('app [app_name]', 'Create Application') //, create_app)
-  .option('crud [model_name]', 'Create Crud', generate_crud)
+  //.option('crud [model_name]', 'Create Crud', generate_crud)
+  .option('crud [model_name]', 'Create Crud', generate_controller)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -29,8 +30,7 @@ if (program.app)
 }
 	
 /** Functions **/
-function set_app()
-{
+function set_app() {
 	var ask = false
 	var schema = { properties: {} }
 	if (program.title)
@@ -153,8 +153,7 @@ function set_app()
 	else config_app()
 }
 
-function config_app()
-{
+function config_app() {
 	var util = require('./util.js')
 	/** Set Port **/
 	util.set_port(program.app, program.port)
@@ -195,13 +194,12 @@ function config_app()
 	process.exit()
 }
 
-function create_app(app_name)
-{
+function create_app(app_name) {
 	var figlet = require('figlet')
 	console.log()
 	figlet('{ Generate App }', function(err, data) {
 		if (err) {
-			console.log('Generate 1.0');
+			console.log('Generate App');
 			//console.dir(err);
 			return;
 		}
@@ -212,8 +210,7 @@ function create_app(app_name)
 	});
 }
 
-function create_app2(app_name) 
-{	
+function create_app2(app_name) {	
 	var tar = require('tar-fs')
 	var readline = require('readline');
 	var fs = require('fs')
@@ -278,8 +275,23 @@ function create_app2(app_name)
 	//fs.createReadStream(__dirname+'/webserver.tar').pipe(tar.extract('./'+app_name))
 }
 
-function generate_crud(model)
-{
+function generate_crud(model) {
+	var figlet = require('figlet')
+	console.log()
+	figlet('{ Generate Crud }', function(err, data) {
+		if (err) {
+			console.log('Generate Crud');
+			//console.dir(err);
+			return;
+		}
+		console.log(colors.cyan(data))
+		console.log('\n'+colors.cyan(' Version 1.0'))
+		//process.exit(0)
+		generate_crud2(model)
+	});
+}
+
+function generate_crud2(model) {
 	var get = require('simple-get')
 	var concat = require('concat-stream')
 	var util = require('./util.js')
@@ -325,8 +337,8 @@ function generate_crud(model)
 		})
 	})
 }
-function create_crud(model, data)
-{	
+
+function create_crud(model, data) {	
 	var ini = data.indexOf('/******* CRUD *******/')
 	ini += 20
 	
@@ -582,10 +594,33 @@ function set_user_points(model, new_list){
 	new_list = new_list.replace("#up_before_update", user_point.before_update)
 	new_list = new_list.replace("#up_before_delete", user_point.before_delete)
 	
+	if (!fs.existsSync('./views/'+model)) fs.mkdirSync('./views/'+model)
+	
 	fs.writeFile('./views/'+model+'/list.ejs', new_list, function (err) {
 		if (err) console.log(err);
 		console.log('Created file ./views/'+model+'/list.ejs')
 	})
+	generate_controller(model)
+}
+
+function generate_controller(model) {
+	var fs = require('fs')
+	
+	var controller = fs.readFileSync('./api/controllers/'+model+'Controller.js', 'utf8')
+	
+	var regex = /list\s*:\s*function\s*\([^{]*{/
+	
+	//var match = regex.exec(controller)
+	var matches = controller.match(regex)
+	
+	console.log('matches: ', matches[0], matches['index'])
+	/*if (!match)
+	{
+		//** Add List Function
+		return 
+	}
+	// Replace Existing Function 
+	ini = match.index*/
 }
 
 
