@@ -608,12 +608,24 @@ function generate_controller(model) {
 	
 	var controller = fs.readFileSync('./api/controllers/'+model+'Controller.js', 'utf8')
 	
-	var regex = /list\s*:\s*function\s*\([^{]*{/
-	
-	//var match = regex.exec(controller)
+	var regex = /\s*\t*list\s*:\s*function\s*\([^{]*{/
+
 	var matches = controller.match(regex)
 	
-	console.log('matches: ', matches[0], matches['index'])
+	var continueFor = true
+	var cont = 1
+	var len = 0
+	for (i=matches['index']+matches[0].length; continueFor; i++)
+	{
+		len++
+		if (controller.substr(i,1) == '{' )
+			cont++
+		if (controller.substr(i,1) == '}' )
+			cont--
+		if (cont == 0) continueFor = false
+	}
+	console.log('cont:'+cont+' len: '+len,'\nfunction ->', controller.substr(matches['index'],matches[0].length+len))
+		
 	/*if (!match)
 	{
 		//** Add List Function
