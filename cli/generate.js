@@ -9,8 +9,8 @@ var program = require('commander');
 program
   .version('0.1.0')
   .option('app [app_name]', 'Create Application') //, create_app)
-  //.option('crud [model_name]', 'Create Crud', generate_crud)
-  .option('crud [model_name]', 'Create Crud', generate_controller)
+  .option('crud [model_name]', 'Create Crud', generate_crud)
+  //.option('crud [model_name]', 'Create Crud', generate_controller)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -325,7 +325,7 @@ function generate_crud2(model) {
 				// `data` is the decoded response, after it's been gunzipped or inflated 
 				// (if applicable) 
 				//console.log('\ngot the response: \n' + data)
-				console.log('Finish Data length: ', data.length)
+				//console.log('Finish Data length: ', data.length)
 				create_crud(model, data)
 				
 			}))
@@ -339,15 +339,29 @@ function generate_crud2(model) {
 }
 
 function create_crud(model, data) {	
-	var ini = data.indexOf('/******* CRUD *******/')
-	ini += 20
+	/** Routes **/
+	var end = data.indexOf('/******* Controller *******/')
 	
-	/*fs.writeFile('./views/'+model+'/list_new.ejs', data.toString().substr(ini), function (err) {
-		if (err) console.log(err);
-		console.log('Created file ./views/'+model+'/list_new.ejs')
-		set_user_points(model, data.toString().substr(ini))
-	})*/
-	set_user_points(model, data.toString().substr(ini))
+	//console.log('Routes: ', data.toString().substr(0,end-1))
+	/** Controller **/
+	var ini = end+28
+	end = data.indexOf('/******* Language *******/')
+	var len = end - ini  
+	
+	//console.log('New Controller: ', data.toString().substr(ini,len))
+	generate_controller(model, data.toString().substr(ini,len))
+	/** Language **/
+	ini = end+26
+	end = data.indexOf('/******* CRUD *******/')
+	len = end - ini - 3
+
+	//console.log('Language: ', data.toString().substr(ini,len))
+	// Update Language
+	
+	/** Crud: List.ejs **/
+	ini = end+20
+	//set_user_points(model, data.toString().substr(ini))
+	//require('fs').writeFileSync('crud.js', data.toString().substr(ini))
 }
 
 function set_user_points(model, new_list){
@@ -600,39 +614,76 @@ function set_user_points(model, new_list){
 		if (err) console.log(err);
 		console.log('Created file ./views/'+model+'/list.ejs')
 	})
-	generate_controller(model)
 }
 
-function generate_controller(model) {
+function generate_controller(model, new_controller) {
 	var fs = require('fs')
 	
 	var controller = fs.readFileSync('./api/controllers/'+model+'Controller.js', 'utf8')
 	
+	/** Remove Controller 'list' Function **/
 	var regex = /\s*\t*list\s*:\s*function\s*\([^{]*{/
 
 	var matches = controller.match(regex)
 	
-	var continueFor = true
-	var cont = 1
-	var len = 0
-	for (i=matches['index']+matches[0].length; continueFor; i++)
+	if (matches)
 	{
-		len++
-		if (controller.substr(i,1) == '{' )
-			cont++
-		if (controller.substr(i,1) == '}' )
-			cont--
-		if (cont == 0) continueFor = false
-	}
-	console.log('cont:'+cont+' len: '+len,'\nfunction ->', controller.substr(matches['index'],matches[0].length+len))
+		var continueFor = true
+		var cont = 1
+		var len = 0
+		for (i=matches['index']+matches[0].length; continueFor; i++)
+		{
+			len++
+			if (controller.substr(i,1) == '{' )
+				cont++
+			if (controller.substr(i,1) == '}' )
+				cont--
+			if (cont == 0) 
+			{
+				continueFor = false
+				if (controller.substr(i+1,1) == ',')
+					len++
+			}
+		}
+		/** Remove Existing 'list' Function **/
+		//console.log('Controller before change: \n', controller)
+		controller = controller.substr(0, matches['index']+1) + controller.substr(matches['index']+matches[0].length+len)
+		//console.log('Controller after change: \n', controller)
+		//console.log('List function exist ->', controller.substr(matches['index'],matches[0].length+len))
 		
-	/*if (!match)
-	{
-		//** Add List Function
-		return 
 	}
-	// Replace Existing Function 
-	ini = match.index*/
+	/** Remove Controller 'exist' Function **/
+	regex = /\s*\t*exist\s*:\s*function\s*\([^{]*{/
+
+	matches = controller.match(regex)
+	
+	if (matches)
+	{
+		var continueFor = true
+		var cont = 1
+		var len = 0
+		for (i=matches['index']+matches[0].length; continueFor; i++)
+		{
+			len++
+			if (controller.substr(i,1) == '{' )
+				cont++
+			if (controller.substr(i,1) == '}' )
+				cont--
+			if (cont == 0) 
+			{
+				continueFor = false
+				if (controller.substr(i+1,1) == ',')
+					len++
+			}
+		}
+		/** Remove Existing 'exist' Function **/
+		//console.log('Controller before change: \n', controller)
+		controller = controller.substr(0, matches['index']+1) + controller.substr(matches['index']+matches[0].length+len)
+		//console.log('Controller after change: \n', controller)
+		//console.log('List function exist ->', controller.substr(matches['index'],matches[0].length+len))
+	}
+	/** Add Generated new Functions **/
+	
 }
 
 

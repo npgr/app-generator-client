@@ -90,6 +90,7 @@ Fix:
 	- remove unused fonts from figlet (aprox 3MB) (ready)
 	/** AQUI **/
 	- generate crud (doing)
+	- validate all user points  / validate replacement of controller
 	- compress crud response
 	- handle templates in memory
 	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
