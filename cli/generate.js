@@ -29,7 +29,15 @@ if (program.app)
 {	
 	create_app(program.app)
 }
-	
+
+process.on('exit', function () {
+	if (program.crud)
+	{
+		console.log (colors.cyan('\n *** CRUD CREATED !!!'))
+		console.log (colors.cyan('\n Browse http://ServerName:port/'+model_name+'/list'))
+	}
+})
+
 /** Functions **/
 function set_app() {
 	var ask = false
@@ -276,6 +284,7 @@ function create_app2(app_name) {
 }
 
 function generate_crud(model) {
+	model_name = model
 	var figlet = require('figlet')
 	console.log()
 	figlet('{ Generate Crud }', function(err, data) {
@@ -338,24 +347,31 @@ function generate_crud2(model) {
 }
 
 function create_crud(model, data) {	
-	/** Routes **/
+	   /***** Routes *****/
 	var end = data.indexOf('/******* Controller *******/')
-	//console.log('Routes: ', data.toString().substr(0,end-1))
-	//generate_routes(data.toString().substr(0,end-1))
-	/** Controller **/
+	console.log('Routes: ', data.toString().substr(0,end-1))
+	generate_routes(data.toString().substr(0,end-1))
+	   /***** Controller *****/
 	var ini = end+28
 	end = data.indexOf('/******* Language *******/')
-	var len = end - ini  
-	//generate_controller(model, data.toString().substr(ini,len))
-	/** Language **/
+	var len = end - ini 
+	generate_controller(model, data.toString().substr(ini,len))
+	   /***** Language *****/
 	ini = end+26
 	end = data.indexOf('/******* CRUD *******/')
 	len = end - ini - 3
 	//console.log('Language: ', data.toString().substr(ini,len))
 	generate_language(data.toString().substr(ini,len))
-	/** Crud: List.ejs **/
+	   /***** Crud: List.ejs *****/
 	ini = end+20
-	//set_user_points(model, data.toString().substr(ini))
+	set_user_points(model, data.toString().substr(ini))
+}
+
+function generate_routes(data) {
+	console.log(colors.green('\n> Routes'))
+	//var new_routes = JSON.parse(data)
+	
+	//console.log('-> New Routes: ', new_routes)
 }
 
 function set_user_points(model, new_list){
@@ -604,7 +620,8 @@ function set_user_points(model, new_list){
 	
 	fs.writeFile('./views/'+model+'/list.ejs', new_list, function (err) {
 		if (err) console.log(err);
-		console.log('Created file ./views/'+model+'/list.ejs')
+		console.log(colors.green('\n> Crud\n'))
+		console.log('-> File ./views/'+model+'/list.ejs Created\n')
 	})
 }
 
@@ -676,15 +693,23 @@ function generate_controller(model, new_controller) {
 	if (controller.indexOf('function') > 1)
 		new_controller += ',\n'
 	regex = /module.exports\s*\t*=\s*\t*{\s*\t*\n/
-	
 	matches = controller.match(regex)
-	var pos = matches['index']+matches[0].length
-	controller = controller.substr(0,pos-1) + new_controller + controller.substr(pos)
-	//console.log('new_controller:\n', controller)
-	fs.writeFile('./api/controllers/'+model+'Controller.js', controller, function(err) {
-		if (err) console.log(err);
-		console.log('Updated File ./api/controllers/'+model+'Controller.js')
-	})
+	//console.log('New Controller: ', controller)
+	if (matches)
+	{
+		var pos = matches['index']+matches[0].length
+		controller = controller.substr(0,pos-1) + new_controller + controller.substr(pos)
+		//console.log('new_controller:\n', controller)
+		fs.writeFile('./api/controllers/'+model+'Controller.js', controller, function(err) {
+			if (err) console.log(err);
+			console.log(colors.green('\n> Controller\n'))
+			console.log('-> File ./api/controllers/'+model+'Controller.js Updated')
+		})
+	} else
+	{
+		console.log(colors.green('\n> Controller\n'))
+		console.log('-> Error Procesing File ./api/controllers/'+model+'Controller.js')
+	}
 }
 
 function generate_routes(new_routes) {
@@ -698,10 +723,12 @@ function generate_language(new_words) {
 	fs.readdir('./config/locales', function (err, files) { 
 		if (!err) 
 		{
-			console.log('words: ', words)
-			console.log('keys: ', keys)
+			console.log(colors.green('\n> Languages'))
+			console.log('\n-> New Words: '+ keys)
+			console.log('\n-> You Must include the translation in files ./config/locales/*.json')
 			files.forEach(function(file) {
-				updateLanguage(file, keys, words)
+				if (file.indexOf('.json') > 0)
+					updateLanguage(file, keys, words)
 			})
 		}
 		else
@@ -710,20 +737,17 @@ function generate_language(new_words) {
 }
 
 function updateLanguage(file, keys, words) {
-	//console.log('file: ', file)
-	if (file.indexOf('.json') > 0)
-	{
-		fs.readFile('./config/locales/'+file, function(err, data) {
+	fs.readFile('./config/locales/'+file, function(err, data) {
+		if (err) throw err
+		var obj = JSON.parse(data)
+		keys.forEach(function(key) {
+			if (!obj[key]) obj[key]= words[key]
+		})
+		var new_data = JSON.stringify(obj, null, '\t')
+		fs.writeFile('./config/locales/'+file, new_data, function(err) {
 			if (err) throw err
-			var obj = JSON.parse(data)
-			keys.forEach(function(key) {
-				if (!obj[key]) obj[key]= words[key]
-			})
-			var new_data = obj.stringify(obj)
-			fs.writeFile('./config/locales/'+file, function(err) {
-				if (err) throw err
-				console.log('file ./config/locales/'+file' updated')
-			})
-		}) 
-	}
+			console.log(colors.green('\n> Languages\n'))
+			console.log('-> File ./config/locales/'+file+' Updated')
+		})
+	})
 }
