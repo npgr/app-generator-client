@@ -8,9 +8,8 @@ var program = require('commander');
  
 program
   .version('0.1.0')
-  .option('app [app_name]', 'Create Application') //, create_app)
+  .option('app [app_name]', 'Create Application')
   .option('crud [model_name]', 'Create Crud', generate_crud)
-  //.option('crud [model_name]', 'Create Crud', generate_controller)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -24,6 +23,8 @@ program
 
 /** Main **/  
 var colors = require("cli-color");
+var fs = require('fs');
+
 if (program.app)
 {	
 	create_app(program.app)
@@ -213,7 +214,6 @@ function create_app(app_name) {
 function create_app2(app_name) {	
 	var tar = require('tar-fs')
 	var readline = require('readline');
-	var fs = require('fs')
 	
 	console.log(colors.green('\n Generating App: '+program.app))
 	/** First time extract webserver.tar.gz **/
@@ -300,7 +300,6 @@ function generate_crud2(model) {
 		//console.log('model: ', jsondat)
 		
 		var get = require('simple-get')
-		var fs = require('fs')
 		var crud_data = ''
  
 		var opts = {
@@ -341,32 +340,25 @@ function generate_crud2(model) {
 function create_crud(model, data) {	
 	/** Routes **/
 	var end = data.indexOf('/******* Controller *******/')
-	
 	//console.log('Routes: ', data.toString().substr(0,end-1))
+	//generate_routes(data.toString().substr(0,end-1))
 	/** Controller **/
 	var ini = end+28
 	end = data.indexOf('/******* Language *******/')
 	var len = end - ini  
-	
-	//console.log('New Controller: ', data.toString().substr(ini,len))
-	generate_controller(model, data.toString().substr(ini,len))
+	//generate_controller(model, data.toString().substr(ini,len))
 	/** Language **/
 	ini = end+26
 	end = data.indexOf('/******* CRUD *******/')
 	len = end - ini - 3
-
 	//console.log('Language: ', data.toString().substr(ini,len))
-	// Update Language
-	
+	generate_language(data.toString().substr(ini,len))
 	/** Crud: List.ejs **/
 	ini = end+20
 	//set_user_points(model, data.toString().substr(ini))
-	//require('fs').writeFileSync('crud.js', data.toString().substr(ini))
 }
 
 function set_user_points(model, new_list){
-	var fs = require('fs')
-	
 	user_point = {
 		'user_menu': '<!-- USER POINT - User Menu -->\n'+
 						'<!-- END USER POINT - User Menu -->',
@@ -617,8 +609,6 @@ function set_user_points(model, new_list){
 }
 
 function generate_controller(model, new_controller) {
-	var fs = require('fs')
-	
 	var controller = fs.readFileSync('./api/controllers/'+model+'Controller.js', 'utf8')
 	
 	/** Remove Controller 'list' Function **/
@@ -683,7 +673,57 @@ function generate_controller(model, new_controller) {
 		//console.log('List function exist ->', controller.substr(matches['index'],matches[0].length+len))
 	}
 	/** Add Generated new Functions **/
+	if (controller.indexOf('function') > 1)
+		new_controller += ',\n'
+	regex = /module.exports\s*\t*=\s*\t*{\s*\t*\n/
 	
+	matches = controller.match(regex)
+	var pos = matches['index']+matches[0].length
+	controller = controller.substr(0,pos-1) + new_controller + controller.substr(pos)
+	//console.log('new_controller:\n', controller)
+	fs.writeFile('./api/controllers/'+model+'Controller.js', controller, function(err) {
+		if (err) console.log(err);
+		console.log('Updated File ./api/controllers/'+model+'Controller.js')
+	})
 }
 
+function generate_routes(new_routes) {
+	var controller = fs.readFileSync('./config/routes.js', 'utf8')
+}
 
+function generate_language(new_words) {
+	var words = JSON.parse(new_words)
+	var keys = Object.keys(words)
+	
+	fs.readdir('./config/locales', function (err, files) { 
+		if (!err) 
+		{
+			console.log('words: ', words)
+			console.log('keys: ', keys)
+			files.forEach(function(file) {
+				updateLanguage(file, keys, words)
+			})
+		}
+		else
+			throw err; 
+	});
+}
+
+function updateLanguage(file, keys, words) {
+	//console.log('file: ', file)
+	if (file.indexOf('.json') > 0)
+	{
+		fs.readFile('./config/locales/'+file, function(err, data) {
+			if (err) throw err
+			var obj = JSON.parse(data)
+			keys.forEach(function(key) {
+				if (!obj[key]) obj[key]= words[key]
+			})
+			var new_data = obj.stringify(obj)
+			fs.writeFile('./config/locales/'+file, function(err) {
+				if (err) throw err
+				console.log('file ./config/locales/'+file' updated')
+			})
+		}) 
+	}
+}
