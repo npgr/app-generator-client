@@ -349,7 +349,7 @@ function generate_crud2(model) {
 function create_crud(model, data) {	
 	   /***** Routes *****/
 	var end = data.indexOf('/******* Controller *******/')
-	console.log('Routes: ', data.toString().substr(0,end-1))
+	//console.log('Routes: ', data.toString().substr(0,end-1))
 	generate_routes(data.toString().substr(0,end-1))
 	   /***** Controller *****/
 	var ini = end+28
@@ -359,7 +359,7 @@ function create_crud(model, data) {
 	   /***** Language *****/
 	ini = end+26
 	end = data.indexOf('/******* CRUD *******/')
-	len = end - ini - 3
+	len = end - ini - 2
 	//console.log('Language: ', data.toString().substr(ini,len))
 	generate_language(data.toString().substr(ini,len))
 	   /***** Crud: List.ejs *****/
@@ -368,8 +368,23 @@ function create_crud(model, data) {
 }
 
 function generate_routes(data) {
-	console.log(colors.green('\n> Routes'))
-	//var new_routes = JSON.parse(data)
+	var routes = fs.readFileSync('./config/routes.js', 'utf8')
+	console.log(colors.green('\n> Routes\n'))
+	var new_routes = JSON.parse(data)
+	var keys = Object.keys(new_routes)
+	var pos = 0
+	keys.forEach(function(key) {
+		var item = '"'+key+'"'
+		if (routes.indexOf(item) == -1)
+		{
+			pos = routes.lastIndexOf('"')
+			routes = routes.substr(0, pos) +',\n  '+ item +': "'+new_routes[key]+'"'+routes.substr(pos+1) 
+			//console.log('New Routes: \n'+routes)
+			console.log('-> Route: '+item+' included')
+		}
+		 else
+			 console.log('-> Route: '+item+' already exist')
+	})
 	
 	//console.log('-> New Routes: ', new_routes)
 }
@@ -710,10 +725,6 @@ function generate_controller(model, new_controller) {
 		console.log(colors.green('\n> Controller\n'))
 		console.log('-> Error Procesing File ./api/controllers/'+model+'Controller.js')
 	}
-}
-
-function generate_routes(new_routes) {
-	var controller = fs.readFileSync('./config/routes.js', 'utf8')
 }
 
 function generate_language(new_words) {
