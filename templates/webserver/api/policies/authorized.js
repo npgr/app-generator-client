@@ -38,7 +38,7 @@ module.exports = function(req, res, next) {
 	
 	var bypass = false
 	if(req.headers.my_key)
-		if (req.headers.my_key == 'abc') bypass = true
+		if (req.headers.my_key == sails.config.appConfig.CLIENT_KEY) bypass = true
 	//console.log('headers: ', req.headers)
 	if (!req.session.user && req.route.path != '/login' && req.route.path != '/validateLogin' && !bypass &&
 		req.route.path != '/db/import'){
@@ -82,9 +82,8 @@ module.exports = function(req, res, next) {
 				return next()
 			}
 		})*/
-		
 		var resource = _.find(req.session.resources, { 'path': path, 'method': req.method.toLowerCase() })
-		if (resource)
+		if (resource || req.session.aut_all)
 		{
 			req.options.resource = resource
 			console.log(colors.green(time + req.method+' '+req.originalUrl+' Authorized for user '+req.session.user))

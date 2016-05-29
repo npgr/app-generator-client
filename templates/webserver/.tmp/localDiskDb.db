@@ -33,6 +33,14 @@
         "createdAt": "2016-05-18T20:37:29.781Z",
         "updatedAt": "2016-05-18T20:37:29.781Z",
         "id": 3
+      },
+      {
+        "item": "ROLES_AUT_ALL",
+        "description": "Roles that have Aut for all resources",
+        "value": "Admin, Other",
+        "createdAt": "2016-05-29T20:57:39.080Z",
+        "updatedAt": "2016-05-29T20:57:39.080Z",
+        "id": 4
       }
     ],
     "language": [],
@@ -870,7 +878,7 @@
       "id": 3
     },
     "config": {
-      "id": 3
+      "id": 4
     }
   }
 }

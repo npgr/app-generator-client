@@ -107,6 +107,15 @@ module.exports = {
 						req.session.email = data.email
 						req.session.languagePreference = data.language 
 						
+						if (sails.config.appConfig.ROLES_AUT_ALL)
+						{
+						  var aut_roles = sails.config.appConfig.ROLES_AUT_ALL.split(',')
+						  req.session.aut_all = false
+						  aut_roles.forEach(function (rol) {
+							if (req.session.profile == rol)
+								req.session.aut_all = true
+						  })
+						}
 						/*Resource.find({id: data.profile.firstpage})
 						  .exec(function(err, data2) {
 							var firstpage = 'App/list'

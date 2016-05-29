@@ -89,6 +89,9 @@ Fix:
 	- MAINTAIN A CLI GENERATOR (encrypted)
 	- remove unused fonts from figlet (aprox 3MB) (ready)
 	/** AQUI **/
+	- Give authorizacion to new crud or authorize all to admin role
+	- ROLES_ALL_AUT config values
+	- simplify authorization over resources
 	- generate crud (doing)
 	- validate all user points  / validate replacement of controller
 	- compress crud response

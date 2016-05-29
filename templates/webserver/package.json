@@ -5,7 +5,7 @@
   "description": "#ap_des",
   "keywords": [],
   "dependencies": {
-    "cli-color": "^1.1.2",
+    "cli-color": "^1.1.0",
     "data2xml": "^1.2.2",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",
