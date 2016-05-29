@@ -112,7 +112,7 @@ module.exports = {
 						  var aut_roles = sails.config.appConfig.ROLES_AUT_ALL.split(',')
 						  req.session.aut_all = false
 						  aut_roles.forEach(function (rol) {
-							if (req.session.profile == rol)
+							if (req.session.profile.name == rol.trim())
 								req.session.aut_all = true
 						  })
 						}
