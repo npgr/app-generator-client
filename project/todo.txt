@@ -91,16 +91,22 @@ Fix:
 	- Give authorizacion to new crud or authorize all to admin role (ready)
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
+	- cli server on cloud, validate licence
+	- cli-server get stadistics
+	- validate generate with data maestra
+	- generate crud (doing)
+	- DB options (Postgres -> Docker, etc) (ask for)
+	- cli migrate ¿? (replace import - export)
+	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
+	- Remove admin Password from generate cli
+	- change profile (name) by role
 	- //End Attributes directive on model
 	- simplify authorization over resources
-	- generate crud (doing)
 	- validate all user points  / validate replacement of controller
 	- compress crud response
 	- handle templates in memory
-	- cli generate app: set admin password, session key, hmac_keys, title, port, etc (remains pwd & hmac)
 	- on generate app -> complete messages, finish with help (include ascii art)
 	- session data in redis
-	- DB options (Postgres -> Docker, etc) (ask for)
 	- install sails globally -> this reduce node_modules (ask for)
 	- redirect from / to /login (ready)
 	- error o progress bar (partial)
