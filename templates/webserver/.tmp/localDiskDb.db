@@ -43,7 +43,6 @@
         "id": 4
       }
     ],
-    "language": [],
     "profile": [
       {
         "name": "Admin",
@@ -639,36 +638,6 @@
         "type": "datetime"
       }
     },
-    "language": {
-      "id": {
-        "type": "integer",
-        "primaryKey": true,
-        "unique": true,
-        "autoIncrement": true
-      },
-      "language": {
-        "type": "string",
-        "enum": [
-          "en",
-          "es",
-          "pt",
-          "fr",
-          "de"
-        ]
-      },
-      "word": {
-        "type": "string"
-      },
-      "translate": {
-        "type": "string"
-      },
-      "createdAt": {
-        "type": "datetime"
-      },
-      "updatedAt": {
-        "type": "datetime"
-      }
-    },
     "profile": {
       "id": {
         "type": "integer",
@@ -843,19 +812,6 @@
     }
   },
   "counters": {
-    "model": {
-      "id": 2
-    },
-    "attribute": {
-      "id": 1
-    },
-    "modelfunction": {
-      "id": 2
-    },
-    "functionattribute": {
-      "id": 1
-    },
-    "language": {},
     "user": {
       "id": 9
     },
@@ -870,12 +826,6 @@
     },
     "account": {
       "id": 4
-    },
-    "functionlist": {
-      "id": 2
-    },
-    "app": {
-      "id": 3
     },
     "config": {
       "id": 4

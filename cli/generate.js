@@ -236,7 +236,7 @@ function create_app2(app_name) {
 		sh.cd(cwd)
 	}
 	var extract = tar.extract('./'+app_name)
-	var bar = {count: 0, total: 17010, size:0}
+	var bar = {count: 0, total: 19305, size:0}
 	
 	extract.on('entry', function(header, stream, callback) {
 		bar.count ++

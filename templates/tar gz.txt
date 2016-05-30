@@ -1,0 +1,7 @@
+# Webserver template
+
+rm -r .tmp/public
+
+tar -cvf webserver.tar .tmp .gitignore .sailsrc *
+
+gzip --best webserver.tar
