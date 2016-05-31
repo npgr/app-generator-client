@@ -92,6 +92,8 @@ Fix:
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
 	- cli server on cloud (doing)
+	- Error generating controller, when exist list function: one \n of more (de más)
+	- validate active User
 	- Do not Ask for Admin Password in App Generator
 	- validate licence
 	- cli-server get stadistics

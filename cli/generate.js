@@ -706,7 +706,10 @@ function generate_controller(model, new_controller) {
 	}
 	/** Add Generated new Functions **/
 	if (controller.indexOf('function') > 1)
+	{
+		new_controller = new_controller.substring(0, new_controller.length - 1);
 		new_controller += ',\n'
+	}
 	regex = /module.exports\s*\t*=\s*\t*{\s*\t*\n/
 	matches = controller.match(regex)
 	//console.log('New Controller: ', controller)
