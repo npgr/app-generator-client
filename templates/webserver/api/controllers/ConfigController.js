@@ -5,13 +5,26 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
-	list : function (req, res) {
-		res.locals.resources = req.session.resources
-		res.locals.user = {id: req.session.userid, user: req.session.user, name: req.session.username, email: req.session.email, language: req.session.languagePreference}
-		res.locals.data = []
-		res.view("Config/list")
+module.exports = {
+	exist: function(req, res, next) {
+		var id = req.param("id")
+		 Config.findOne(id)
+			.exec(function(err, data) {
+				if(err) res.json({ "exist": "error"})
+				  else if (!data) res.json({ "exist": false})
+					else res.json({ "exist": true})
+			})
 	},
+	list : function (req, res) {
+		//Config.find()
+		//	.exec(function(err, data){
+				res.locals.resources = req.session.resources
+				res.locals.user = {id: req.session.userid, user: req.session.user, name: req.session.username, email: req.session.email, language: req.session.languagePreference}
+		//		res.locals.data = JSON.stringify(data)
+				res.locals.data = []
+				res.view("Config/list")
+		//	})
+	},
 	export : function(req, res) {
 		Config.find()
 		 .exec(function(err, configs) {

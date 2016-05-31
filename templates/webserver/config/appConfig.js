@@ -14,6 +14,8 @@ module.exports.appConfig = {
 	
 	BROWSER: true,
 	
-	CLIENT_KEY: ''
-
+	CLIENT_KEY: '',
+	
+	/** Pages that do not need login **/
+	PAGES_WITHOUT_LOGIN: '/signup, other' // /db/import, /db/export
 };

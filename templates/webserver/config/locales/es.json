@@ -1,76 +1,78 @@
 {
-  "List %s": "Listar",
-  "List": "Listar",
-  "Create": "Crear",
-  "Display": "Consultar",
-  "Delete": "Borrar",
-  "Edit": "Editar",
-  "Equal to": "Igual a",
-  "Different to": "Diferente a",
-  "Greater or Equal to": "Mayor o igual a",
-  "Less or Equal to": "Menor o igual a",
-  "Contains": "Contiene",
-  "Find": "Buscar",
-  "Columns": "Columnas",
-  "Change %s": "Cambiar %s",
-  "Change ": "Cambiar",
-  "Exit": "Salir",
-  "Repeat": "Repetir",
-  "Record already Exist": "Registro ya Existe",
-  "Error Processing Request: ": "Error Procesando Solicitud: ",
-  "Record Deleted": "Registro Borrado",
-  "Record Updated": "Registro Actualizado",
-  "Record Created": "Registro Creado",
-  "Columns": "Columnas",
-  "Show": "Visible",
-  "Hide": "Oculto",
-  "Username": "Usuario",
-  "Password": "Contraseña",
-  "Username or Password incorrect": "Usuario o Contraseña incorrectos"
-  ,"User": "Usuario"
-  ,"Users": "Usuarios"
-  ,"Account": "Cuenta"
-  ,"Profile": "Perfil"
-  ,"Resource": "Recurso"
-  ,"Method": "Metodo"
-  ,"ProfileResource": "Recurso Perfil"
-  ,"Require Aut": "Requiere Aut"
-  ,"Name": "Nombre"
-  ,"email": "Correo"
-  ,"Photo": "Foto"
-  ,"Id": "Id"
-  ,"Type": "Tipo"
-  ,"Change": "Cambio"
-  ,"Status": "Status"
-  ,"January": "Enero"
-  ,"February": "Febrero"
-  ,"March": "Marzo"
-  ,"April": "Abril"
-  ,"May": "Mayo"
-  ,"June": "Junio"
-  ,"July": "Julio"
-  ,"August": "Agosto"
-  ,"September": "Septiembre"
-  ,"October": "Octubre"
-  ,"November": "Noviembre"
-  ,"December": "Diciembre"
-  ,"Exit": "Salir"
-  ,"Next": "Próximo"
-  ,"Previous": "Anterior"
-  ,"Security": "Seguridad"
-  ,"Back": "Previo"
-  ,"Profiles": "Perfiles"
-  ,"Resources": "Recursos"
-  ,"Language": "Idioma"
-  ,"Active": "Activo"
-  ,"Inactive": "Inactivo"
-  ,"Profile Resource": "Recursos Perfil"
-  ,"User Resource": "Recursos Usuario"
-  ,"List Apps": "Listar Apps"
-  ,"Log Out": "Salir"
-  ,"User Not Authorized to this Option": "Usuario no Autorizado a esta Opción"
-  ,"Current Password Incorrect": "Contraseña Incorrecta"
-  ,"Profile Changed, Close Session to Apply Changes": "Usuario Cambiado, Cierre la Sesión para Aplicar Cambios"
-  ,"New Password must be equal to Confirm Password": "El Nuevo Password debe ser igual al Password Confirmado"
-  ,"Password Must have al least %s Characters": "La Contraseña debe tener al menos %s Caracteres"
+	"List %s": "Listar",
+	"List": "Listar",
+	"Create": "Crear",
+	"Display": "Consultar",
+	"Delete": "Borrar",
+	"Edit": "Editar",
+	"Equal to": "Igual a",
+	"Different to": "Diferente a",
+	"Greater or Equal to": "Mayor o igual a",
+	"Less or Equal to": "Menor o igual a",
+	"Contains": "Contiene",
+	"Find": "Buscar",
+	"Columns": "Columnas",
+	"Change %s": "Cambiar %s",
+	"Change ": "Cambiar",
+	"Exit": "Salir",
+	"Repeat": "Repetir",
+	"Record already Exist": "Registro ya Existe",
+	"Error Processing Request: ": "Error Procesando Solicitud: ",
+	"Record Deleted": "Registro Borrado",
+	"Record Updated": "Registro Actualizado",
+	"Record Created": "Registro Creado",
+	"Show": "Visible",
+	"Hide": "Oculto",
+	"Username": "Usuario",
+	"Password": "Contraseña",
+	"Username or Password incorrect": "Usuario o Contraseña incorrectos",
+	"User": "Usuario",
+	"Users": "Usuarios",
+	"Account": "Cuenta",
+	"Profile": "Perfil",
+	"Resource": "Recurso",
+	"Method": "Metodo",
+	"ProfileResource": "Recurso Perfil",
+	"Require Aut": "Requiere Aut",
+	"Name": "Nombre",
+	"email": "Correo",
+	"Photo": "Foto",
+	"Id": "Id",
+	"Type": "Tipo",
+	"Change": "Cambio",
+	"Status": "Status",
+	"January": "Enero",
+	"February": "Febrero",
+	"March": "Marzo",
+	"April": "Abril",
+	"May": "Mayo",
+	"June": "Junio",
+	"July": "Julio",
+	"August": "Agosto",
+	"September": "Septiembre",
+	"October": "Octubre",
+	"November": "Noviembre",
+	"December": "Diciembre",
+	"Next": "Próximo",
+	"Previous": "Anterior",
+	"Security": "Seguridad",
+	"Back": "Previo",
+	"Profiles": "Perfiles",
+	"Resources": "Recursos",
+	"Language": "Idioma",
+	"Active": "Activo",
+	"Inactive": "Inactivo",
+	"Profile Resource": "Recursos Perfil",
+	"User Resource": "Recursos Usuario",
+	"List Apps": "Listar Apps",
+	"Log Out": "Salir",
+	"User Not Authorized to this Option": "Usuario no Autorizado a esta Opción",
+	"Current Password Incorrect": "Contraseña Incorrecta",
+	"Profile Changed, Close Session to Apply Changes": "Usuario Cambiado, Cierre la Sesión para Aplicar Cambios",
+	"New Password must be equal to Confirm Password": "El Nuevo Password debe ser igual al Password Confirmado",
+	"Password Must have al least %s Characters": "La Contraseña debe tener al menos %s Caracteres",
+	"Config": "",
+	"Item": "",
+	"Description": "Descripción",
+	"Value": "Valor"
 }

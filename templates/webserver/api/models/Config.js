@@ -38,6 +38,8 @@ module.exports = {
 	description: {
 		//description: 'Description',
 		type: 'string',
+		//textarea_cols: 40,
+		//textarea_rows: 3,
 		required: true
 	},
 	value: {

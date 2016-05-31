@@ -92,6 +92,8 @@ Fix:
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
 	- cli server on cloud (doing)
+	- ¿ move all appconfig to json file ?
+	- template webserver - generate - appConfig - set HMAC Key (change admin password !!!)
 	- Error generating controller, when exist list function: one \n of more (de más)
 	- validate active User
 	- Do not Ask for Admin Password in App Generator

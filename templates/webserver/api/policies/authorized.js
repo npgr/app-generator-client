@@ -19,7 +19,16 @@ module.exports = function(req, res, next) {
 			return path.substring(0,path.lastIndexOf('/'))
 		return path
 	}
-
+	function page_without_login(page) {
+		var arr = sails.config.appConfig.PAGES_WITHOUT_LOGIN.split(',')
+		
+		var returno = false
+		arr.forEach(function(xpage) {
+			if (page.toLowerCase() == xpage.trim().toLowerCase())
+				returno = true
+		})
+		return returno
+	}
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller
   
@@ -41,7 +50,7 @@ module.exports = function(req, res, next) {
 		if (req.headers.my_key == sails.config.appConfig.CLIENT_KEY) bypass = true
 	//console.log('headers: ', req.headers)
 	if (!req.session.user && req.route.path != '/login' && req.route.path != '/validateLogin' && !bypass &&
-		req.route.path != '/db/import'){
+		!page_without_login(req.route.path)){
 
 		//console.log('Redirecting to login from '+req.route.path)
 		if (sails.config.appConfig.BROWSER != 'false')
@@ -52,7 +61,7 @@ module.exports = function(req, res, next) {
 			
 	
 	if (req.route.path != '/login' && req.route.path != '/validateLogin' && req.route.path != '/signout' && 
-	    req.route.path != '/db/import')
+	    !page_without_login(req.route.path))
 	{
 		//var resource_name = _.result(_.find(req.session.resources, { 'path': req.route.path }), 'name')
 		

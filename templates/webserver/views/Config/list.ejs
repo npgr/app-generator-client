@@ -1,3 +1,4 @@
+*/
 <!-- list template: version 7.23 -->
  <% 
  function lng(word) {
@@ -42,7 +43,7 @@
 	<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
 	<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
 <!-- USER POINT - Include Libraries, Styles & Components -->
-<!-- END USER POINT - Include Libraries, Styles & Components -->
+<!-- END USER POINT - Include Libraries, Styles & Components --> 
 <script>	
 // Redirect to https
   <% if (process.env.HTTPS == 'true') { %>
@@ -111,7 +112,7 @@ paper-menu {
 			</tr>
 			<tr>
 				<td><label class="left_label" for="description"><%= lng('Description')%><strong class="red"> *</strong></label></td>
-				<td><input id="description" type="text" name="description" required></td>
+				<td><textarea id="description" name="description" rows="3" cols="40" required></textarea></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="value"><%= lng('Value')%><strong class="red"> *</strong></label></td>
@@ -235,7 +236,7 @@ paper-menu {
 			</tr>
 			<tr>
 				<td><label class="left_label" for="description"><%= lng('Description')%><strong class="red"> *</strong></label></td>
-				<td><input id="description" type="text" name="description" value="{{item.description}}" required></td>
+				<td><textarea id="description" name="description" rows="3" cols="40" value="{{item.description}}" required></textarea></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="value"><%= lng('Value')%><strong class="red"> *</strong></label></td>
@@ -335,7 +336,7 @@ paper-menu {
 			</tr>
 			<tr>
 				<td><label class="left_label" for="description"><%= lng('Description')%></label></td>
-				<td><input id="description" type="text" name="description" value="{{item.description}}" disabled></td>
+				<td><textarea id="description" name="description" rows="3" cols="40" value="{{item.description}}" disabled></textarea></td>
 			</tr>
 			<tr>
 				<td><label class="left_label" for="value"><%= lng('Value')%></label></td>
@@ -392,7 +393,7 @@ paper-menu {
 			alert("<%= lng('Error Processing Request: ')%>", this.$.ajax.lastError)
 		}
 /** USER POINT - Delete Functions **/
-/** END USER POINT - Delete Functions **/
+/** END USER POINT - Delete Functions **/ 
 	})
 </script>
 </dom-module>
