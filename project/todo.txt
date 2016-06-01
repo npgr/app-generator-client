@@ -92,6 +92,7 @@ Fix:
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
 	- cli server on cloud (doing)
+	- template/webserver help/about in menu (include reference to generator)
 	- ¿ move all appconfig to json file ?
 	- template webserver - generate - appConfig - set HMAC Key (change admin password !!!)
 	- Error generating controller, when exist list function: one \n of more (de más)
