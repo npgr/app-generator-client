@@ -92,6 +92,15 @@ Fix:
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
 	- cli server on cloud (doing)
+		/signup (send confirm email)
+		/confirmSignup (generate token & send email)
+		/generate/crud (validate token)
+		/login (renew token & user statics | Admin - statics)
+			(user)
+			/profile
+			/plan & payments
+			(admin)
+			/statics
 	- template/webserver help/about in menu (include reference to generator)
 	- ¿ move all appconfig to json file ?
 	- template webserver - generate - appConfig - set HMAC Key (change admin password !!!)
