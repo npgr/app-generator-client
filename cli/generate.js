@@ -312,7 +312,8 @@ function generate_crud2(model) {
 		var crud_data = ''
 		var url= 'https://appgen-npgr.rhcloud.com'
 		if (process.env.LOCAL)
-			url= 'http://localhost:8080'
+			//url= 'http://localhost:8080'
+			url= 'http://localhost:3000/generate/crud'
  
 		var opts = {
 			url: url,
@@ -340,7 +341,7 @@ function generate_crud2(model) {
 				create_crud(model, data)
 				
 			}))
-			//res.pipe(fs.createWriteStream('./crud_orig.js'))
+			res.pipe(fs.createWriteStream('./crud_orig.js'))
 			/*res.on('end', function() {
 				console.log('Data received')
 				console.log('data length: ',data.length)	
