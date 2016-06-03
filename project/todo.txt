@@ -102,6 +102,9 @@ Fix:
 			(admin)
 			/statics
 	- template/webserver help/about in menu (include reference to generator)
+	- Improve package.json like crud node module
+	- delete all crud generators after test cli generator
+	- use node cluster like latest node.js cartrige & scale option for openshift app
 	- ¿ move all appconfig to json file ?
 	- template webserver - generate - appConfig - set HMAC Key (change admin password !!!)
 	- Error generating controller, when exist list function: one \n of more (de más)

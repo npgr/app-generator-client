@@ -114,6 +114,7 @@ module.exports = function(req, res, next) {
 	{
 	//if (path == '/App') return res.json({msg: 'not Authorized'})
 		//console.log('authorized - language Preference: ', req.session.languagePreference)
+		console.log(colors.yellow(time + req.method+' '+req.originalUrl+' Not Need Authorization'))
 		if (typeof req.session.languagePreference != 'undefined')
 			req.setLocale(req.session.languagePreference);
 		return next()
