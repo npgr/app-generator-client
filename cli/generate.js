@@ -310,7 +310,7 @@ function generate_crud2(model) {
 		
 		var get = require('simple-get')
 		var crud_data = ''
-		var url= 'https://appgen-npgr.rhcloud.com'
+		var url= 'https://appgen2-npgr.rhcloud.com/generate/crud'
 		if (process.env.LOCAL)
 			//url= 'http://localhost:8080'
 			url= 'http://localhost:3000/generate/crud'
