@@ -313,7 +313,7 @@ function generate_crud2(model) {
 		var url= 'https://appgen2-npgr.rhcloud.com/generate/crud'
 		if (process.env.LOCAL)
 			//url= 'http://localhost:8080'
-			url= 'http://localhost:3000/generate/crud'
+			url= 'http://localhost:8080/generate/crud'
  
 		var opts = {
 			url: url,
@@ -363,7 +363,7 @@ function create_crud(model, data) {
 	   /***** Language *****/
 	ini = end+26
 	end = data.indexOf('/******* CRUD *******/')
-	len = end - ini - 2
+	len = end - ini - 1
 	//console.log('Language: ', data.toString().substr(ini,len))
 	generate_language(data.toString().substr(ini,len))
 	   /***** Crud: List.ejs *****/

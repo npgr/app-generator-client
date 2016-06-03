@@ -101,6 +101,7 @@ Fix:
 			/plan & payments
 			(admin)
 			/statics
+	- secure email
 	- template/webserver help/about in menu (include reference to generator)
 	- Improve package.json like crud node module
 	- delete all crud generators after test cli generator
