@@ -10,6 +10,7 @@ program
   .version('0.1.0')
   .option('app [app_name]', 'Create Application')
   .option('crud [model_name]', 'Create Crud', generate_crud)
+  .option('set [token]', 'Set Token', set_token)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -39,6 +40,14 @@ process.on('exit', function () {
 })
 
 /** Functions **/
+function set_token(token) {
+	var fs = require('fs')
+	
+	var obj = {token: token}
+	
+	fs.writeFileSync(__dirname+'/config.json', JSON.stringify(obj), 'utf-8')
+	console.log('Token Set')
+}
 function set_app() {
 	var ask = false
 	var schema = { properties: {} }
@@ -301,9 +310,18 @@ function generate_crud(model) {
 }
 
 function generate_crud2(model) {
+	var fs = require('fs')
 	var get = require('simple-get')
 	var concat = require('concat-stream')
 	var util = require('./util.js')
+	
+	var data = fs.readFileSync(__dirname+'/config.json','utf-8')
+ 	if (!data) 
+	{
+		console.log('Missing Token')
+		return
+	}
+	var token = JSON.parse(data)
 	
 	util.get_model(model, function(jsondat) {
 		//console.log('model: ', jsondat)
@@ -314,7 +332,8 @@ function generate_crud2(model) {
 		if (process.env.LOCAL)
 			//url= 'http://localhost:8080'
 			url= 'http://localhost:8080/generate/crud'
- 
+			
+		
 		var opts = {
 			url: url,
 			body: 'dato',//JSON.stringify(jsondat),
@@ -341,7 +360,7 @@ function generate_crud2(model) {
 				create_crud(model, data)
 				
 			}))
-			res.pipe(fs.createWriteStream('./crud_orig.js'))
+			//res.pipe(fs.createWriteStream('./crud_orig.js'))
 			/*res.on('end', function() {
 				console.log('Data received')
 				console.log('data length: ',data.length)	

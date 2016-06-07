@@ -92,8 +92,8 @@ Fix:
 	- ROLES_ALL_AUT config values (ready)
 	/** AQUI **/
 	- cli server on cloud (doing)
-		/signup (send confirm email)
-		/confirmSignup (generate token & send email)
+		/signup (send confirm email)   (Finish Email Format - file on globals)
+		/confirmSignup (generate token & send email)  (Finish ConfirmSignup Page)
 		/generate/crud (validate token)
 		/login (renew token & user statics | Admin - statics)
 			(user)
