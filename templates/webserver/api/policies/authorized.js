@@ -43,7 +43,7 @@ module.exports = function(req, res, next) {
 	var min = d.getMinutes(); if (min < 10) min = '0'+min 
 	var seg = d.getSeconds(); if (seg < 10) seg = '0'+seg
 	
-	var time = d.getFullYear() + '/' + d.getMonth()+1 + '/' + d.getDate() + ' ' + d.getHours() + ':' + min + ':' + seg + ' - '
+	var time = d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + min + ':' + seg + ' - '
 	
 	var bypass = false
 	if(req.headers.my_key)
