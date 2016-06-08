@@ -32,7 +32,7 @@ if (program.app)
 }
 
 process.on('exit', function () {
-	if (program.crud)
+	if (program.crud & process.exitCode != 1)
 	{
 		console.log (colors.cyan('\n *** CRUD CREATED !!!'))
 		console.log (colors.cyan('\n Browse http://ServerName:port/'+model_name+'/list'))
@@ -316,12 +316,14 @@ function generate_crud2(model) {
 	var util = require('./util.js')
 	
 	var data = fs.readFileSync(__dirname+'/config.json','utf-8')
- 	if (!data) 
+ 	var obj = JSON.parse(data)
+	
+	if (!obj.token || obj.token == '')
 	{
-		console.log('Missing Token')
-		return
+		console.log(colors.greenBright('\n Warning: You need to create an Account'))
+		console.log(colors.greenBright('          Go to http://appgen2-npgr.rhcloud.com/signup'))
+		process.exit(1)
 	}
-	var token = JSON.parse(data)
 	
 	util.get_model(model, function(jsondat) {
 		//console.log('model: ', jsondat)
@@ -338,7 +340,7 @@ function generate_crud2(model) {
 			url: url,
 			body: 'dato',//JSON.stringify(jsondat),
 			headers: {
-				'key': 'my key',
+				'token': obj.token,
 				'data': JSON.stringify(jsondat),
 				'model': model
 			}
@@ -357,10 +359,16 @@ function generate_crud2(model) {
 				// (if applicable) 
 				//console.log('\ngot the response: \n' + data)
 				//console.log('Finish Data length: ', data.length)
-				create_crud(model, data)
-				
+				console.log('headers: ', res.headers)
+				if (!res.headers['app-msg']) 
+					create_crud(model, data)
+				  else
+				  {
+					console.log('msg: ',res.headers['app-msg'])
+					process.exit(1)
+				  }
 			}))
-			//res.pipe(fs.createWriteStream('./crud_orig.js'))
+			res.pipe(fs.createWriteStream('./crud_orig.js'))
 			/*res.on('end', function() {
 				console.log('Data received')
 				console.log('data length: ',data.length)	
