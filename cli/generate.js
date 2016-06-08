@@ -338,10 +338,11 @@ function generate_crud2(model) {
 		
 		var opts = {
 			url: url,
-			body: 'dato',//JSON.stringify(jsondat),
+			body: JSON.stringify(jsondat),
 			headers: {
+				//'content-type': 'text/plain; charset=utf-8',
 				'token': obj.token,
-				'data': JSON.stringify(jsondat),
+				//'data': JSON.stringify(jsondat),
 				'model': model
 			}
 		}
@@ -359,7 +360,7 @@ function generate_crud2(model) {
 				// (if applicable) 
 				//console.log('\ngot the response: \n' + data)
 				//console.log('Finish Data length: ', data.length)
-				console.log('headers: ', res.headers)
+				//console.log('headers: ', res.headers)
 				if (!res.headers['app-msg']) 
 					create_crud(model, data)
 				  else
@@ -368,7 +369,7 @@ function generate_crud2(model) {
 					process.exit(1)
 				  }
 			}))
-			res.pipe(fs.createWriteStream('./crud_orig.js'))
+			//res.pipe(fs.createWriteStream('./crud_orig.js'))
 			/*res.on('end', function() {
 				console.log('Data received')
 				console.log('data length: ',data.length)	
