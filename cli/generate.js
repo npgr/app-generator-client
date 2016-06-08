@@ -10,6 +10,7 @@ program
   .version('0.1.0')
   .option('app [app_name]', 'Create Application')
   .option('crud [model_name]', 'Create Crud', generate_crud)
+  .option('set2', 'Set Token', set_account)
   .option('set [token]', 'Set Token', set_token)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
@@ -40,6 +41,22 @@ process.on('exit', function () {
 })
 
 /** Functions **/
+function set_account() {
+	const readline = require('readline');
+	
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	});
+
+	rl.question('E-mail ? ', function(answer) {
+		// TODO: Log the answer in a database
+		console.log('Your E-mail is', answer);
+
+		rl.close();
+	});
+}
+
 function set_token(token) {
 	var fs = require('fs')
 	
