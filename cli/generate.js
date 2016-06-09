@@ -5,10 +5,13 @@
  */
  
 var program = require('commander');
+var colors = require("cli-color");
+var fs = require('fs');
  
 program
   .version('0.1.0')
-  .option('app [app_name]', 'Create Application')
+  .option('app [app_name]', 'Create Application', create_app)
+  //.option('app [app_name]', 'Create Application', set_app)
   .option('crud [model_name]', 'Create Crud', generate_crud)
   .option('set2', 'Set Token', set_account)
   .option('set [token]', 'Set Token', set_token)
@@ -19,18 +22,14 @@ program
   .option('--repo [repo]', 'Url Source Repository')
   .option('--aut [author]', 'App Author')
   .option('--lic [license]', 'App type of License')
-  .option('--pwd [pwd]', 'Admin Password')
+  //.option('--pwd [pwd]', 'Admin Password')
   
   .parse(process.argv);
 
-/** Main **/  
-var colors = require("cli-color");
-var fs = require('fs');
-
-if (program.app)
+/*if (program.app)
 {	
 	create_app(program.app)
-}
+}*/
 
 process.on('exit', function () {
 	if (program.crud & process.exitCode != 1)
@@ -86,8 +85,10 @@ function set_token(token) {
 function set_app() {
 	var ask = false
 	var schema = { properties: {} }
+	var prueba = 'Esto es una prueba'
+	console.log(colors.yellow('> ')+colors.green('prueba: '), colors.cyan(prueba))
 	if (program.title)
-		console.log(colors.green('> title: '), colors.cyan(program.title))
+		console.log(colors.yellow('> ')+colors.green('title: '), colors.cyan(program.title))
 	else {
 		ask = true
 		schema.properties.title = { 
@@ -98,7 +99,7 @@ function set_app() {
 		}
 	}
 	if (program.desc)
-		console.log(colors.green('> App Description: '), colors.cyan(program.desc))
+		console.log(colors.yellow('> ')+colors.green('App Description: '), colors.cyan(program.desc))
 	else {
 		ask = true
 		schema.properties.desc = { 
@@ -107,7 +108,7 @@ function set_app() {
 		}
 	}
 	if (program.port)
-		console.log(colors.green('> App Description: '), colors.cyan(program.desc))
+		console.log(colors.yellow('> ')+colors.green('App Description: '), colors.cyan(program.desc))
 	else {
 		ask = true
 		schema.properties.port = { 
@@ -119,7 +120,7 @@ function set_app() {
 		}
 	}
 	if (program.ver)
-		console.log(colors.green('> App Version: '), colors.cyan(program.ver))
+		console.log(colors.yellow('> ')+colors.green('App Version: '), colors.cyan(program.ver))
 	else {
 		ask = true
 		schema.properties.ver = { 
@@ -130,7 +131,7 @@ function set_app() {
 		}
 	}
 	if (program.repo)
-		console.log(colors.green('> Url Source Repository: '), colors.cyan(program.repo))
+		console.log(colors.yellow('> ')+colors.green('Url Source Repository: '), colors.cyan(program.repo))
 	else {
 		ask = true
 		schema.properties.repo = { 
@@ -139,7 +140,7 @@ function set_app() {
 		}
 	}
 	if (program.aut)
-		console.log(colors.green('> Author: '), colors.cyan(program.aut))
+		console.log(colors.yellow('> ')+colors.green('Author: '), colors.cyan(program.aut))
 	else {
 		ask = true
 		schema.properties.aut = { 
@@ -148,7 +149,7 @@ function set_app() {
 		}
 	}
 	if (program.lic)
-		console.log(colors.green('> License: '), colors.cyan(program.lic))
+		console.log(colors.yellow('> ')+colors.green('License: '), colors.cyan(program.lic))
 	else {
 		ask = true
 		schema.properties.lic = { 
@@ -156,7 +157,7 @@ function set_app() {
 			type: 'string'
 		}
 	}
-	if (program.pwd)
+	/*if (program.pwd)
 		console.log(colors.green('> Admin Password: '), colors.cyan(program.pwd))
 	else {
 		ask = true
@@ -184,19 +185,19 @@ function set_app() {
 				return true
 			}
 		}
-	}
+	}*/
 	if (ask)
 	{
 		console.log(colors.green('\n\n Configure App\n'))
 		var prompt = require('prompt')
-		prompt.message = colors.green('> ')
+		prompt.message = colors.yellow('> ')
 		prompt.delimiter = ''
 		prompt.colors = false
-		
+
 		prompt.start()
 		prompt.get(schema, function(err, result) {
-			if (result.pwd != result.pwd2)
-				result.pwd = 'admin'
+			//if (result.pwd != result.pwd2)
+				//result.pwd = 'admin'
 			//console.log('result: ', result)
 			Object.assign(program, result)
 			//console.log('program: ', program)
@@ -232,16 +233,16 @@ function config_app() {
 	/** Missing set hmac keys & admin password **/
 	console.log(colors.green('\n App Configured !!!'))
 	console.log(colors.green('\n Getting Started: '))
-	console.log('\n   1) cd '+program.app)
-	console.log('\n   2) Start App, options:')
-	console.log('\n      2.1) bash start.sh (it Runs App with PM2), Or')
-	console.log('\n      2.2) PORT=<port Number> node app')
-	console.log('\n   3) browse Url http://localhost:'+program.port)
-	console.log('\n   4) login => User: Admin; Password: Configured Value')
-	console.log('\n   -> View Running Process (if running on PM2) -> npm run list')
-	console.log('\n   -> View Logs (if running on PM2) -> npm run logs')
-	console.log('\n   -> Stop App (if running on PM2) -> npm stop')
-	console.log('\n      Read Documentation: http://')
+	console.log(colors.yellow('\n   1)')+' cd '+program.app)
+	console.log(colors.yellow('\n   2)')+' Start App, options:')
+	console.log(colors.yellow('\n    2.1)')+' bash start.sh (it Runs App with PM2), Or')
+	console.log(colors.yellow('\n    2.2)')+' PORT=<port Number> node app')
+	console.log(colors.yellow('\n   3)')+' browse Url http://localhost:'+program.port)
+	console.log(colors.yellow('\n   4)')+' login => User: Admin; Password: admin')
+	console.log(colors.yellow('\n   ->)')+' View Running Process (if running on PM2) -> npm run list')
+	console.log(colors.yellow('\n   ->)')+' View Logs (if running on PM2) -> npm run logs')
+	console.log(colors.yellow('\n   ->)')+' Stop App (if running on PM2) -> npm stop')
+	console.log(colors.greenBright('\n      Read Documentation: http://'))
 	console.log(colors.cyan('\n       ENJOY YOUR NEW APP !!!'))
 	
 	process.exit()
