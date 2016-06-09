@@ -42,19 +42,37 @@ process.on('exit', function () {
 
 /** Functions **/
 function set_account() {
-	const readline = require('readline');
-	
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout
-	});
+	var colors = require('cli-color')
+	var prompt = require('prompt')
+	prompt.message = colors.yellow('\n> ')
+	prompt.delimiter = ''
+	prompt.colors = false
+		
+	prompt.start()
+	prompt.get([{
+		name: 'email',
+		description: colors.green('E-mail: '),
+		pattern: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+		required: true,
+		message: 'Invalid E-mail'
+		}, {
+		name: 'pwd',
+		description: colors.green('Password: '),
+		required: true,
+		hidden: true,
+		replace: '*',
+		message: 'Invalid E-mail'
+    }], function (err, result) {
+    // 
+    // Log the results. 
+    // 
+    console.log('  Result: ', result);
+  });
+}
 
-	rl.question('E-mail ? ', function(answer) {
-		// TODO: Log the answer in a database
-		console.log('Your E-mail is', answer);
-
-		rl.close();
-	});
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }
 
 function set_token(token) {
