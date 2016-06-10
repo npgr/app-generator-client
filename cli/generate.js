@@ -13,8 +13,8 @@ program
   .option('app [app_name]', 'Create Application', create_app)
   //.option('app [app_name]', 'Create Application', set_app)
   .option('crud [model_name]', 'Create Crud', generate_crud)
-  .option('set2', 'Set Token', set_account)
-  .option('set [token]', 'Set Token', set_token)
+  .option('set', 'Set Account', set_account)
+  .option('set2 [token]', 'Set Token', set_token)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -69,11 +69,6 @@ function set_account() {
   });
 }
 
-function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-
 function set_token(token) {
 	var fs = require('fs')
 	
@@ -85,8 +80,6 @@ function set_token(token) {
 function set_app() {
 	var ask = false
 	var schema = { properties: {} }
-	var prueba = 'Esto es una prueba'
-	console.log(colors.yellow('> ')+colors.green('prueba: '), colors.cyan(prueba))
 	if (program.title)
 		console.log(colors.yellow('> ')+colors.green('title: '), colors.cyan(program.title))
 	else {
@@ -125,9 +118,10 @@ function set_app() {
 		ask = true
 		schema.properties.ver = { 
 			description: colors.green('App Version: '), 
+			pattern: /^(\d+\.)?(\d+\.)?(\*|\d+)$/,
 			type: 'string', 
-			/** Use Regex **/
-			default: '1.0.0'
+			default: '1.0.0',
+			message: 'Invalid version number'
 		}
 	}
 	if (program.repo)
