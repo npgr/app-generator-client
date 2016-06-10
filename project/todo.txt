@@ -106,6 +106,12 @@ Fix:
 			/plan & payments
 			(admin)
 			/statics
+	- Model:  
+		- 1 account -> n machines (limits on free account to 3)
+		- 1 machine - 1 account
+		- Purchase by month
+	- remove token in user
+	- include notes in model (generate documentation)
 	- change token by password
 	- register statics of generated apps / crud
 	- check version of client & server
