@@ -60,12 +60,13 @@ function set_account() {
 		required: true,
 		hidden: true,
 		replace: '*',
-		message: 'Invalid E-mail'
+		message: 'Password Required'
     }], function (err, result) {
     // 
     // Log the results. 
     // 
     console.log('  Result: ', result);
+	process.exit()
   });
 }
 
