@@ -13,8 +13,7 @@ program
   .option('app [app_name]', 'Create Application', create_app)
   //.option('app [app_name]', 'Create Application', set_app)
   .option('crud [model_name]', 'Create Crud', generate_crud)
-  .option('set', 'Set Account', set_account)
-  .option('set2 [token]', 'Set Token', set_token)
+  .option('set [token]', 'Set Token', set_token)
   .option('--title [title]', 'Application Title')
   .option('--desc [app_desc]', 'Application Description')
   .option('--port <port>', 'Port Number')
@@ -40,43 +39,39 @@ process.on('exit', function () {
 })
 
 /** Functions **/
-function set_account() {
-	var colors = require('cli-color')
-	var prompt = require('prompt')
-	prompt.message = colors.yellow('\n> ')
-	prompt.delimiter = ''
-	prompt.colors = false
-		
-	prompt.start()
-	prompt.get([{
-		name: 'email',
-		description: colors.green('E-mail: '),
-		pattern: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-		required: true,
-		message: 'Invalid E-mail'
-		}, {
-		name: 'pwd',
-		description: colors.green('Password: '),
-		required: true,
-		hidden: true,
-		replace: '*',
-		message: 'Password Required'
-    }], function (err, result) {
-    // 
-    // Log the results. 
-    // 
-    console.log('  Result: ', result);
-	process.exit()
-  });
+function server_url() {
+	var url= 'https://appgen2-npgr.rhcloud.com'
+	if (process.env.LOCAL)
+		//url= 'http://localhost:8080'
+		url= 'http://localhost:8080'
+	return url
 }
 
 function set_token(token) {
-	var fs = require('fs')
+	var get = require('simple-get')
+	
+	var opts = {
+			url: server_url()+'/Machine/set/'+token,
+			headers: {
+				//'content-type': 'text/plain; charset=utf-8',
+				'token': token,
+			}
+		}
+	get.post(opts, function (err, res) {
+		if (err) throw err
+		res.setTimeout(10000)
+		
+			res.on('data', function(data) {
+				console.log('data', data.toString())	
+			})
+		})
+		
+	/*var fs = require('fs')
 	
 	var obj = {token: token}
 	
 	fs.writeFileSync(__dirname+'/config.json', JSON.stringify(obj), 'utf-8')
-	console.log('Token Set')
+	console.log('Token Set')*/
 }
 function set_app() {
 	var ask = false
@@ -361,14 +356,9 @@ function generate_crud2(model) {
 		
 		var get = require('simple-get')
 		var crud_data = ''
-		var url= 'https://appgen2-npgr.rhcloud.com/generate/crud'
-		if (process.env.LOCAL)
-			//url= 'http://localhost:8080'
-			url= 'http://localhost:8080/generate/crud'
-			
 		
 		var opts = {
-			url: url,
+			url: server_url()+'/generate/crud',
 			body: JSON.stringify(jsondat),
 			headers: {
 				//'content-type': 'text/plain; charset=utf-8',

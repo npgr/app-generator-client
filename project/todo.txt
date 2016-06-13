@@ -106,11 +106,15 @@ Fix:
 			/plan & payments
 			(admin)
 			/statics
+	- check pwd on post signup/signin
+	- Forgot password
 	- Model:  
 		- 1 account -> n machines (limits on free account to 3)
 		- 1 machine - 1 account
 		- Purchase by month
 	- remove token in user
+	- Bluemix/Docker - KickStarter/Indiegogo
+	- striper
 	- include notes in model (generate documentation)
 	- change token by password
 	- register statics of generated apps / crud
