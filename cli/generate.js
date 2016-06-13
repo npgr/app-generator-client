@@ -49,12 +49,13 @@ function server_url() {
 
 function set_token(token) {
 	var get = require('simple-get')
+	var log = console.log
 	
 	var opts = {
 			url: server_url()+'/Machine/set/'+token,
 			headers: {
 				//'content-type': 'text/plain; charset=utf-8',
-				'token': token,
+				'appgen-token': token
 			}
 		}
 	get.post(opts, function (err, res) {
@@ -62,16 +63,26 @@ function set_token(token) {
 		res.setTimeout(10000)
 		
 			res.on('data', function(data) {
-				console.log('data', data.toString())	
+				//log('data', data.toString())
+				// Check if Json
+				try {
+					var obj = JSON.parse(data.toString())
+				} catch (e) {
+					log('Invalid data received from server')
+					process.exit(0)
+				}
+				if (obj.token)
+				{
+					var fs = require('fs')
+	
+					var config = {token: obj.token}
+	
+					fs.writeFileSync(__dirname+'/config.json', JSON.stringify(config), 'utf-8')
+					log('Token Set')
+				} else
+					log(obj)
 			})
 		})
-		
-	/*var fs = require('fs')
-	
-	var obj = {token: token}
-	
-	fs.writeFileSync(__dirname+'/config.json', JSON.stringify(obj), 'utf-8')
-	console.log('Token Set')*/
 }
 function set_app() {
 	var ask = false
@@ -362,7 +373,7 @@ function generate_crud2(model) {
 			body: JSON.stringify(jsondat),
 			headers: {
 				//'content-type': 'text/plain; charset=utf-8',
-				'token': obj.token,
+				'appgen-token': obj.token,
 				//'data': JSON.stringify(jsondat),
 				'model': model
 			}
@@ -382,13 +393,22 @@ function generate_crud2(model) {
 				//console.log('\ngot the response: \n' + data)
 				//console.log('Finish Data length: ', data.length)
 				//console.log('headers: ', res.headers)
-				if (!res.headers['app-msg']) 
+				if (!res.headers['app-msg'])
+				{
+					if (res.headers['appgen-token'])
+					{
+						console.log('new token: ', res.headers['appgen-token'])
+						var fs = require('fs')
+						var config = {token: res.headers['appgen-token']}
+						fs.writeFileSync(__dirname+'/config.json', JSON.stringify(config), 'utf-8')
+					}	
 					create_crud(model, data)
-				  else
-				  {
+				}
+				else
+				{
 					console.log('msg: ',res.headers['app-msg'])
 					process.exit(1)
-				  }
+				}
 			}))
 			//res.pipe(fs.createWriteStream('./crud_orig.js'))
 			/*res.on('end', function() {

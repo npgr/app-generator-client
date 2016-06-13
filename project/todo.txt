@@ -106,8 +106,9 @@ Fix:
 			/plan & payments
 			(admin)
 			/statics
-	- check pwd on post signup/signin
-	- Forgot password
+	- use cases: change machine, reinstall, etc (sen token by mail)
+	- check pwd on post signup/signin (fields send on post)
+	- Forgot password option
 	- Model:  
 		- 1 account -> n machines (limits on free account to 3)
 		- 1 machine - 1 account
