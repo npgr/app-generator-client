@@ -106,7 +106,9 @@ Fix:
 			/plan & payments
 			(admin)
 			/statics
+	- change purchase model (remove tot apps)
 	- use cases: change machine, reinstall, etc (sen token by mail)
+	- use sendgrid signup as model (including confirm email) 
 	- check pwd on post signup/signin (fields send on post)
 	- Forgot password option
 	- Model:  

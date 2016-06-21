@@ -33,6 +33,7 @@ program
 process.on('exit', function () {
 	if (program.crud & process.exitCode != 1)
 	{
+		if (gen_cruds) console.log(' Aut End: ', aut_end, ' Aut Cruds: ', aut_cruds, ' Gen Cruds: ', gen_cruds)
 		console.log (colors.cyan('\n *** CRUD CREATED !!!'))
 		console.log (colors.cyan('\n Browse http://ServerName:port/'+model_name+'/list'))
 	}
@@ -395,9 +396,11 @@ function generate_crud2(model) {
 				//console.log('headers: ', res.headers)
 				if (!res.headers['app-msg'])
 				{
+					if (res.headers['aut_end']) aut_end = res.headers['aut_end']
+					if (res.headers['aut_cruds']) aut_cruds = res.headers['aut_cruds']
+					if (res.headers['gen_cruds']) gen_cruds = res.headers['gen_cruds']
 					if (res.headers['appgen-token'])
 					{
-						console.log('new token: ', res.headers['appgen-token'])
 						var fs = require('fs')
 						var config = {token: res.headers['appgen-token']}
 						fs.writeFileSync(__dirname+'/config.json', JSON.stringify(config), 'utf-8')
