@@ -1,3 +1,12 @@
+Name of Product:
+				Appsembler (Already exist - check landing page)
+				Appsemble (Already exist)
+				Appsembly (Already exist)
+				
+				!!! Apptomatic  (http://whoadmin.com/apptomatic.com.html)  - Company name
+	
+	Company LOP
+
 1) Protect App - Asar, JX, JS scramber, js obfuscator, encrypted license (by models, generations)
 		- Compile version of generate: languaje C, java or Phyton
 		
@@ -38,9 +47,13 @@ Deploy
 5) Landing Page, publish app (for download), validate/update key, receive payments
     - Demo with ngrok
 	- Use Webly, Wix, etc (templates for landing pages)
+	- Message: Easy of use, Performance, Productivity
+	- Using Parallax
     - Market Fit - Google Analytics (landing page & generator ?) - Get email address - little survey  (company size, type) - Get stadistics directly from generator
 	- social media pages
 	- get coverage of specialized press (Inforworld, etc)
+	- Caracteristicas: Easy of use, productive, - Cloud ready, multi DB 
+
 	
 
 ----- Product Ready for Sale -----------
@@ -273,8 +286,10 @@ Deploy
 
 5) Marketing:
 
+GrowHacking
+
 	5.1) Book
-	5.2) Twitter, ¿ Instagram ?
+	5.2) Twitter, ¿ Instagram ?. Use #nodejs, to be included in Twitter Bots
 	5.3) YouTube channel
 	5.4) Blog
 	5.5) Web Page (scrambler)
